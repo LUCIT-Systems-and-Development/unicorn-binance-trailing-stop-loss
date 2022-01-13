@@ -189,44 +189,6 @@ or the [current master branch](https://github.com/LUCIT-Systems-and-Development/
 - [Modules](https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss-engine/unicorn_binance_trailing_stop_loss_engine.html)
 
 ## Examples
-- [example_binance_coin_futures.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_binance_coin_futures.py)
-- [example_binance_dex.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_binance_dex.py)
-- [example_binance_futures.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_binance_futures.py)
-- [example_binance_futures_1s.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_binance_futures_1s.py)
-- [example_binance_jex.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_binance_jex.py)
-- [example_binance_us.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_binance_us.py)
-- [example_bookticker.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_bookticker.py)
-- [example_ctrl-c.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_ctrl-c.py)
-- [example_demo.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_demo.py)
-- [example_easy_migration_from_python-binance.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_easy_migration_from_python-binance.py)
-- [example_interactive_mode.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_interactive_mode.py)
-- [example_kline_1m_with_unicorn_fy.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_kline_1m_with_unicorn_fy.py)
-- [example_logging.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_logging.py)
-- [example_monitoring.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_monitoring.py)
-- [example_multi_stream.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_multi_stream.py)
-- [example_multiple_userdata_streams.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_multiple_userdata_streams.py)
-- [example_plotting_last_price.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_plotting_last_price.py)
-- [example_process_streams.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_process_streams.py)
-- [example_stream_buffer.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_stream_buffer.py)
-- [example_stream_buffer_extended.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_stream_buffer_extended.py)
-- [example_stream_buffer_fifo-lifo.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_stream_buffer_fifo-lifo.py)
-- [example_stream_everything.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_stream_everything.py)
-- [example_stream_management.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_stream_management.py)
-- [example_stream_management_extended.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_stream_management_extended.py)
-- [example_stream_signals.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_stream_signals.py)
-- [example_stream_signals_callback.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_stream_signals_callback.py)
-- [example_subscribe.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_subscribe.py)
-- [example_ticker_and_miniticker.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_ticker_and_miniticker.py)
-- [example_trade_stream.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_trade_stream.py)
-- [example_trbinance.com.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_trbinance_com.py)
-- [example_userdata_stream.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_userdata_stream.py)
-- [example_userdata_stream_new_style.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_userdata_stream_new_style.py)
-- [example_version_of_this_package.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_version_of_this_package.py)
-
-## Howto
-- [Howto: UNICORN Binance Trailing Stop Loss Engine](https://www.technopathy.club/2019/11/02/howto-unicorn-binance-trailing-stop-loss-engine/)
-- [Howto: Monitoring UNICORN Binance Trailing Stop Loss Engine Manager with ICINGA2](https://www.technopathy.club/2019/11/02/howto-monitoring-unicorn-binance-trailing-stop-loss-engine-manager-with-icinga2/)
-- [Binance Python API – A Step-by-Step Guide](https://algotrading101.com/learn/binance-python-api-guide/#what-is-the-binance-api) ([GitHub Repo](https://github.com/PythonForForex/Binance-api-step-by-step-guide))
 
 ## Project Homepage
 [https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine)
@@ -246,10 +208,7 @@ To receive notifications on available updates you can
 the repository on [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine), write your 
 [own script](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/blob/master/example_version_of_this_package.py) 
 with using 
-[`is_update_availabe()`](https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss-engine/unicorn_binance_trailing_stop_loss_engine.html#unicorn_binance_trailing_stop_loss_engine.unicorn_binance_trailing_stop_loss_engine_manager.BinanceTrailingStopLossEngineManager.is_update_availabe) 
-or you use the 
-[monitoring API service](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/wiki/UNICORN-Monitoring-API-Service).
-
+[`is_update_availabe()`](https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss-engine/unicorn_binance_trailing_stop_loss_engine.html#unicorn_binance_trailing_stop_loss_engine.unicorn_binance_trailing_stop_loss_engine_manager.BinanceTrailingStopLossEngineManager.is_update_availabe).
 Follow us on [Twitter](https://twitter.com/LUCIT_SysDev) for general news about the [unicorn-binance-suite](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-suite)!
 
 To receive news (like inspection windows/maintenance) about the Binance API`s subscribe to their telegram groups: 
