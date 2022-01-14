@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# File: setup.py
+# File: manager.py
 #
 # Part of ‘UNICORN Binance Trailing Stop Loss Engine’
-# Project website: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine
-# Documentation: https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss-engine
-# PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss-engine
+# Project website: https://github.com/LUCIT-Systems-and-Development/lucit_general_toolset
+# Documentation: https://lucit-systems-and-development.github.io/lucit_general_toolset
+# PyPI: https://pypi.org/project/lucit_general_toolset
 #
 # Author: LUCIT Systems and Development
 #
@@ -35,3 +35,6 @@
 class BinanceTrailingStopLossEngineManager:
     def __init__(self):
         pass
+
+    def get_version(self):
+        return "0.0.0"

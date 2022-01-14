@@ -33,7 +33,7 @@
 # IN THE SOFTWARE.
 
 import setuptools
-from unicorn_binance_trailing_stop_loss_engine.unicorn_binance_trailing_stop_loss_engine_manager import BinanceTrailingStopLossEngineManager
+from unicorn_binance_trailing_stop_loss_engine.manager import BinanceTrailingStopLossEngineManager
 
 ubtsle = BinanceTrailingStopLossEngineManager()
 
@@ -50,7 +50,7 @@ setuptools.setup(
      long_description=long_description,
      long_description_content_type="text/markdown",
      license='MIT License',
-     install_requires=['unicorn-binance-websocket-api', 'unicorn-binance-rest-api'],
+     install_requires=['requests', 'unicorn-binance-websocket-api', 'unicorn-binance-rest-api'],
      keywords='binance, ',
      project_urls={
         'Documentation': 'https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss-engine',

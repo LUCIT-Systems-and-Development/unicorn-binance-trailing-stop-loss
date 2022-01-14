@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# File: unicorn_binance_trailing_stop_loss_engine_manager.py
+# File: manager.py
 #
 # Part of ‘UNICORN Binance Trailing Stop Loss Engine’
 # Project website: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine
@@ -32,7 +32,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-from unicorn_binance_trailing_stop_loss_engine.unicorn_binance_trailing_stop_loss_engine_manager import BinanceTrailingStopLossEngineManager
+from unicorn_binance_trailing_stop_loss_engine.manager import BinanceTrailingStopLossEngineManager
 import logging
 import unittest
 import os
