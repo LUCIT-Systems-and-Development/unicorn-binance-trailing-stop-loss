@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# File: binance_stop_loss/binance_trailing_stop_loss.py
+# File: unicorn_binance_trailing_stop_loss_bot.py
 #
-# Part of ‘LUCIT Trading Tools’
+# Part of ‘UNICORN Binance Trailing Stop Loss Engine’
+# Project website: https://github.com/LUCIT-Systems-and-Development/lucit_general_toolset
+# Documentation: https://lucit-systems-and-development.github.io/lucit_general_toolset
+# PyPI: https://pypi.org/project/lucit_general_toolset
 #
-# Author: LUCIT IT-Management GmbH
-#         https://www.lucit.dev
+# Author: LUCIT Systems and Development
 #
-# Copyright (c) 2021-2021, LUCIT IT-Management GmbH
+# Copyright (c) 2022-2022, LUCIT Systems and Development (https://www.lucit.tech) and Oliver Zehentleitner
 # All rights reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -38,30 +40,25 @@ import os
 import sys
 import time
 
-root_path = '../../../lucit-trading-suite'
+# Workaround to locally load the package of the repository
+root_path = '../../unicorn-binance-trailing-stop-loss-engine'
 os.chdir(sys.path[0])
 sys.path.insert(1, os.path.abspath(root_path))
 
-from lucit_config.config_loader import ConfigLoader
-from classes.unicorn_binance_stop_loss.unicorn_binance_stop_loss import BinanceStopLoss
+from unicorn_binance_trailing_stop_loss_engine.manager import BinanceTrailingStopLossEngineManager
 
-
-def callback_error(msg):
-    print(f"STOP LOSS ERROR - BOT IS SHUTTING DOWN! - {msg}")
-
-
-def callback_finished(msg):
-    print(f"STOP LOSS FINISHED - BOT IS SHUTTING DOWN! - {msg}")
-
+# Set specific logger
+logger = logging.getLogger("unicorn_binance_trailing_stop_loss_bot")
+logger.setLevel(logging.INFO)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--apikey',
                     type=str,
-                    help="API Key",
+                    help="The API key!",
                     required=False)
 parser.add_argument('--apisecret',
                     type=str,
-                    help="API Secret",
+                    help="The API secret!",
                     required=False)
 parser.add_argument('--exchange',
                     type=str,
@@ -73,38 +70,52 @@ parser.add_argument('--keepthreshold',
                     required=False)
 parser.add_argument('--limit',
                     type=str,
-                    help='Stop/loss limit in integer or percent',
+                    help='Stop/loss limit in integer or percent.',
                     required=False)
 parser.add_argument('--logfile',
                     type=str,
-                    help='Logfile',
+                    help='Specify path including filename to the logfile.',
                     required=False)
 parser.add_argument('--orderside',
                     type=str,
                     help="Specify whether the trailing stop loss should be in buying or selling mode. (Ex: 'buy' "
-                         "or 'sell')",
+                         "or 'sell').",
                     required=False)
 parser.add_argument('--ordertype',
                     type=str,
-                    help="`limit` or `market`)",
+                    help="Use `limit` or `market`.",
                     required=False)
 parser.add_argument('--profile',
                     type=str,
-                    help='Name of the profile to load from profiles.ini',
+                    help='Name of the profile to load from profiles.ini!',
                     required=False)
 parser.add_argument('--resetstoplossprice',
                     type=str,
                     help='Reset the existing stop_loss_price! Usage: True anything else is False!',
                     required=False)
+parser.add_argument('--secrets',
+                    type=str,
+                    help='Specify path including filename to the secrets file. (Ex: `~/secrets.ini`) If not '
+                         'available it tries to load a secrets.ini from the current working directory.',
+                    required=False)
 parser.add_argument('--stoplossprice',
                     type=float,
-                    help='Set the starting stop/loss price',
+                    help='Set the starting stop/loss price.',
                     required=False)
 parser.add_argument('--symbol',
                     type=str,
-                    help='Market symbol',
+                    help='The market symbol as used by Binance.',
                     required=False)
 options = parser.parse_args()
+
+
+def callback_error(msg):
+    print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {msg}")
+
+
+def callback_finished(msg):
+    print(f"STOP LOSS FINISHED - ENGINE IS SHUTTING DOWN! - {msg}")
+
 
 if len(sys.argv) <= 1:
     parser.print_help()
@@ -114,13 +125,22 @@ if options.logfile is True:
     logfile = options.logfile
 else:
     logfile = os.path.basename(__file__) + '.log'
+# Todo: Use the Logfile name :)
 
-# Set specific logger
-logger = logging.getLogger("unicorn_binance_stop_loss")
-logger.setLevel(logging.INFO)
-
-# Load lucit_config file
-config = ConfigLoader.get_config(root_path=root_path)
+# Load secrets.ini file
+if options.secrets is not None:
+    # Load from cli arg if provided
+    config_file = str(options.secrets)
+else:
+    # Load secrets from default filename
+    config_file = "secrets.ini2"
+    if os.path.isfile(config_file) is False:
+        logger.critical("If secrets.ini is not in the same directory or is renamed, then the parameter --secrets "
+                        "is mandatory! Please use --help for further information!")
+        sys.exit(1)
+logging.info(f"Loading configuration file {config_file}")
+config = ConfigParser(interpolation=ExtendedInterpolation())
+config.read(config_file)
 public_key = config['BINANCE']['api_key']
 private_key = config['BINANCE']['api_secret']
 send_to_email_address = config['EMAIL']['send_to_email']
@@ -208,31 +228,31 @@ if str(reset_stop_loss_price).upper() == "TRUE":
 else:
     reset_stop_loss_price = False
 
-ubsl = BinanceStopLoss(callback_error=callback_error,
-                       callback_finished=callback_finished,
-                       binance_public_key=public_key,
-                       binance_private_key=private_key,
-                       exchange=exchange,
-                       keep_threshold=keep_threshold,
-                       reset_stop_loss_price=reset_stop_loss_price,
-                       send_to_email_address=send_to_email_address,
-                       send_from_email_address=send_from_email_address,
-                       send_from_email_password=send_from_email_password,
-                       send_from_email_server=send_from_email_server,
-                       send_from_email_port=send_from_email_port,
-                       stop_loss_limit=stop_loss_limit,
-                       stop_loss_market=stop_loss_market,
-                       stop_loss_order_type=stop_loss_order_type,
-                       stop_loss_price=stop_loss_price,
-                       stop_loss_side=stop_loss_side,
-                       telegram_bot_token=telegram_bot_token,
-                       telegram_send_to=telegram_send_to)
-ubsl.start()
+ubtsl = BinanceTrailingStopLossEngineManager(callback_error=callback_error,
+                                             callback_finished=callback_finished,
+                                             binance_public_key=public_key,
+                                             binance_private_key=private_key,
+                                             exchange=exchange,
+                                             keep_threshold=keep_threshold,
+                                             reset_stop_loss_price=reset_stop_loss_price,
+                                             send_to_email_address=send_to_email_address,
+                                             send_from_email_address=send_from_email_address,
+                                             send_from_email_password=send_from_email_password,
+                                             send_from_email_server=send_from_email_server,
+                                             send_from_email_port=send_from_email_port,
+                                             stop_loss_limit=stop_loss_limit,
+                                             stop_loss_market=stop_loss_market,
+                                             stop_loss_order_type=stop_loss_order_type,
+                                             stop_loss_price=stop_loss_price,
+                                             stop_loss_side=stop_loss_side,
+                                             telegram_bot_token=telegram_bot_token,
+                                             telegram_send_to=telegram_send_to)
+ubtsl.start()
 
 try:
-    while ubsl.stop_request is False:
-        time.sleep(60)
+    while ubtsl.stop_request is False:
+        time.sleep(1)
 except KeyboardInterrupt:
     print("\nStopping ... just wait a few seconds!")
-    ubsl.stop()
+    ubtsl.stop()
 print(f"Exit main file!")
