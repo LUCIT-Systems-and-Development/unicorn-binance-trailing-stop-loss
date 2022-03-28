@@ -10,7 +10,7 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('../..'))
 
-# sphinx-apidoc -f -o source/ ../unicorn_binance_trailing_stop_loss_engine/
+# sphinx-apidoc -f -o source/ ../unicorn_binance_trailing_stop_loss/
 
 # pip install python_docs_theme
 ## edit source/conf.py:

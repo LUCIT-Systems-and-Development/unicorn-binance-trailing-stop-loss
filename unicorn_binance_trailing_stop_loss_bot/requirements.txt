@@ -1,5 +1,0 @@
-config
-pandas
-requests
-unicorn-binance-rest-api
-unicorn-binance-websocket-api

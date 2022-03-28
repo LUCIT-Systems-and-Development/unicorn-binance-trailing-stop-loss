@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# File: unicorn_binance_trailing_stop_loss_bot.py
+# File: unicorn_binance_trailing_stop_loss/bot.py
 #
-# Part of ‘UNICORN Binance Trailing Stop Loss Engine’
+# Part of ‘UNICORN Binance Trailing Stop Loss’
 # Project website: https://github.com/LUCIT-Systems-and-Development/lucit_general_toolset
 # Documentation: https://lucit-systems-and-development.github.io/lucit_general_toolset
 # PyPI: https://pypi.org/project/lucit_general_toolset
@@ -32,6 +32,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
+from manager import BinanceTrailingStopLossManager
 from configparser import ConfigParser, ExtendedInterpolation
 
 import argparse
@@ -39,13 +40,6 @@ import logging
 import os
 import sys
 import time
-
-# Workaround to locally load the package of the repository
-root_path = '../../unicorn-binance-trailing-stop-loss-engine'
-os.chdir(sys.path[0])
-sys.path.insert(1, os.path.abspath(root_path))
-
-from unicorn_binance_trailing_stop_loss_engine.manager import BinanceTrailingStopLossEngineManager
 
 # Set specific logger
 logger = logging.getLogger("unicorn_binance_trailing_stop_loss_bot")
@@ -152,7 +146,7 @@ telegram_bot_token = config['TELEGRAM']['bot_token']
 telegram_send_to = config['TELEGRAM']['send_to']
 
 # Load profiles
-profiles_file = "profiles.ini"
+profiles_file = "../profiles.ini"
 logging.info(f"Loading profiles file {profiles_file}")
 profiles = ConfigParser(interpolation=ExtendedInterpolation())
 profiles.read(profiles_file)
@@ -228,25 +222,25 @@ if str(reset_stop_loss_price).upper() == "TRUE":
 else:
     reset_stop_loss_price = False
 
-ubtsl = BinanceTrailingStopLossEngineManager(callback_error=callback_error,
-                                             callback_finished=callback_finished,
-                                             binance_public_key=public_key,
-                                             binance_private_key=private_key,
-                                             exchange=exchange,
-                                             keep_threshold=keep_threshold,
-                                             reset_stop_loss_price=reset_stop_loss_price,
-                                             send_to_email_address=send_to_email_address,
-                                             send_from_email_address=send_from_email_address,
-                                             send_from_email_password=send_from_email_password,
-                                             send_from_email_server=send_from_email_server,
-                                             send_from_email_port=send_from_email_port,
-                                             stop_loss_limit=stop_loss_limit,
-                                             stop_loss_market=stop_loss_market,
-                                             stop_loss_order_type=stop_loss_order_type,
-                                             stop_loss_price=stop_loss_price,
-                                             stop_loss_side=stop_loss_side,
-                                             telegram_bot_token=telegram_bot_token,
-                                             telegram_send_to=telegram_send_to)
+ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
+                                       callback_finished=callback_finished,
+                                       binance_public_key=public_key,
+                                       binance_private_key=private_key,
+                                       exchange=exchange,
+                                       keep_threshold=keep_threshold,
+                                       reset_stop_loss_price=reset_stop_loss_price,
+                                       send_to_email_address=send_to_email_address,
+                                       send_from_email_address=send_from_email_address,
+                                       send_from_email_password=send_from_email_password,
+                                       send_from_email_server=send_from_email_server,
+                                       send_from_email_port=send_from_email_port,
+                                       stop_loss_limit=stop_loss_limit,
+                                       stop_loss_market=stop_loss_market,
+                                       stop_loss_order_type=stop_loss_order_type,
+                                       stop_loss_price=stop_loss_price,
+                                       stop_loss_side=stop_loss_side,
+                                       telegram_bot_token=telegram_bot_token,
+                                       telegram_send_to=telegram_send_to)
 ubtsl.start()
 
 try:

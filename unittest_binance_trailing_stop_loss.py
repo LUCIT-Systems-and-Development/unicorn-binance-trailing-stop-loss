@@ -32,7 +32,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-from unicorn_binance_trailing_stop_loss_engine.manager import BinanceTrailingStopLossEngineManager
+from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossEngineManager
 import logging
 import unittest
 import os
@@ -41,7 +41,7 @@ import time
 BINANCE_COM_API_KEY = ""
 BINANCE_COM_API_SECRET = ""
 
-logging.getLogger("unicorn_binance_trailing_stop_loss_engine.unicorn_binance_trailing_stop_loss_engine_manager")
+logging.getLogger("unicorn_binance_trailing_stop_loss.unicorn_binance_trailing_stop_loss_engine_manager")
 logging.basicConfig(level=logging.DEBUG,
                     filename=os.path.basename(__file__) + '.log',
                     format="{asctime} [{levelname:8}] {process} {thread} {module}: {message}",

@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# File: unicorn_binance_trailing_stop_loss_engine/manager.py
+# File: unicorn_binance_trailing_stop_loss/manager.py
 #
-# Part of ‘UNICORN Binance Trailing Stop Loss Engine’
-# Project website: https://github.com/LUCIT-Systems-and-Development/lucit_general_toolset
-# Documentation: https://lucit-systems-and-development.github.io/lucit_general_toolset
-# PyPI: https://pypi.org/project/lucit_general_toolset
+# Part of ‘UNICORN Binance Trailing Stop Loss’
+# Project website: https://www.lucit.tech/unicorn-binance-websocket-api.html
+# Github: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-websocket-api
+# Documentation: https://unicorn-binance-websocket-api.docs.lucit.tech
+# PyPI: https://pypi.org/project/unicorn-binance-websocket-api/
 #
 # Author: LUCIT Systems and Development
 #
-# Copyright (c) 2022-2022, LUCIT Systems and Development (https://www.lucit.tech) and Oliver Zehentleitner
+# Copyright (c) 2019-2022, LUCIT Systems and Development (https://www.lucit.tech) and Oliver Zehentleitner
 # All rights reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -48,7 +49,7 @@ import threading
 import time
 
 
-class BinanceTrailingStopLossEngineManager:
+class BinanceTrailingStopLossManager:
     """
     UNICORN-Binance-Trailing-Stop-Loss-Engine for managing Stop/Loss orders and sending notifications.
 
@@ -151,7 +152,7 @@ class BinanceTrailingStopLossEngineManager:
         self.exchange = exchange
         self.exchange_info: dict = {}
         self.keep_threshold = keep_threshold
-        self.logger = logging.getLogger('unicorn_binance_trailing_stop_loss_engine')
+        self.logger = logging.getLogger('unicorn_binance_trailing_stop_loss')
         self.precision_crypto: int = 2  # Todo: make dynamic
         self.precision_fiat: int = 2  # Todo: make dynamic
         self.reset_stop_loss_price = True if reset_stop_loss_price is True else False

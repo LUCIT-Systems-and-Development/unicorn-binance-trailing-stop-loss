@@ -3,7 +3,7 @@
 #
 # File: setup.py
 #
-# Part of ‘UNICORN Binance Trailing Stop Loss Engine’
+# Part of ‘UNICORN Binance Trailing Stop Loss’
 # Project website: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine
 # Documentation: https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss-engine
 # PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss-engine
@@ -33,7 +33,7 @@
 # IN THE SOFTWARE.
 
 import setuptools
-from unicorn_binance_trailing_stop_loss_engine.manager import BinanceTrailingStopLossEngineManager
+from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossEngineManager
 
 ubtsle = BinanceTrailingStopLossEngineManager()
 
