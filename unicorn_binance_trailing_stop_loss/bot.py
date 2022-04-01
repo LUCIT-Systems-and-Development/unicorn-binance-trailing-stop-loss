@@ -4,9 +4,11 @@
 # File: unicorn_binance_trailing_stop_loss/bot.py
 #
 # Part of ‘UNICORN Binance Trailing Stop Loss’
-# Project website: https://github.com/LUCIT-Systems-and-Development/lucit_general_toolset
-# Documentation: https://lucit-systems-and-development.github.io/lucit_general_toolset
-# PyPI: https://pypi.org/project/lucit_general_toolset
+# Project website: https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html
+# Github: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss
+# Documentation: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech
+# PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss
+#
 #
 # Author: LUCIT Systems and Development
 #
@@ -42,7 +44,7 @@ import sys
 import time
 
 # Set specific logger
-logger = logging.getLogger("unicorn_binance_trailing_stop_loss_bot")
+logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
 logger.setLevel(logging.INFO)
 
 parser = argparse.ArgumentParser()
@@ -87,7 +89,7 @@ parser.add_argument('--resetstoplossprice',
                     type=str,
                     help='Reset the existing stop_loss_price! Usage: True anything else is False!',
                     required=False)
-parser.add_argument('--secrets',
+parser.add_argument('--secretsfile',
                     type=str,
                     help='Specify path including filename to the secrets file. (Ex: `~/secrets.ini`) If not '
                          'available it tries to load a secrets.ini from the current working directory.',
@@ -119,17 +121,16 @@ if options.logfile is True:
     logfile = options.logfile
 else:
     logfile = os.path.basename(__file__) + '.log'
-# Todo: Use the Logfile name :)
 
 # Load secrets.ini file
-if options.secrets is not None:
+if options.secretsfile is not None:
     # Load from cli arg if provided
-    config_file = str(options.secrets)
+    config_file = str(options.secretsfile)
 else:
     # Load secrets from default filename
-    config_file = "secrets.ini2"
+    config_file = "secrets.ini"
     if os.path.isfile(config_file) is False:
-        logger.critical("If secrets.ini is not in the same directory or is renamed, then the parameter --secrets "
+        logger.critical("If secrets.ini is not in the same directory or is renamed, then the parameter --secretsfile "
                         "is mandatory! Please use --help for further information!")
         sys.exit(1)
 logging.info(f"Loading configuration file {config_file}")
@@ -146,7 +147,7 @@ telegram_bot_token = config['TELEGRAM']['bot_token']
 telegram_send_to = config['TELEGRAM']['send_to']
 
 # Load profiles
-profiles_file = "../profiles.ini"
+profiles_file = "profiles.ini"
 logging.info(f"Loading profiles file {profiles_file}")
 profiles = ConfigParser(interpolation=ExtendedInterpolation())
 profiles.read(profiles_file)
@@ -174,6 +175,7 @@ if options.profile is not None:
         reset_stop_loss_price = profiles[options.profile]['reset_stop_loss_price']
     except KeyError:
         pass
+
     try:
         stop_loss_market = profiles[options.profile]['stop_loss_market']
     except KeyError:
@@ -221,6 +223,7 @@ if str(reset_stop_loss_price).upper() == "TRUE":
     reset_stop_loss_price = True
 else:
     reset_stop_loss_price = False
+
 
 ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        callback_finished=callback_finished,

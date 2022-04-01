@@ -20,14 +20,14 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'unicorn-binance-trailing-stop-loss-engine'
+project = 'unicorn-binance-trailing-stop-loss'
 copyright = '2022-2022, LUCIT Systems and Development and Oliver Zehentleitner'
 author = 'LUCIT Systems and Development'
 
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.1.0_alpha'
+release = '0.1.0'
 
 html_last_updated_fmt = "%b %d %Y at %H:%M (CET)"
 
@@ -88,7 +88,7 @@ pygments_style = None
 
 html_theme = 'python_docs_theme_technopathy'
 html_context = {'github_user_name': 'LUCIT-Systems-and-Development',
-                'github_repo_name': 'unicorn-binance-trailing-stop-loss-engine',
+                'github_repo_name': 'unicorn-binance-trailing-stop-loss',
                 'project_name': project}
 
 
@@ -116,7 +116,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'unicorn-binance-trailing-stop-loss-engine-apidoc'
+htmlhelp_basename = 'unicorn-binance-trailing-stop-loss-apidoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -143,8 +143,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'unicorn-binance-trailing-stop-loss-engine.tex',
-     'unicorn-binance-trailing-stop-loss-engine Documentation',
+    (master_doc, 'unicorn-binance-trailing-stop-loss.tex',
+     'unicorn-binance-trailing-stop-loss Documentation',
      'LUCIT Systems and Development', 'manual'),
 ]
 
@@ -154,7 +154,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'unicorn-binance-trailing-stop-loss-engine', 'unicorn-binance-trailing-stop-loss-engine Documentation',
+    (master_doc, 'unicorn-binance-trailing-stop-loss', 'unicorn-binance-trailing-stop-loss Documentation',
      [author], 1)
 ]
 
@@ -165,8 +165,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'unicorn-binance-trailing-stop-loss-engine', 'unicorn-binance-trailing-stop-loss-engine Documentation',
-     author, 'unicorn-binance-trailing-stop-loss-engine', 'One line description of project.',
+    (master_doc, 'unicorn-binance-trailing-stop-loss', 'unicorn-binance-trailing-stop-loss Documentation',
+     author, 'unicorn-binance-trailing-stop-loss', 'One line description of project.',
      'Miscellaneous'),
 ]
 

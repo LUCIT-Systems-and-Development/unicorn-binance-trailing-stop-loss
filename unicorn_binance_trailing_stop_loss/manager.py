@@ -4,10 +4,10 @@
 # File: unicorn_binance_trailing_stop_loss/manager.py
 #
 # Part of ‘UNICORN Binance Trailing Stop Loss’
-# Project website: https://www.lucit.tech/unicorn-binance-websocket-api.html
-# Github: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-websocket-api
-# Documentation: https://unicorn-binance-websocket-api.docs.lucit.tech
-# PyPI: https://pypi.org/project/unicorn-binance-websocket-api/
+# Project website: https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html
+# Github: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss
+# Documentation: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech
+# PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss
 #
 # Author: LUCIT Systems and Development
 #
@@ -51,7 +51,7 @@ import time
 
 class BinanceTrailingStopLossManager:
     """
-    UNICORN-Binance-Trailing-Stop-Loss-Engine for managing Stop/Loss orders and sending notifications.
+    unicorn-binance-trailing-stop-loss for managing Stop/Loss orders and sending notifications.
 
     Supported exchanges: binance.com-isolated_margin
 

@@ -3,10 +3,11 @@
 #
 # File: pypi/upload_wheel.sh
 #
-# Part of ‘UNICORN Binance Trailing Stop Loss Engine’
-# Project website: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine
-# Documentation: https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss-engine
-# PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss-engine
+# Part of ‘UNICORN Binance Trailing Stop Loss’
+# Project website: https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html
+# Github: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss
+# Documentation: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech
+# PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss
 #
 # Author: LUCIT Systems and Development
 #

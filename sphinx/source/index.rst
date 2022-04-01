@@ -1,10 +1,10 @@
-.. unicorn-binance-trailing-stop-loss-engine documentation master file, created by
+.. unicorn-binance-trailing-stop-loss documentation master file, created by
    sphinx-quickstart on Sat Nov  2 14:14:48 2019.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to unicorn-binance-trailing-stop-loss-engine's documentation!
-=========================================================
+Welcome to unicorn-binance-trailing-stop-loss's documentation!
+==============================================================
 
 .. toctree::
    :maxdepth: 3

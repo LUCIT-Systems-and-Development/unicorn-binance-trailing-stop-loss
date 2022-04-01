@@ -4,9 +4,10 @@
 # File: setup.py
 #
 # Part of ‘UNICORN Binance Trailing Stop Loss’
-# Project website: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine
-# Documentation: https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss-engine
-# PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss-engine
+# Project website: https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html
+# Github: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss
+# Documentation: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech
+# PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss
 #
 # Author: LUCIT Systems and Development
 #
@@ -41,11 +42,11 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-     name='unicorn-binance-trailing-stop-loss-engine',
+     name='unicorn-binance-trailing-stop-loss',
      version=str(ubtsle.get_version()),
      author="LUCIT Systems and Development",
      author_email='info@lucit.tech',
-     url="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine",
+     url="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss",
      description="",
      long_description=long_description,
      long_description_content_type="text/markdown",
@@ -53,8 +54,8 @@ setuptools.setup(
      install_requires=['requests', 'unicorn-binance-websocket-api', 'unicorn-binance-rest-api'],
      keywords='binance, ',
      project_urls={
-        'Documentation': 'https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss-engine',
-        'Wiki': 'https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss-engine/wiki',
+        'Documentation': 'https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss',
+        'Wiki': 'https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki',
         'Author': 'https://www.lucit.tech',
      },
      python_requires='>=3.7.0',
