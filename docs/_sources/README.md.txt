@@ -48,7 +48,8 @@ The Python package [UNICORN Binance Trailing Stop Loss](https://www.lucit.tech/u
 ### What are the benefits of the UNICORN Binance Trailing Stop Loss?
 - Fully managed websockets and 100% auto-reconnect! Also handles maintenance windows!
 - [Supported exchanges](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki/Binance-websocket-endpoint-configuration-overview): 
-
+- Powered by [UNICORN Binance REST API](https://www.lucit.tech/unicorn-binance-rest-api.html) and 
+[UNICORN Binance WebSocket API](https://www.lucit.tech/unicorn-binance-websocket-api.html).
 
 If you like the project, please [![star](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/star.png)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/stargazers) it on 
 [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)!
