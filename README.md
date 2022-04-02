@@ -24,7 +24,8 @@
 [Notifications](#receive-notifications) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
 [Contributing](#contributing) | [Commercial Support](#commercial-support)
 
-A Python library with a command line interface for a trailing stop loss at Binance Exchange.
+A Python library with a command line interface for a trailing stop loss on Binance Exchange in a easy, fast, flexible,
+robust and fully-featured way.
 
 Part of ['UNICORN Binance Suite'](https://www.lucit.tech/unicorn-binance-suite.html).
 
@@ -34,7 +35,7 @@ import unicorn_binance_trailing_stop_loss
 
 ```
 
-https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html
+CLI usage: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html
 
 ### Get the right [logger](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_logging.py):
 ```
@@ -104,9 +105,12 @@ or the [current master branch](https://github.com/LUCIT-Systems-and-Development/
 ## Documentation
 - [General](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech)
 - [Modules](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html)
+- [CLI](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html)
 
 ## Examples
 - [example_logging.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_logging.py)
+- [example_profiles.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_profiles.ini)
+- [example_secrets.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_secrets.ini)
 
 ## Project Homepage
 [https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)
