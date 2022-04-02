@@ -126,14 +126,15 @@ else:
 if options.secretsfile is not None:
     # Load from cli arg if provided
     config_file = str(options.secretsfile)
+    logging.info(f"Loading configuration file `{config_file}`")
 else:
     # Load secrets from default filename
     config_file = "secrets.ini"
+    logging.info(f"Loading configuration file `secrets.ini`")
     if os.path.isfile(config_file) is False:
         logger.critical("If secrets.ini is not in the same directory or is renamed, then the parameter --secretsfile "
                         "is mandatory! Please use --help for further information!")
         sys.exit(1)
-logging.info(f"Loading configuration file {config_file}")
 config = ConfigParser(interpolation=ExtendedInterpolation())
 config.read(config_file)
 public_key = config['BINANCE']['api_key']

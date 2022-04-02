@@ -37,7 +37,7 @@
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
 from unicorn_binance_rest_api.exceptions import BinanceAPIException
 from unicorn_binance_websocket_api.manager import BinanceWebSocketApiManager
-from unicorn_binance_websocket_api.exceptions import *
+from unicorn_binance_websocket_api.exceptions import UnknownExchange, StreamRecoveryError
 from typing import Optional
 import datetime
 import logging
@@ -580,7 +580,6 @@ class BinanceTrailingStopLossManager:
             server.sendmail(self.send_from_email_address, self.send_to_email_address, message)
             self.logger.info(f"Email sent!")
             return True
-        return False
 
     def send_telegram_notification(self,
                                    message: str = None) -> bool:
