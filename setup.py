@@ -75,7 +75,6 @@ setuptools.setup(
          "Operating System :: OS Independent",
          "Topic :: Office/Business :: Financial :: Investment",
          'Topic :: Software Development :: Libraries :: Python Modules',
-         "Framework :: AsyncIO",
      ],
 )
 
