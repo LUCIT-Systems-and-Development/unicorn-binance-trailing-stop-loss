@@ -195,9 +195,9 @@ class BinanceTrailingStopLossManager:
                                            process_stream_data=self.process_userdata_stream,
                                            output_default="UnicornFy")
         except UnknownExchange:
-            self.logger.critical("Please use a valid exchange!")
+            self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
             exit()
-        self.version = "0.0.0.dev"
+        self.version = "0.1.0"
 
     def calculate_stop_loss_amount(self,
                                    amount: float) -> Optional[float]:
@@ -209,7 +209,8 @@ class BinanceTrailingStopLossManager:
 
         :return: float or None
         """
-        self.logger.debug(f"Calculation stop/loss amount without trading fee")
+        self.logger.debug(f"BinanceTrailingStopLossManager.calculate_stop_loss_amount() - Calculation stop/loss "
+                          f"amount without trading fee")
         fee = self.trading_fee_percent
         final_fee = 0
         if self.exchange == "binance.com":
@@ -233,7 +234,8 @@ class BinanceTrailingStopLossManager:
 
         :return: float or None
         """
-        self.logger.debug(f"Calculation stop/loss price of base price: {price}")
+        self.logger.debug(f"BinanceTrailingStopLossManager.calculate_stop_loss_price() - Calculation stop/loss price "
+                          f"of base price: {price}")
         if "%" in self.stop_loss_limit:
             limit_percent = float(self.stop_loss_limit.rstrip("%"))
             sl_price = float(price/100)*float(100.0-limit_percent)
@@ -253,22 +255,27 @@ class BinanceTrailingStopLossManager:
             if open_orders:
                 for open_order in open_orders:
                     if open_order['type'] == "STOP_LOSS_LIMIT":
-                        self.logger.info(f"Cancelling open STOP_LOSS_LIMIT order (orderID={open_order['orderId']}) "
+                        self.logger.info(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - Cancelling "
+                                         f"open STOP_LOSS_LIMIT order (orderID={open_order['orderId']}) "
                                          f"with stop_loss_price={open_order['price']}.")
                         try:
                             canceled_order = self.ubra_user.cancel_margin_order(symbol=self.stop_loss_market,
                                                                                 isIsolated="TRUE",
                                                                                 orderId=open_order['orderId'])
                         except BinanceAPIException as error_msg:
-                            self.logger.error(f"cancel_open_stop_loss_order(): {error_msg}")
+                            self.logger.error(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - "
+                                              f"error_msg: {error_msg}")
                             return False
-                        self.logger.info(f"New order_status of orderID={canceled_order['orderId']} is"
+                        self.logger.info(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - New "
+                                         f"order_status of orderID={canceled_order['orderId']} is"
                                          f" {canceled_order['status']}.")
                         return True
-            self.logger.info(f"No open order for cancellation found!")
+            self.logger.info(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - No open order for "
+                             f"cancellation found!")
             return False
         else:
-            self.logger.critical(f"cancel_open_stop_loss_order(): no valid exchange provided!")
+            self.logger.critical(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - no valid exchange "
+                                 f"provided!")
             return False
 
     def create_stop_loss_order(self,
@@ -306,7 +313,8 @@ class BinanceTrailingStopLossManager:
                 current_price_str = f"current_price={current_price}, "
             else:
                 current_price_str = ""
-            self.logger.info(f"Creating stop/loss order: {current_price_str}"
+            self.logger.info(f"BinanceTrailingStopLossManager.create_stop_loss_order() - Creating stop/loss "
+                             f"order: {current_price_str}"
                              f"stop_price={self.get_stop_loss_trigger_price(stop_loss_price)}, "
                              f"sell_price={stop_loss_price}, "
                              f"owning_amount={total}, "
@@ -314,7 +322,7 @@ class BinanceTrailingStopLossManager:
                              f"stop_loss_quantity={stop_loss_quantity} ...")
             if stop_loss_quantity == 0:
                 msg = f"Empty stop_loss_quantity in create_stop_loss_order()"
-                self.logger.error(msg)
+                self.logger.error(f"BinanceTrailingStopLossManager.create_stop_loss_order() - {msg}")
                 self.send_email_notificaton(msg)
                 self.send_telegram_notification(msg)
                 self.stop()
@@ -331,11 +339,28 @@ class BinanceTrailingStopLossManager:
                                                                quantity=stop_loss_quantity,
                                                                timeInForce="GTC")
                 self.stop_loss_order_id = new_order['orderId']
-                self.logger.info(f"Created stop/loss order for market symbol {new_order['symbol']} with orderId="
+                self.logger.info(f"BinanceTrailingStopLossManager.create_stop_loss_order() - Created stop/loss order "
+                                 f"for market symbol {new_order['symbol']} with orderId="
                                  f"{new_order['orderId']} and side={new_order['side']}.")
             except BinanceAPIException as error_msg:
-                self.logger.error(f"create_stop_loss_order(): {error_msg}")
+                self.logger.error(f"BinanceTrailingStopLossManager.create_stop_loss_order() - {error_msg}")
                 return False
+            return True
+
+    def is_update_available(self) -> bool:
+        """
+        Is a new release of this package available?
+        :return: bool
+        """
+        self.logger.debug(f"BinanceTrailingStopLossManager.is_update_available() - Starting the request")
+        installed_version = self.get_version()
+        if ".dev" in installed_version:
+            installed_version = installed_version[:-4]
+        if self.get_latest_version() == installed_version:
+            return False
+        elif self.get_latest_version() == "unknown":
+            return False
+        else:
             return True
 
     def get_exchange_info(self) -> [dict]:
@@ -373,7 +398,7 @@ class BinanceTrailingStopLossManager:
                 return None
             return open_orders
         except BinanceAPIException as error_msg:
-            self.logger.error(f"get_open_orders(): {error_msg}")
+            self.logger.error(f"BinanceTrailingStopLossManager.get_open_orders() - {error_msg}")
             return None
 
     def get_owning_amount(self,
@@ -395,7 +420,8 @@ class BinanceTrailingStopLossManager:
                 for item in account_info['assets']:
                     base_asset_pool = item['baseAsset']
                     if base_asset_pool['asset'] == base_asset:
-                        self.logger.info(f"Owning {base_asset_pool['asset']}: free={base_asset_pool['free']}, "
+                        self.logger.info(f"BinanceTrailingStopLossManager.get_owning_amount() - Owning "
+                                         f"{base_asset_pool['asset']}: free={base_asset_pool['free']}, "
                                          f"total={base_asset_pool['totalAsset']} "
                                          f"(interest={base_asset_pool['interest']})")
                         return float(base_asset_pool['totalAsset']), float(base_asset_pool['free'])
@@ -403,7 +429,7 @@ class BinanceTrailingStopLossManager:
             else:
                 return None
         except BinanceAPIException as error_msg:
-            self.logger.error(f"get_owning_amount(): {error_msg}")
+            self.logger.error(f"BinanceTrailingStopLossManager.get_owning_amount() - {error_msg}")
             return None
 
     def get_stop_loss_asset_amount(self) -> Optional[float]:
@@ -480,10 +506,18 @@ class BinanceTrailingStopLossManager:
                 symbol_info = None
             return symbol_info
         except BinanceAPIException as error_msg:
-            self.logger.error(f"get_symbol_info(): {error_msg}")
+            self.logger.error(f"BinanceTrailingStopLossManager.get_symbol_info() - {error_msg}")
             if "APIError(code=-2008): Invalid Api-Key ID" in error_msg:
                 exit(1)
             return None
+
+    def get_version(self) -> str:
+        """
+        Get the package/module version
+        :return: str
+        """
+        self.logger.debug(f"BinanceTrailingStopLossManager.get_version() - Returning the version")
+        return self.version
 
     def process_userdata_stream(self,
                                 stream_data: dict = None,
@@ -493,8 +527,8 @@ class BinanceTrailingStopLossManager:
 
         :return: bool
         """
-        self.logger.debug(f"process_userdata_stream(stream_data={stream_data}, stream_buffer_name="
-                          f"{stream_buffer_name}) started ...")
+        self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream(stream_data={stream_data}, "
+                          f"stream_buffer_name={stream_buffer_name}) started ...")
         if stream_data['event_type'] == "executionReport":
             if stream_data['order_id'] == self.stop_loss_order_id:
                 if stream_data['current_order_status'] == "FILLED":
@@ -502,7 +536,7 @@ class BinanceTrailingStopLossManager:
                           f"STOP LOSS FILLED at price {stream_data['order_price']} (order_id={stream_data['order_id']})"
                     msg_short = f"STOP LOSS FILLED at price {stream_data['order_price']} " \
                                 f"(order_id={stream_data['order_id']})"
-                    self.logger.info(msg_short)
+                    self.logger.info(f"BinanceTrailingStopLossManager.get_owning_amount() - {msg_short}")
                     self.send_telegram_notification(msg)
                     self.send_email_notificaton(msg)
                     self.stop()
@@ -510,14 +544,15 @@ class BinanceTrailingStopLossManager:
                         self.callback_finished(msg_short)
                     return
                 elif stream_data['current_order_status'] == "CANCELED":
-                    self.logger.info(f"===============================================================================")
-                    self.logger.info(f"Received CANCELED event, trigger creation of new order ...")
+                    self.logger.info(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
+                                     f"Received CANCELED event, trigger creation of new order ...")
                     self.create_stop_loss_order(self.stop_loss_price, current_price=self.current_price)
                     return
             else:
-                self.logger.debug(f"Received stream_data: {stream_data}")
+                self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
+                                  f"Received stream_data: {stream_data}")
         elif stream_data['event_type'] == "outboundAccountPosition":
-            self.logger.debug(f"Received: {stream_data}")
+            self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received: {stream_data}")
 
     def process_price_feed_stream(self,
                                   stream_data: dict = None,
@@ -528,18 +563,18 @@ class BinanceTrailingStopLossManager:
 
         :return: bool
         """
-        self.logger.debug(f"DEBUG: process_stop_loss(stream_data={stream_data}, stream_buffer_name={stream_buffer_name}"
-                          f") started ...")
+        self.logger.debug(f"BinanceTrailingStopLossManager.process_price_feed_stream(stream_data={stream_data}, "
+                          f"stream_buffer_name={stream_buffer_name}) started ...")
         if stream_data.get('price'):
             self.current_price = stream_data.get('price')
             sl_price = self.calculate_stop_loss_price(float(stream_data.get('price')))
             if self.stop_loss_price is None:
-                self.logger.info(f"===============================================================================")
-                self.logger.info(f"Setting stop_loss_price from None to {sl_price}!")
+                self.logger.info(f"BinanceTrailingStopLossManager.process_price_feed_stream() - Setting "
+                                 f"stop_loss_price from None to {sl_price}!")
                 self.create_stop_loss_order(sl_price, current_price=stream_data.get('price'))
             elif self.stop_loss_price < sl_price:
-                self.logger.info(f"===============================================================================")
-                self.logger.info(f"Setting stop_loss_price from {self.stop_loss_price} to {sl_price}!")
+                self.logger.info(f"BinanceTrailingStopLossManager.process_price_feed_stream() - Setting "
+                                 f"stop_loss_price from {self.stop_loss_price} to {sl_price}!")
                 self.create_stop_loss_order(sl_price, current_price=stream_data.get('price'))
         return True
 
@@ -555,9 +590,10 @@ class BinanceTrailingStopLossManager:
         :return: float
         """
         if not isinstance(decimals, int):
-            raise TypeError("Decimal places must be an integer")
+            raise TypeError("BinanceTrailingStopLossManager.round_decimals_down() - Decimal places must be an integer")
         elif decimals < 0:
-            raise ValueError("Decimal places has to be 0 or more")
+            raise ValueError("BinanceTrailingStopLossManager.round_decimals_down() - Decimal places has to be 0 or "
+                             "more")
         elif decimals == 0:
             return math.floor(number)
         else:
@@ -578,7 +614,7 @@ class BinanceTrailingStopLossManager:
         with smtplib.SMTP_SSL(self.send_from_email_server, self.send_from_email_port, context=context) as server:
             server.login(self.send_from_email_address, self.send_from_email_password)
             server.sendmail(self.send_from_email_address, self.send_to_email_address, message)
-            self.logger.info(f"Email sent!")
+            self.logger.info(f"BinanceTrailingStopLossManager.send_email_notificaton() - Email sent!")
             return True
 
     def send_telegram_notification(self,
@@ -597,7 +633,7 @@ class BinanceTrailingStopLossManager:
         request_url = f"https://api.telegram.org/bot{self.telegram_bot_token}/sendMessage?chat_id=" \
                       f"{self.telegram_send_to}&parse_mode=HTML&text={message}"
         response = requests.get(request_url)
-        self.logger.info(f"send_telegram_message() response: {response}")
+        self.logger.info(f"BinanceTrailingStopLossManager.send_telegram_message() - response: {response}")
         return True
 
     def start(self) -> bool:
@@ -606,10 +642,11 @@ class BinanceTrailingStopLossManager:
 
         :return: bool
         """
-        self.logger.info(f"Starting trailing stop/loss on {self.exchange} for the market {self.stop_loss_market} ...")
-        self.logger.debug(f"reset_stop_loss_price={self.reset_stop_loss_price}")
+        self.logger.info(f"BinanceTrailingStopLossManager.start() - Starting trailing stop/loss on {self.exchange} "
+                         f"for the market {self.stop_loss_market} ...")
+        self.logger.debug(f"BinanceTrailingStopLossManager.start() - reset_stop_loss_price={self.reset_stop_loss_price}")
         self.symbol_info = self.get_symbol_info(symbol=self.stop_loss_market)
-        self.logger.info(f"Binance used_weight: {self.ubra_user.get_used_weight()}")
+        self.logger.info(f"BinanceTrailingStopLossManager.start() -  used_weight: {self.ubra_user.get_used_weight()}")
         self.stop_loss_asset_name = self.symbol_info['base']
         self.exchange_info = self.get_exchange_info()
         self.update_stop_loss_asset_amount()
@@ -627,10 +664,10 @@ class BinanceTrailingStopLossManager:
                                     markets=self.stop_loss_market,
                                     stream_label="PriceFeed")
 
-        self.logger.info(f"Waiting till userData stream is running ...")
+        self.logger.info(f"BinanceTrailingStopLossManager.start() - Waiting till userData stream is running ...")
         if self.ubwa_user.wait_till_stream_has_started(user_stream_id):
             time.sleep(5)
-            self.logger.info(f"User stream is running!")
+            self.logger.info(f"BinanceTrailingStopLossManager.start() - User stream is running!")
 
         if self.stop_loss_price is None or self.stop_loss_price == 0.0:
             if self.reset_stop_loss_price is not True:
@@ -638,15 +675,16 @@ class BinanceTrailingStopLossManager:
                 if open_orders:
                     for open_order in open_orders:
                         if open_order['type'] == "STOP_LOSS_LIMIT":
-                            self.logger.info(f"Found open STOP_LOSS_LIMIT order "
-                                             f"with stop_loss_price={open_order['price']}.")
+                            self.logger.info(f"BinanceTrailingStopLossManager.start() - Found open STOP_LOSS_LIMIT "
+                                             f"order with stop_loss_price={open_order['price']}.")
                             self.create_stop_loss_order(float(open_order['price']))
                 else:
-                    self.logger.info(f"No open STOP_LOSS_LIMIT orders found!")
+                    self.logger.info(f"BinanceTrailingStopLossManager.start() - No open STOP_LOSS_LIMIT orders found!")
             else:
-                self.logger.info(f"Resetting old stop_loss_price!")
+                self.logger.info(f"BinanceTrailingStopLossManager.start() - Resetting old stop_loss_price!")
         else:
-            self.logger.info(f"Using provided stop_loss_price={self.stop_loss_price}")
+            self.logger.info(f"BinanceTrailingStopLossManager.start() - Using provided stop_loss_price="
+                             f"{self.stop_loss_price}")
             self.create_stop_loss_order(self.stop_loss_price)
         return True
 
@@ -656,7 +694,8 @@ class BinanceTrailingStopLossManager:
 
         :return: bool
         """
-        self.logger.info(f"Gracefully stopping unicorn-binance-stop-loss engine ...")
+        self.logger.info(f"BinanceTrailingStopLossManager.stop() - Gracefully stopping unicorn-binance-stop-loss "
+                         f"engine ...")
         self.stop_request = True
         try:
             self.ubwa_pub.stop_manager_with_all_streams()
@@ -679,7 +718,7 @@ class BinanceTrailingStopLossManager:
 
         :return: bool
         """
-        self.logger.debug(f"Setting new stop_loss_price={stop_loss_price} ...")
+        self.logger.debug(f"BinanceTrailingStopLossManager.set_stop_loss_price() - Setting new stop_loss_price={stop_loss_price} ...")
         self.stop_loss_price = stop_loss_price
         return True
 
@@ -696,21 +735,23 @@ class BinanceTrailingStopLossManager:
 
         :return: float
         """
-        self.logger.info(f"Calculating the stop_loss_quantity amount.")
+        self.logger.info(f"BinanceTrailingStopLossManager.update_stop_loss_quantity() - Calculating the "
+                         f"stop_loss_quantity amount.")
         if "%" in self.keep_threshold:
             keep_threshold_percent = float(self.keep_threshold.rstrip("%"))
             keep_threshold_float = total/100*keep_threshold_percent
         else:
             keep_threshold_float = float(self.keep_threshold)
         if keep_threshold_float > free:
-            msg = f"Nothing to do - `keep_threshold` is greater then `stop_loss_asset_amount_free`!"
+            msg = f"BinanceTrailingStopLossManager.update_stop_loss_quantity() - Nothing to do - `keep_threshold` " \
+                  f"is greater then `stop_loss_asset_amount_free`!"
             self.logger.critical(msg)
             self.send_telegram_notification(msg)
             self.send_email_notificaton(msg)
             self.stop()
             if self.callback_error is not None:
                 self.callback_error(msg)
-            return
+            return False
         stop_loss_quantity = free - keep_threshold_float
         self.stop_loss_quantity = stop_loss_quantity
         return stop_loss_quantity

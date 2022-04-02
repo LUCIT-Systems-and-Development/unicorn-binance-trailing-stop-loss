@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# File: unicorn_binance_trailing_stop_loss/bot.py
+# File: cli/ubtsl.py
 #
 # Part of ‘UNICORN Binance Trailing Stop Loss’
 # Project website: https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html
@@ -34,20 +34,34 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-from manager import BinanceTrailingStopLossManager
+from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 from configparser import ConfigParser, ExtendedInterpolation
 
 import argparse
 import logging
 import os
 import sys
+import textwrap
 import time
 
 # Set specific logger
 logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
 logger.setLevel(logging.INFO)
 
-parser = argparse.ArgumentParser()
+"""
+    UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
+"""
+
+VERSION = "0.1.0.dev"
+
+parser = argparse.ArgumentParser(
+      prog=f"UNICORN Binance Trailing Stop Loss CLI {VERSION}",
+      formatter_class=argparse.RawDescriptionHelpFormatter,
+      epilog=textwrap.dedent('''\
+         additional information:
+             Home: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss
+         '''))
+
 parser.add_argument('--apikey',
                     type=str,
                     help="The API key!",
