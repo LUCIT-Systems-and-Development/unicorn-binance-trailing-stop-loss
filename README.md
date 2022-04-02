@@ -34,6 +34,8 @@ import unicorn_binance_trailing_stop_loss
 
 ```
 
+https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html
+
 ### Get the right [logger](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_logging.py):
 ```
 logging.getLogger("unicorn_binance_trailing_stop_loss")
