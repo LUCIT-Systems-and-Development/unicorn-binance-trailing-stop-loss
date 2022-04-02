@@ -24,7 +24,7 @@ jobs:
         pip install -r requirements.txt
         pip install coveralls
     - name: Unit test
-      run: coverage run --source unicorn_binance_local_depth_cache unittest_binance_local_depth_cache.py
+      run: coverage run --source unicorn_binance_trailing_stop_loss unittest_binance_trailing_stop_loss.py
     - name: "Upload coverage to Codecov"
       uses: codecov/codecov-action@v1
       with:
