@@ -36,23 +36,27 @@
 
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 from configparser import ConfigParser, ExtendedInterpolation
-
 import argparse
 import logging
 import os
 import sys
 import textwrap
 import time
+from pathlib import Path
 
 # Set specific logger
+logging.basicConfig(level=logging.INFO,
+                    format="{asctime} [{levelname:8}] {process} {thread} {module}: {message}",
+                    style="{")
+
 logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
-logger.setLevel(logging.INFO)
 
 """
     UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
 """
 
-VERSION = "0.1.0.dev"
+VERSION = "0.1.0"
+HOME_PATH = str(Path.home()) + "/"
 
 parser = argparse.ArgumentParser(
       prog=f"UNICORN Binance Trailing Stop Loss CLI {VERSION}",
@@ -99,6 +103,11 @@ parser.add_argument('--profile',
                     type=str,
                     help='Name of the profile to load from profiles.ini!',
                     required=False)
+parser.add_argument('--profilesfile',
+                    type=str,
+                    help='Specify path including filename to the profiles file. (Ex: `~/profiles.ini`) If not '
+                         'available it tries to load a profile.ini from the current working directory.',
+                    required=False)
 parser.add_argument('--resetstoplossprice',
                     type=str,
                     help='Reset the existing stop_loss_price! Usage: True anything else is False!',
@@ -140,15 +149,23 @@ else:
 if options.secretsfile is not None:
     # Load from cli arg if provided
     config_file = str(options.secretsfile)
-    logging.info(f"Loading configuration file `{config_file}`")
 else:
-    # Load secrets from default filename
-    config_file = "secrets.ini"
-    logging.info(f"Loading configuration file `secrets.ini`")
-    if os.path.isfile(config_file) is False:
-        logger.critical("If secrets.ini is not in the same directory or is renamed, then the parameter --secretsfile "
-                        "is mandatory! Please use --help for further information!")
+    # Load secrets from default filenames
+    config_file_lucit = f"{HOME_PATH}.lucit_trading_tools.ini"
+    config_file_secrets_cwd = f"ubtsl_secrets.ini"
+    config_file_secrets_home = f"{HOME_PATH}ubtsl_secrets.ini"
+    if os.path.isfile(config_file_lucit):
+        config_file = config_file_lucit
+    elif os.path.isfile(config_file_secrets_cwd):
+        config_file = config_file_secrets_cwd
+    elif os.path.isfile(config_file_secrets_home):
+        config_file = config_file_secrets_home
+    else:
+        logger.critical("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
+                        "the parameter --secretsfile is mandatory! Please use --help for further information!")
         sys.exit(1)
+logger.info(f"Loading configuration file `{config_file}`")
+
 config = ConfigParser(interpolation=ExtendedInterpolation())
 config.read(config_file)
 public_key = config['BINANCE']['api_key']
@@ -161,9 +178,22 @@ send_from_email_port = config['EMAIL']['send_from_port']
 telegram_bot_token = config['TELEGRAM']['bot_token']
 telegram_send_to = config['TELEGRAM']['send_to']
 
-# Load profiles
-profiles_file = "profiles.ini"
-logging.info(f"Loading profiles file {profiles_file}")
+# Load profiles.ini file
+if options.profilesfile is not None:
+    # Load from cli arg if provided
+    profiles_file = str(options.profilesfile)
+else:
+    profiles_file_cwd = "ubtsl_profiles.ini"
+    profiles_file_home = f"{HOME_PATH}ubtsl_profiles.ini"
+    if os.path.isfile(profiles_file_cwd):
+        profiles_file = profiles_file_cwd
+    elif os.path.isfile(profiles_file_home):
+        profiles_file = profiles_file_home
+    else:
+        logger.critical("If ´ubtsl_profiles.ini´ is not in the home or current working directory or is renamed, then "
+                        "the parameter --profilesfile is mandatory! Please use --help for further information!")
+        sys.exit(1)
+logger.info(f"Loading profiles file {profiles_file}")
 profiles = ConfigParser(interpolation=ExtendedInterpolation())
 profiles.read(profiles_file)
 
