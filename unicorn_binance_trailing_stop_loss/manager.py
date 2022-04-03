@@ -536,18 +536,21 @@ class BinanceTrailingStopLossManager:
                           f"STOP LOSS FILLED at price {stream_data['order_price']} (order_id={stream_data['order_id']})"
                     msg_short = f"STOP LOSS FILLED at price {stream_data['order_price']} " \
                                 f"(order_id={stream_data['order_id']})"
-                    self.logger.info(f"BinanceTrailingStopLossManager.get_owning_amount() - {msg_short}")
+                    log_msg_short = " ".join(msg_short.strip())
+                    self.logger.info(f"BinanceTrailingStopLossManager.get_owning_amount() - {log_msg_short}")
                     self.send_telegram_notification(msg)
                     self.send_email_notificaton(msg)
                     self.stop()
                     if self.callback_finished is not None:
                         self.callback_finished(msg_short)
-                    return
+                    for thread in threading.enumerate():
+                        print(f"Thread: {thread.name}")
+                    return True
                 elif stream_data['current_order_status'] == "CANCELED":
                     self.logger.info(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
                                      f"Received CANCELED event, trigger creation of new order ...")
                     self.create_stop_loss_order(self.stop_loss_price, current_price=self.current_price)
-                    return
+                    return False
             else:
                 self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
                                   f"Received stream_data: {stream_data}")

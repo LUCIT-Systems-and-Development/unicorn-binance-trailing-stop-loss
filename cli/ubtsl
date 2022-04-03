@@ -44,19 +44,13 @@ import textwrap
 import time
 from pathlib import Path
 
-# Set specific logger
-logging.basicConfig(level=logging.INFO,
-                    format="{asctime} [{levelname:8}] {process} {thread} {module}: {message}",
-                    style="{")
-
-logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
-
 """
     UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
 """
 
 VERSION = "0.1.0"
 HOME_PATH = str(Path.home()) + "/"
+LOG_FORMAT = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
 parser = argparse.ArgumentParser(
       prog=f"UNICORN Binance Trailing Stop Loss CLI {VERSION}",
@@ -125,6 +119,10 @@ parser.add_argument('--symbol',
                     type=str,
                     help='The market symbol as used by Binance.',
                     required=False)
+parser.add_argument('--loglevel',
+                    type=str,
+                    help='Choose a log level (DEBUG, INFO, WARNING, ERROR or CRITICAL). Default is `INFO.',
+                    required=False)
 options = parser.parse_args()
 
 
@@ -140,10 +138,32 @@ if len(sys.argv) <= 1:
     parser.print_help()
     sys.exit(1)
 
+# Log file
 if options.logfile is True:
     logfile = options.logfile
 else:
     logfile = os.path.basename(__file__) + '.log'
+
+# Log level
+if options.loglevel == "DEBUG":
+    loglevel = logging.DEBUG
+elif options.loglevel == "INFO":
+    loglevel = logging.INFO
+elif options.loglevel == "WARN" or options.loglevel == "WARNING" :
+    loglevel = logging.WARNING
+elif options.loglevel == "ERROR":
+    loglevel = logging.ERROR
+elif options.loglevel == "CRITICAL":
+    loglevel = logging.CRITICAL
+else:
+    loglevel = logging.INFO
+
+# Config logger
+logging.basicConfig(level=loglevel,
+                    filename=logfile,
+                    format=LOG_FORMAT,
+                    style="{")
+logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
 
 # Load secrets.ini file
 if options.secretsfile is not None:
