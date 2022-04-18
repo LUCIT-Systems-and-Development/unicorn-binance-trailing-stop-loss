@@ -636,7 +636,7 @@ class BinanceTrailingStopLossManager:
         self.logger.info(f"BinanceTrailingStopLossManager.send_telegram_message() - response: {response}")
         return True
 
-    def start(self) -> bool:
+    def run(self) -> bool:
         """
         Start Stop/Loss with provided settings!
 
@@ -708,6 +708,7 @@ class BinanceTrailingStopLossManager:
             return True
         except KeyboardInterrupt:
             print("\nStopping ... just wait a few seconds!")
+            return True
 
     def set_stop_loss_price(self,
                             stop_loss_price: float = None) -> bool:

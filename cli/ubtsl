@@ -311,7 +311,6 @@ ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        stop_loss_side=stop_loss_side,
                                        telegram_bot_token=telegram_bot_token,
                                        telegram_send_to=telegram_send_to)
-ubtsl.start()
 
 try:
     while ubtsl.stop_request is False:
