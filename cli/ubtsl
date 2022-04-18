@@ -106,10 +106,10 @@ parser.add_argument('--resetstoplossprice',
                     type=str,
                     help='Reset the existing stop_loss_price! Usage: True anything else is False!',
                     required=False)
-parser.add_argument('--secretsfile',
+parser.add_argument('--configfile',
                     type=str,
-                    help='Specify path including filename to the secrets file. (Ex: `~/secrets.ini`) If not '
-                         'available it tries to load a secrets.ini from the current working directory.',
+                    help='Specify path including filename to the config file. (Ex: `~/config.ini`) If not '
+                         'available it tries to load a config.ini from the current working directory.',
                     required=False)
 parser.add_argument('--stoplossprice',
                     type=float,
@@ -128,10 +128,12 @@ options = parser.parse_args()
 
 def callback_error(msg):
     print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {msg}")
+    ubtsl.stop()
 
 
 def callback_finished(msg):
     print(f"STOP LOSS FINISHED - ENGINE IS SHUTTING DOWN! - {msg}")
+    ubtsl.stop()
 
 
 if len(sys.argv) <= 1:
@@ -165,21 +167,21 @@ logging.basicConfig(level=loglevel,
                     style="{")
 logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
 
-# Load secrets.ini file
-if options.secretsfile is not None:
+# Load config.ini file
+if options.configfile is not None:
     # Load from cli arg if provided
-    config_file = str(options.secretsfile)
+    config_file = str(options.configfile)
 else:
     # Load secrets from default filenames
     config_file_lucit = f"{HOME_PATH}.lucit_trading_tools.ini"
-    config_file_secrets_cwd = f"ubtsl_secrets.ini"
-    config_file_secrets_home = f"{HOME_PATH}ubtsl_secrets.ini"
+    config_file_cwd = f"ubtsl_config.ini"
+    config_file_home = f"{HOME_PATH}ubtsl_config.ini"
     if os.path.isfile(config_file_lucit):
         config_file = config_file_lucit
-    elif os.path.isfile(config_file_secrets_cwd):
-        config_file = config_file_secrets_cwd
-    elif os.path.isfile(config_file_secrets_home):
-        config_file = config_file_secrets_home
+    elif os.path.isfile(config_file_cwd):
+        config_file = config_file_cwd
+    elif os.path.isfile(config_file_home):
+        config_file = config_file_home
     else:
         logger.critical("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
                         "the parameter --secretsfile is mandatory! Please use --help for further information!")
