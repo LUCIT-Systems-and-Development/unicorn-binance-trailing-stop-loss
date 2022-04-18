@@ -37,7 +37,7 @@
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
 from unicorn_binance_rest_api.exceptions import BinanceAPIException
 from unicorn_binance_websocket_api.manager import BinanceWebSocketApiManager
-from unicorn_binance_websocket_api.exceptions import UnknownExchange, StreamRecoveryError
+from unicorn_binance_websocket_api.exceptions import UnknownExchange
 from typing import Optional
 import datetime
 import logging
@@ -385,13 +385,10 @@ class BinanceTrailingStopLossManager:
         try:
             if self.exchange == "binance.com":
                 open_orders = self.ubra_user.get_open_orders(symbol=stop_loss_market)
-                return None
             elif self.exchange == "binance.com-futures":
                 open_orders = self.ubra_user.get_open_margin_orders(symbol=stop_loss_market)
-                return None
             elif self.exchange == "binance.com-margin":
                 open_orders = self.ubra_user.get_open_margin_orders(symbol=stop_loss_market)
-                return None
             elif self.exchange == "binance.com-isolated_margin":
                 open_orders = self.ubra_user.get_open_margin_orders(symbol=stop_loss_market, isIsolated="True")
             else:
