@@ -197,7 +197,7 @@ class BinanceTrailingStopLossManager:
         except UnknownExchange:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
             exit()
-        self.version = "0.1.0"
+        self.version = "0.1.1"
 
     def calculate_stop_loss_amount(self,
                                    amount: float) -> Optional[float]:
