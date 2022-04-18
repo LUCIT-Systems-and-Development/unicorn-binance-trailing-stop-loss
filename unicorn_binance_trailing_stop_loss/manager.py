@@ -702,6 +702,7 @@ class BinanceTrailingStopLossManager:
         self.stop_request = True
         try:
             self.ubwa_pub.stop_manager_with_all_streams()
+            self.ubwa_user.stop_manager_with_all_streams()
             return True
         except KeyboardInterrupt:
             print("\nStopping ... just wait a few seconds!")
