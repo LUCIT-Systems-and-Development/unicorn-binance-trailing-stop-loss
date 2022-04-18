@@ -33,6 +33,7 @@ Part of ['UNICORN Binance Suite'](https://www.lucit.tech/unicorn-binance-suite.h
 ```
 import unicorn_binance_trailing_stop_loss
 
+
 def callback_error(msg):
     print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {msg}")
     ubtsl.stop()
@@ -40,6 +41,7 @@ def callback_error(msg):
 def callback_finished(msg):
     print(f"STOP LOSS FINISHED - ENGINE IS SHUTTING DOWN! - {msg}")
     ubtsl.stop()
+    
     
 ubtsl = unicorn_binance_trailing_stop_loss.BinanceTrailingStopLossManager(callback_error=callback_error,
                                                                           callback_finished=callback_finished,
@@ -62,7 +64,7 @@ ubtsl = unicorn_binance_trailing_stop_loss.BinanceTrailingStopLossManager(callba
                                                                           telegram_send_to="telegram_send_to")
 ```
 
-CLI usage: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html
+[CLI usage](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html)
 
 ### Get the right [logger](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_logging.py):
 ```
