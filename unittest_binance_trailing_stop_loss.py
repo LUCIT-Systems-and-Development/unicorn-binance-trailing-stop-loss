@@ -82,7 +82,7 @@ UBTSL = BinanceTrailingStopLossManager(callback_error=callback_error,
 
 
 class TestBinanceComManager(unittest.TestCase):
-    def test_stopping(self):
+    def test_stop(self):
         self.assertTrue(UBTSL.stop())
 
 
