@@ -48,7 +48,7 @@ from pathlib import Path
     UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
 """
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 HOME_PATH = str(Path.home()) + "/"
 LOG_FORMAT = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
