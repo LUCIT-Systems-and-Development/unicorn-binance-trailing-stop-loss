@@ -52,7 +52,6 @@ optional arguments:
   --stoplossprice STOPLOSSPRICE
                         Set the starting stop/loss price.
   --symbol SYMBOL       The market symbol as used by Binance.
-
 ```
 
 ## Example usage

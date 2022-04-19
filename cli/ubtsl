@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# File: cli/ubtsl.py
+# File: cli/ubtsl
 #
 # Part of ‘UNICORN Binance Trailing Stop Loss’
 # Project website: https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html
@@ -35,6 +35,7 @@
 # IN THE SOFTWARE.
 
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
+from unicorn_binance_rest_api.manager import BinanceRestApiManager
 from configparser import ConfigParser, ExtendedInterpolation
 import argparse
 import logging
@@ -48,7 +49,7 @@ from pathlib import Path
     UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
 """
 
-VERSION = "0.1.1"
+VERSION = BinanceTrailingStopLossManager.get_version()
 HOME_PATH = str(Path.home()) + "/"
 LOG_FORMAT = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
@@ -94,6 +95,10 @@ parser.add_argument('--configfile',
                     help='Specify path including filename to the config file. (Ex: `~/config.ini`) If not '
                          'available it tries to load a ubtsl_config.ini from the home and the current working '
                          'directory.',
+                    required=False)
+parser.add_argument('--engine',
+                    type=str,
+                    help='Default: "trail". Options: "jump-in-and-trail"',
                     required=False)
 parser.add_argument('--keepthreshold',
                     type=str,
@@ -238,6 +243,7 @@ logger.info(f"Loading profiles file {profiles_file}")
 profiles = ConfigParser(interpolation=ExtendedInterpolation())
 profiles.read(profiles_file)
 
+engine = "trail"
 exchange = ""
 keep_threshold = ""
 stop_loss_market = ""
@@ -261,7 +267,10 @@ if options.profile is not None:
         reset_stop_loss_price = profiles[options.profile]['reset_stop_loss_price']
     except KeyError:
         pass
-
+    try:
+        engine = profiles[options.profile]['engine']
+    except KeyError:
+        pass
     try:
         stop_loss_market = profiles[options.profile]['stop_loss_market']
     except KeyError:
@@ -288,6 +297,8 @@ if options.apikey is not None:
     public_key = options.apikey
 if options.apisecret is not None:
     private_key = options.apisecret
+if options.engine is not None:
+    engine = options.engine
 if options.exchange is not None:
     exchange = options.exchange
 if options.keepthreshold is not None:
@@ -309,6 +320,18 @@ if str(reset_stop_loss_price).upper() == "TRUE":
     reset_stop_loss_price = True
 else:
     reset_stop_loss_price = False
+
+
+if engine == "jump-in-and-trail":
+    ubra = BinanceRestApiManager(api_key=public_key, api_secret=private_key , exchange=exchange)
+    if exchange == "binance.com-isolated_margin":
+        new_order = ubra.create_margin_order(symbol=stop_loss_market,
+                                             isIsolated="TRUE",
+                                             side="BUY",
+                                             type="MARKET",
+                                             price=1,
+                                             quantity=1,
+                                             timeInForce="GTC")
 
 
 ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,

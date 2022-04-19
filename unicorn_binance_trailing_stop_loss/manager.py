@@ -48,6 +48,8 @@ import ssl
 import threading
 import time
 
+VERSION = "0.1.2"
+
 
 class BinanceTrailingStopLossManager:
     """
@@ -197,7 +199,7 @@ class BinanceTrailingStopLossManager:
         except UnknownExchange:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
             exit()
-        self.version = "0.1.1"
+        self.version = VERSION
 
     def calculate_stop_loss_amount(self,
                                    amount: float) -> Optional[float]:
@@ -508,13 +510,13 @@ class BinanceTrailingStopLossManager:
                 exit(1)
             return None
 
-    def get_version(self) -> str:
+    @staticmethod
+    def get_version() -> str:
         """
         Get the package/module version
         :return: str
         """
-        self.logger.debug(f"BinanceTrailingStopLossManager.get_version() - Returning the version")
-        return self.version
+        return VERSION
 
     def process_userdata_stream(self,
                                 stream_data: dict = None,

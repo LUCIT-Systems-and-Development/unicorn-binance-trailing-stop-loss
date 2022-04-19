@@ -36,14 +36,12 @@
 import setuptools
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 
-ubtsl = BinanceTrailingStopLossManager()
-
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
      name='unicorn-binance-trailing-stop-loss',
-     version=str(ubtsl.get_version()),
+     version=str(BinanceTrailingStopLossManager.get_version()),
      author="LUCIT Systems and Development",
      author_email='info@lucit.tech',
      url="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss",
@@ -81,5 +79,3 @@ setuptools.setup(
          'Topic :: Software Development :: Libraries :: Python Modules',
      ],
 )
-
-ubtsl.stop()
