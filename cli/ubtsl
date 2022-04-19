@@ -92,7 +92,8 @@ parser.add_argument('--exchange',
 parser.add_argument('--configfile',
                     type=str,
                     help='Specify path including filename to the config file. (Ex: `~/config.ini`) If not '
-                         'available it tries to load a config.ini from the current working directory.',
+                         'available it tries to load a ubtsl_config.ini from the home and the current working '
+                         'directory.',
                     required=False)
 parser.add_argument('--keepthreshold',
                     type=str,
@@ -126,7 +127,8 @@ parser.add_argument('--profile',
 parser.add_argument('--profilesfile',
                     type=str,
                     help='Specify path including filename to the profiles file. (Ex: `~/profiles.ini`) If not '
-                         'available it tries to load a profile.ini from the current working directory.',
+                         'available it tries to load a ubtsl_profile.ini from the home and the current working '
+                         'directory.',
                     required=False)
 parser.add_argument('--resetstoplossprice',
                     type=str,

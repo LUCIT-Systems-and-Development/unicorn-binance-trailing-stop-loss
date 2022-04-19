@@ -1,40 +1,8 @@
 # UNICORN Binance Trailing Stop Loss CLI
 ## Description
-The CLI interface is installed during the installation of `unicorn-binance-trailing-stop-loss` with PIP:
-
-```
-$ ubtsl 
-usage: UNICORN Binance Trailing Stop Loss CLI 0.1.1 (MIT License) [-h] [--apikey APIKEY] [--apisecret APISECRET] [--exchange EXCHANGE] [--configfile CONFIGFILE] [--keepthreshold KEEPTHRESHOLD] [--limit LIMIT] [--logfile LOGFILE]
-                                                                  [--loglevel LOGLEVEL] [--orderside ORDERSIDE] [--ordertype ORDERTYPE] [--profile PROFILE] [--profilesfile PROFILESFILE] [--resetstoplossprice RESETSTOPLOSSPRICE]
-                                                                  [--stoplossprice STOPLOSSPRICE] [--symbol SYMBOL]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --apikey APIKEY       The API key!
-  --apisecret APISECRET
-                        The API secret!
-  --exchange EXCHANGE   Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
-  --configfile CONFIGFILE
-                        Specify path including filename to the config file. (Ex: `~/config.ini`) If not available it tries to load a config.ini from the current working directory.
-  --keepthreshold KEEPTHRESHOLD
-                        Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
-  --limit LIMIT         Stop/loss limit in integer or percent.
-  --logfile LOGFILE     Specify path including filename to the logfile.
-  --loglevel LOGLEVEL   Choose a log level (DEBUG, INFO, WARNING, ERROR or CRITICAL). Default is `INFO.
-  --orderside ORDERSIDE
-                        Specify whether the trailing stop loss should be in buying or selling mode. (Ex: 'buy' or 'sell').
-  --ordertype ORDERTYPE
-                        Use `limit` or `market`.
-  --profile PROFILE     Name of the profile to load from profiles.ini!
-  --profilesfile PROFILESFILE
-                        Specify path including filename to the profiles file. (Ex: `~/profiles.ini`) If not available it tries to load a profile.ini from the current working directory.
-  --resetstoplossprice RESETSTOPLOSSPRICE
-                        Reset the existing stop_loss_price! Usage: True anything else is False!
-  --stoplossprice STOPLOSSPRICE
-                        Set the starting stop/loss price.
-  --symbol SYMBOL       The market symbol as used by Binance.
-
-```
+The CLI interface is installed during the 
+[installation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/README.html#a-wheel-and-a-source-file-of-the-latest-release-with-pip-from-pypi) 
+of `unicorn-binance-trailing-stop-loss` with PIP.
 
 The CLI interface `ubtsl` is used to interact with the 
 [`UNICORN Binance Tailing Stop Loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) library.
@@ -51,7 +19,43 @@ overwrite predefined values from the profile.
 Once the tool is started, it trailes the stop/loss order until it is completely fulfilled and then calls the function 
 passed with the `callback_finished` parameter.
 
-## Example
+```
+$ ubtsl 
+usage: UNICORN Binance Trailing Stop Loss CLI 0.1.1 (MIT License) [-h] [--apikey APIKEY] [--apisecret APISECRET] [--exchange EXCHANGE] [--configfile CONFIGFILE] [--keepthreshold KEEPTHRESHOLD] [--limit LIMIT] [--logfile LOGFILE]
+                                                                  [--loglevel LOGLEVEL] [--orderside ORDERSIDE] [--ordertype ORDERTYPE] [--profile PROFILE] [--profilesfile PROFILESFILE] [--resetstoplossprice RESETSTOPLOSSPRICE]
+                                                                  [--stoplossprice STOPLOSSPRICE] [--symbol SYMBOL]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --apikey APIKEY       The API key!
+  --apisecret APISECRET
+                        The API secret!
+  --configfile CONFIGFILE
+                        Specify path including filename to the config file. (Ex: `~/config.ini`) If not available it 
+                        tries to load a ubtsl_config.ini from the home and the current working directory.
+  --exchange EXCHANGE   Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+  --keepthreshold KEEPTHRESHOLD
+                        Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+  --limit LIMIT         Stop/loss limit in integer or percent.
+  --logfile LOGFILE     Specify path including filename to the logfile.
+  --loglevel LOGLEVEL   Choose a log level (DEBUG, INFO, WARNING, ERROR or CRITICAL). Default is `INFO.
+  --orderside ORDERSIDE
+                        Specify whether the trailing stop loss should be in buying or selling mode. (Ex: 'buy' or 'sell').
+  --ordertype ORDERTYPE
+                        Use `limit` or `market`.
+  --profile PROFILE     Name of the profile to load from profiles.ini!
+  --profilesfile PROFILESFILE
+                        Specify path including filename to the profiles file. (Ex: `~/profiles.ini`) If not available 
+                        it tries to load a ubtsl_profile.ini from the home and the current working directory.
+  --resetstoplossprice RESETSTOPLOSSPRICE
+                        Reset the existing stop_loss_price! Usage: True anything else is False!
+  --stoplossprice STOPLOSSPRICE
+                        Set the starting stop/loss price.
+  --symbol SYMBOL       The market symbol as used by Binance.
+
+```
+
+## Example usage
 Arguments defined in the CLI overrule values from the loaded profile!
 
 ```

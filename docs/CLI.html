@@ -72,39 +72,9 @@
 <h1>UNICORN Binance Trailing Stop Loss CLI<a class="headerlink" href="#unicorn-binance-trailing-stop-loss-cli" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>The CLI interface is installed during the installation of <code class="docutils literal notranslate"><span class="pre">unicorn-binance-trailing-stop-loss</span></code> with PIP:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ubtsl 
-usage: UNICORN Binance Trailing Stop Loss CLI 0.1.1 (MIT License) [-h] [--apikey APIKEY] [--apisecret APISECRET] [--exchange EXCHANGE] [--configfile CONFIGFILE] [--keepthreshold KEEPTHRESHOLD] [--limit LIMIT] [--logfile LOGFILE]
-                                                                  [--loglevel LOGLEVEL] [--orderside ORDERSIDE] [--ordertype ORDERTYPE] [--profile PROFILE] [--profilesfile PROFILESFILE] [--resetstoplossprice RESETSTOPLOSSPRICE]
-                                                                  [--stoplossprice STOPLOSSPRICE] [--symbol SYMBOL]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --apikey APIKEY       The API key!
-  --apisecret APISECRET
-                        The API secret!
-  --exchange EXCHANGE   Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
-  --configfile CONFIGFILE
-                        Specify path including filename to the config file. (Ex: `~/config.ini`) If not available it tries to load a config.ini from the current working directory.
-  --keepthreshold KEEPTHRESHOLD
-                        Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
-  --limit LIMIT         Stop/loss limit in integer or percent.
-  --logfile LOGFILE     Specify path including filename to the logfile.
-  --loglevel LOGLEVEL   Choose a log level (DEBUG, INFO, WARNING, ERROR or CRITICAL). Default is `INFO.
-  --orderside ORDERSIDE
-                        Specify whether the trailing stop loss should be in buying or selling mode. (Ex: &#39;buy&#39; or &#39;sell&#39;).
-  --ordertype ORDERTYPE
-                        Use `limit` or `market`.
-  --profile PROFILE     Name of the profile to load from profiles.ini!
-  --profilesfile PROFILESFILE
-                        Specify path including filename to the profiles file. (Ex: `~/profiles.ini`) If not available it tries to load a profile.ini from the current working directory.
-  --resetstoplossprice RESETSTOPLOSSPRICE
-                        Reset the existing stop_loss_price! Usage: True anything else is False!
-  --stoplossprice STOPLOSSPRICE
-                        Set the starting stop/loss price.
-  --symbol SYMBOL       The market symbol as used by Binance.
-</pre></div>
-</div>
+<p>The CLI interface is installed during the
+<a class="reference external" href="https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/README.html#a-wheel-and-a-source-file-of-the-latest-release-with-pip-from-pypi">installation</a>
+of <code class="docutils literal notranslate"><span class="pre">unicorn-binance-trailing-stop-loss</span></code> with PIP.</p>
 <p>The CLI interface <code class="docutils literal notranslate"><span class="pre">ubtsl</span></code> is used to interact with the
 <a class="reference external" href="https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html"><code class="docutils literal notranslate"><span class="pre">UNICORN</span> <span class="pre">Binance</span> <span class="pre">Tailing</span> <span class="pre">Stop</span> <span class="pre">Loss</span></code></a> library.</p>
 <p>After startup <code class="docutils literal notranslate"><span class="pre">ubtsl</span></code> tries to load a
@@ -116,9 +86,43 @@ file from the home and the current working directory.</p>
 overwrite predefined values from the profile.</p>
 <p>Once the tool is started, it trailes the stop/loss order until it is completely fulfilled and then calls the function
 passed with the <code class="docutils literal notranslate"><span class="pre">callback_finished</span></code> parameter.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ubtsl 
+usage: UNICORN Binance Trailing Stop Loss CLI 0.1.1 (MIT License) [-h] [--apikey APIKEY] [--apisecret APISECRET] [--exchange EXCHANGE] [--configfile CONFIGFILE] [--keepthreshold KEEPTHRESHOLD] [--limit LIMIT] [--logfile LOGFILE]
+                                                                  [--loglevel LOGLEVEL] [--orderside ORDERSIDE] [--ordertype ORDERTYPE] [--profile PROFILE] [--profilesfile PROFILESFILE] [--resetstoplossprice RESETSTOPLOSSPRICE]
+                                                                  [--stoplossprice STOPLOSSPRICE] [--symbol SYMBOL]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --apikey APIKEY       The API key!
+  --apisecret APISECRET
+                        The API secret!
+  --configfile CONFIGFILE
+                        Specify path including filename to the config file. (Ex: `~/config.ini`) If not available it 
+                        tries to load a ubtsl_config.ini from the home and the current working directory.
+  --exchange EXCHANGE   Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+  --keepthreshold KEEPTHRESHOLD
+                        Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+  --limit LIMIT         Stop/loss limit in integer or percent.
+  --logfile LOGFILE     Specify path including filename to the logfile.
+  --loglevel LOGLEVEL   Choose a log level (DEBUG, INFO, WARNING, ERROR or CRITICAL). Default is `INFO.
+  --orderside ORDERSIDE
+                        Specify whether the trailing stop loss should be in buying or selling mode. (Ex: &#39;buy&#39; or &#39;sell&#39;).
+  --ordertype ORDERTYPE
+                        Use `limit` or `market`.
+  --profile PROFILE     Name of the profile to load from profiles.ini!
+  --profilesfile PROFILESFILE
+                        Specify path including filename to the profiles file. (Ex: `~/profiles.ini`) If not available 
+                        it tries to load a ubtsl_profile.ini from the home and the current working directory.
+  --resetstoplossprice RESETSTOPLOSSPRICE
+                        Reset the existing stop_loss_price! Usage: True anything else is False!
+  --stoplossprice STOPLOSSPRICE
+                        Set the starting stop/loss price.
+  --symbol SYMBOL       The market symbol as used by Binance.
+</pre></div>
 </div>
-<div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="example-usage">
+<h2>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h2>
 <p>Arguments defined in the CLI overrule values from the loaded profile!</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ubtsl --profile LUNAUSDT_SELL --configfile yourconfig.ini --stoplossprice 88.50 --limit 0.5%
 </pre></div>
@@ -156,7 +160,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <ul>
 <li><a class="reference internal" href="#">UNICORN Binance Trailing Stop Loss CLI</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
 <li><a class="reference internal" href="#examples">Examples</a></li>
 <li><a class="reference internal" href="#disclaimer">Disclaimer</a></li>
 </ul>
@@ -268,7 +272,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <div class="footer">
         <a href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues">Found a bug</a>?
         <br />
-        Last updated on Apr 19 2022 at 09:09 (CET).
+        Last updated on Apr 19 2022 at 09:20 (CET).
         <br />
         &copy; <a href="copyright.html">Copyright</a> 2022-2022, LUCIT Systems and Development and Oliver Zehentleitner.
         <br />
