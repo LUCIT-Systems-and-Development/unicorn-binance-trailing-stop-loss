@@ -83,6 +83,7 @@ passed with the `callback_finished` parameter. On error it calls `callback_error
 ### What are the benefits of the UNICORN Binance Trailing Stop Loss?
 - Using websockets for push notifications about price updates and order updates. (fast and low used weight)
 - Supported exchanges: 
+
 | Exchange | Exchange string | 
 | -------- | --------------- | 
 | [Binance](https://www.binance.com) | `BinanceTrailingStopLossManager(exchange="binance.com")` |
