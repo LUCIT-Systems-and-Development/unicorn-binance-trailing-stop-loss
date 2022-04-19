@@ -54,7 +54,6 @@ optional arguments:
   --symbol SYMBOL       The market symbol as used by Binance.
 ```
 
-
 ## Example usage
 Arguments defined in the CLI overrule values from the loaded profile!
 

@@ -64,7 +64,7 @@ ubtsl = unicorn_binance_trailing_stop_loss.BinanceTrailingStopLossManager(callba
                                                                           telegram_send_to="telegram_send_to")
 ```
 
-Read about the [CLI usage](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html).
+Read about the [CLI usage](https://www.lucit.tech/ubtsl-cli.html).
 
 ### Get the right [logger](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_logging.py):
 ```
