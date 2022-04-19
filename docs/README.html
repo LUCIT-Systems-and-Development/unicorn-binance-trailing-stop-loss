@@ -137,17 +137,26 @@ robust and fully-featured way.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;unicorn_binance_trailing_stop_loss&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html">Discover even more possibilities</a></p>
+<p><a class="reference external" href="https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html">Discover more possibilities</a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>The Python package <a class="reference external" href="https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html">UNICORN Binance Trailing Stop Loss</a>
-…</p>
+provides a reuseable library and CLI interface.</p>
+<p>Once the engine is started, it trailes the stop/loss order until it is completely fulfilled and then calls the function
+passed with the <code class="docutils literal notranslate"><span class="pre">callback_finished</span></code> parameter. On error it calls <code class="docutils literal notranslate"><span class="pre">callback_error</span></code>.</p>
 <div class="section" id="what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss">
 <h3>What are the benefits of the UNICORN Binance Trailing Stop Loss?<a class="headerlink" href="#what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Fully managed websockets and 100% auto-reconnect! Also handles maintenance windows!</p></li>
-<li><p><a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki/Binance-websocket-endpoint-configuration-overview">Supported exchanges</a>:</p></li>
+<li><p>Supported exchanges:</p>
+<ul>
+<li><p>binance.com (+testnet)</p></li>
+<li><p>binance.com-futures</p></li>
+<li><p>binance.com-margin</p></li>
+<li><p>binance.com-isolated_margin</p></li>
+</ul>
+</li>
 <li><p>Powered by <a class="reference external" href="https://www.lucit.tech/unicorn-binance-rest-api.html">UNICORN Binance REST API</a> and
 <a class="reference external" href="https://www.lucit.tech/unicorn-binance-websocket-api.html">UNICORN Binance WebSocket API</a>.</p></li>
 </ul>
@@ -157,8 +166,7 @@ robust and fully-featured way.</p>
 </div>
 <div class="section" id="installation-and-upgrade">
 <h2>Installation and Upgrade<a class="headerlink" href="#installation-and-upgrade" title="Permalink to this headline">¶</a></h2>
-<p>The module requires Python 3.7 or above, as it depends on Pythons latest asyncio features for asynchronous/concurrent
-processing.</p>
+<p>The module requires Python 3.7 or above.</p>
 <p>The current dependencies are listed
 <a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/requirements.txt">here</a>.</p>
 <p>If you run into errors during the installation take a look <a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki/Installation">here</a>.</p>
@@ -180,9 +188,9 @@ processing.</p>
 </div>
 <div class="section" id="windows">
 <h4>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h4>
-<p>Use the below command with the version (such as 0.1.0) you determined
+<p>Use the below command with the version (such as 0.1.1) you determined
 <a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest">here</a>:</p>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/0.1.0.tar.gz</span> <span class="pre">--upgrade</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/0.1.1.tar.gz</span> <span class="pre">--upgrade</span></code></p>
 </div>
 </div>
 <div class="section" id="from-the-latest-source-dev-stage-with-pip-from-github">
@@ -296,7 +304,8 @@ of any kind, including but not limited to direct or indirect damages for loss of
 <p><a class="reference external" href="https://www.lucit.tech"><img alt="LUCIT" src="https://www.lucit.tech/files/images/logos/LUCIT-LOGO.png" /></a></p>
 <p><em><strong>Do you need a developer, operator or consultant?</strong></em></p>
 <p>Contact <a class="reference external" href="https://about.me/oliver-zehentleitner">me</a> for a non-binding initial consultation via my company
-<a class="reference external" href="https://www.lucit.tech">LUCIT</a> from Vienna (Austria) or via <a class="reference external" href="https://t.me/LUCIT_OZ">Telegram</a>/<a class="reference external" href="https://wa.me/436602456535">WhatsApp</a>.</p>
+<a class="reference external" href="https://www.lucit.tech">LUCIT</a> from Vienna (Austria) or via
+<a class="reference external" href="https://t.me/LUCIT_OZ">Telegram</a>/<a class="reference external" href="https://wa.me/436602456535">WhatsApp</a>.</p>
 </div>
 </div>
 
@@ -452,7 +461,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <div class="footer">
         <a href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues">Found a bug</a>?
         <br />
-        Last updated on Apr 19 2022 at 09:20 (CET).
+        Last updated on Apr 19 2022 at 09:58 (CET).
         <br />
         &copy; <a href="copyright.html">Copyright</a> 2022-2022, LUCIT Systems and Development and Oliver Zehentleitner.
         <br />

@@ -71,15 +71,22 @@ Read about the [CLI usage](https://unicorn-binance-trailing-stop-loss.docs.lucit
 logging.getLogger("unicorn_binance_trailing_stop_loss")
 ```
 
-[Discover even more possibilities](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html)
+[Discover more possibilities](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html)
 
 ## Description
 The Python package [UNICORN Binance Trailing Stop Loss](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) 
-...
+provides a reuseable library and CLI interface.
+
+Once the engine is started, it trailes the stop/loss order until it is completely fulfilled and then calls the function 
+passed with the `callback_finished` parameter. On error it calls `callback_error`.
 
 ### What are the benefits of the UNICORN Binance Trailing Stop Loss?
 - Fully managed websockets and 100% auto-reconnect! Also handles maintenance windows!
-- [Supported exchanges](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki/Binance-websocket-endpoint-configuration-overview): 
+- Supported exchanges: 
+  - binance.com (+testnet)
+  - binance.com-futures
+  - binance.com-margin
+  - binance.com-isolated_margin
 - Powered by [UNICORN Binance REST API](https://www.lucit.tech/unicorn-binance-rest-api.html) and 
 [UNICORN Binance WebSocket API](https://www.lucit.tech/unicorn-binance-websocket-api.html).
 
@@ -87,8 +94,7 @@ If you like the project, please [![star](https://raw.githubusercontent.com/lucit
 [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)!
 
 ## Installation and Upgrade
-The module requires Python 3.7 or above, as it depends on Pythons latest asyncio features for asynchronous/concurrent 
-processing. 
+The module requires Python 3.7 or above.
 
 The current dependencies are listed 
 [here](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/requirements.txt).
@@ -110,10 +116,10 @@ Run in bash:
 `pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/$(curl -s https://api.github.com/repos/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")').tar.gz --upgrade`
 
 #### Windows
-Use the below command with the version (such as 0.1.0) you determined 
+Use the below command with the version (such as 0.1.1) you determined 
 [here](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest):
 
-`pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/0.1.0.tar.gz --upgrade`
+`pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/0.1.1.tar.gz --upgrade`
 ### From the latest source (dev-stage) with PIP from [Github](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)
 This is not a release version and can not be considered to be stable!
 
@@ -213,4 +219,5 @@ of any kind, including but not limited to direct or indirect damages for loss of
 ***Do you need a developer, operator or consultant?***
 
 Contact [me](https://about.me/oliver-zehentleitner) for a non-binding initial consultation via my company 
-[LUCIT](https://www.lucit.tech) from Vienna (Austria) or via [Telegram](https://t.me/LUCIT_OZ)/[WhatsApp](https://wa.me/436602456535).
+[LUCIT](https://www.lucit.tech) from Vienna (Austria) or via 
+[Telegram](https://t.me/LUCIT_OZ)/[WhatsApp](https://wa.me/436602456535).
