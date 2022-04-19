@@ -35,7 +35,7 @@
 # IN THE SOFTWARE.
 
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
-from unicorn_binance_rest_api.manager import BinanceRestApiManager
+from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 import argparse
 import logging
@@ -149,7 +149,6 @@ parser.add_argument('--symbol',
                     required=False)
 options = parser.parse_args()
 
-
 def callback_error(msg):
     print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {msg}")
     ubtsl.stop()
@@ -182,7 +181,7 @@ elif options.loglevel == "ERROR":
 elif options.loglevel == "CRITICAL":
     loglevel = logging.CRITICAL
 else:
-    loglevel = logging.INFO
+    loglevel = logging.DEBUG
 
 # Config logger
 logging.basicConfig(level=loglevel,
@@ -190,6 +189,7 @@ logging.basicConfig(level=loglevel,
                     format=LOG_FORMAT,
                     style="{")
 logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
+logger.info("Started ubtsl")
 
 # Load config.ini file
 if options.configfile is not None:
@@ -251,7 +251,7 @@ stop_loss_limit = ""
 stop_loss_order_type = ""
 stop_loss_price: float = 0.0
 stop_loss_side = ""
-reset_stop_loss_price: bool = False
+reset_stop_loss_price = False
 
 # Load a profile is provided via argparse
 if options.profile is not None:
@@ -321,17 +321,39 @@ if str(reset_stop_loss_price).upper() == "TRUE":
 else:
     reset_stop_loss_price = False
 
-
 if engine == "jump-in-and-trail":
-    ubra = BinanceRestApiManager(api_key=public_key, api_secret=private_key , exchange=exchange)
+    logger.info(f"Starting jump-in-and-trail engine")
+    ubra = BinanceRestApiManager(api_key=public_key, api_secret=private_key, exchange=exchange)
     if exchange == "binance.com-isolated_margin":
-        new_order = ubra.create_margin_order(symbol=stop_loss_market,
-                                             isIsolated="TRUE",
-                                             side="BUY",
-                                             type="MARKET",
-                                             price=1,
-                                             quantity=1,
-                                             timeInForce="GTC")
+        stop_loss_side = "SELL"
+        isolated_margin_account = ubra.get_isolated_margin_account()
+        if isolated_margin_account['assets'][0]['symbol'] == stop_loss_market:
+            ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
+            amount_to_buy = float(float(isolated_margin_account['assets'][0]['quoteAsset']['free']) / float(ask_price))
+            try:
+                margin_order = ubra.create_margin_order(symbol=stop_loss_market,
+                                                        isIsolated="TRUE",
+                                                        side="BUY",
+                                                        type="MARKET",
+                                                        quantity=str(round(amount_to_buy, 2)),
+                                                        sideEffectType="MARGIN_BUY")
+            except BinanceAPIException as error_msg:
+                msg = f"Stopping because of Binance API exception: {error_msg}"
+                logging.critical(msg)
+                print(msg)
+                if "code=-1102" in str(error_msg):
+                    msg = f"Probably no free quote asset!"
+                    logging.critical(msg)
+                    print(msg)
+                sys.exit(1)
+            logger.info(f"Jumped in with buy order: {margin_order}")
+
+            # Todo:
+            # Calculate the average price instead of using the price of the first execution:
+            stop_loss_price = margin_order['fills'][0]['price']
+    else:
+        logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange '{exchange}'.")
+        sys.exit(1)
 
 
 ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
