@@ -53,11 +53,28 @@ HOME_PATH = str(Path.home()) + "/"
 LOG_FORMAT = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
 parser = argparse.ArgumentParser(
-      prog=f"UNICORN Binance Trailing Stop Loss CLI {VERSION}",
+      prog=f"UNICORN Binance Trailing Stop Loss CLI {VERSION} (MIT License)",
       formatter_class=argparse.RawDescriptionHelpFormatter,
       epilog=textwrap.dedent('''\
+         disclaimer:
+             This project is for informational purposes only. You should not construe this information or any other material as 
+             legal, tax, investment, financial or other advice. Nothing contained herein constitutes a solicitation, recommendation, 
+             endorsement or offer by us or any third party provider to buy or sell any securities or other financial instruments in 
+             this or any other jurisdiction in which such solicitation or offer would be unlawful under the securities laws of such 
+             jurisdiction.
+            
+             If you intend to use real money, use it at your own risk.
+            
+             Under no circumstances will we be responsible or liable for any claims, damages, losses, expenses, costs or liabilities 
+             of any kind, including but not limited to direct or indirect damages for loss of profits.
+
          additional information:
-             Home: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss
+             Author: https://www.lucit.tech
+             Changes: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech//CHANGELOG.html
+             Documentation: https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss
+             Issue Tracker: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues
+             Source: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss
+             Wiki: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki
          '''))
 
 parser.add_argument('--apikey',
@@ -72,6 +89,11 @@ parser.add_argument('--exchange',
                     type=str,
                     help="Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...",
                     required=False)
+parser.add_argument('--configfile',
+                    type=str,
+                    help='Specify path including filename to the config file. (Ex: `~/config.ini`) If not '
+                         'available it tries to load a config.ini from the current working directory.',
+                    required=False)
 parser.add_argument('--keepthreshold',
                     type=str,
                     help="Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...",
@@ -83,6 +105,10 @@ parser.add_argument('--limit',
 parser.add_argument('--logfile',
                     type=str,
                     help='Specify path including filename to the logfile.',
+                    required=False)
+parser.add_argument('--loglevel',
+                    type=str,
+                    help='Choose a log level (DEBUG, INFO, WARNING, ERROR or CRITICAL). Default is `INFO.',
                     required=False)
 parser.add_argument('--orderside',
                     type=str,
@@ -106,11 +132,6 @@ parser.add_argument('--resetstoplossprice',
                     type=str,
                     help='Reset the existing stop_loss_price! Usage: True anything else is False!',
                     required=False)
-parser.add_argument('--configfile',
-                    type=str,
-                    help='Specify path including filename to the config file. (Ex: `~/config.ini`) If not '
-                         'available it tries to load a config.ini from the current working directory.',
-                    required=False)
 parser.add_argument('--stoplossprice',
                     type=float,
                     help='Set the starting stop/loss price.',
@@ -118,10 +139,6 @@ parser.add_argument('--stoplossprice',
 parser.add_argument('--symbol',
                     type=str,
                     help='The market symbol as used by Binance.',
-                    required=False)
-parser.add_argument('--loglevel',
-                    type=str,
-                    help='Choose a log level (DEBUG, INFO, WARNING, ERROR or CRITICAL). Default is `INFO.',
                     required=False)
 options = parser.parse_args()
 
@@ -303,7 +320,7 @@ ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        send_from_email_address=send_from_email_address,
                                        send_from_email_password=send_from_email_password,
                                        send_from_email_server=send_from_email_server,
-                                       send_from_email_port=send_from_email_port,
+                                       send_from_email_port=int(send_from_email_port),
                                        stop_loss_limit=stop_loss_limit,
                                        stop_loss_market=stop_loss_market,
                                        stop_loss_order_type=stop_loss_order_type,

@@ -6,10 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [Semantic Versioning](http://semver.org/).
 
 ## 0.1.1.dev (development stage/unreleased/unstable)
-
+General updaes
 
 ## 0.1.1
-Updates
+General updates
 
 ## 0.1.0
 Init

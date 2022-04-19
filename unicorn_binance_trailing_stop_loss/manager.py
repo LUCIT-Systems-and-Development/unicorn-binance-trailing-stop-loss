@@ -636,11 +636,11 @@ class BinanceTrailingStopLossManager:
         self.logger.info(f"BinanceTrailingStopLossManager.send_telegram_message() - response: {response}")
         return True
 
-    def run(self) -> bool:
+    def run(self) -> None:
         """
         Start Stop/Loss with provided settings!
 
-        :return: bool
+        :return: None
         """
         self.logger.info(f"BinanceTrailingStopLossManager.start() - Starting trailing stop/loss on {self.exchange} "
                          f"for the market {self.stop_loss_market} ...")
@@ -686,7 +686,7 @@ class BinanceTrailingStopLossManager:
             self.logger.info(f"BinanceTrailingStopLossManager.start() - Using provided stop_loss_price="
                              f"{self.stop_loss_price}")
             self.create_stop_loss_order(self.stop_loss_price)
-        return True
+        return None
 
     def stop(self) -> bool:
         """

@@ -66,7 +66,7 @@ setuptools.setup(
      packages=setuptools.find_packages(),
      scripts=['cli/ubtsl'],
      classifiers=[
-         "Development Status :: 5 - Production/Stable",
+         "Development Status :: 4 - Beta",
          "Programming Language :: Python :: 3.7",
          "Programming Language :: Python :: 3.8",
          "Programming Language :: Python :: 3.9",
