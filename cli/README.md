@@ -1,7 +1,7 @@
 # UNICORN Binance Trailing Stop Loss CLI
 ## Description
 The CLI interface is installed during the 
-[installation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/README.html#a-wheel-and-a-source-file-of-the-latest-release-with-pip-from-pypi) 
+[installation](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
 of `unicorn-binance-trailing-stop-loss` with PIP.
 
 The CLI interface `ubtsl` is used to interact with the 
