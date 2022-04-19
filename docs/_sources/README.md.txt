@@ -83,10 +83,13 @@ passed with the `callback_finished` parameter. On error it calls `callback_error
 ### What are the benefits of the UNICORN Binance Trailing Stop Loss?
 - Using websockets for push notifications about price updates and order updates. (fast and low used weight)
 - Supported exchanges: 
-  - binance.com (+testnet)
-  - binance.com-futures
-  - binance.com-margin
-  - binance.com-isolated_margin
+| Exchange | Exchange string | 
+| -------- | --------------- | 
+| [Binance](https://www.binance.com) | `BinanceTrailingStopLossManager(exchange="binance.com")` |
+| [Binance Testnet](https://testnet.binance.vision/) | `BinanceTrailingStopLossManager(exchange="binance.com-testnet")` |
+| [Binance Isolated Margin](https://www.binance.com) | `BinanceTrailingStopLossManager(exchange="binance.com-isolated_margin")` |
+| More are coming soon | - |
+
 - Integrated notification system (email and telegram)
 - Powered by [UNICORN Binance REST API](https://www.lucit.tech/unicorn-binance-rest-api.html) and 
 [UNICORN Binance WebSocket API](https://www.lucit.tech/unicorn-binance-websocket-api.html).
