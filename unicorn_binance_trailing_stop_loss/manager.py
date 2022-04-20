@@ -48,7 +48,7 @@ import ssl
 import threading
 import time
 
-VERSION = "0.2.0.dev"
+VERSION = "0.2.0"
 
 
 class BinanceTrailingStopLossManager(threading.Thread):
