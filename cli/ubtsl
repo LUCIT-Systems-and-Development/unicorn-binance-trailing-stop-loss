@@ -353,6 +353,7 @@ if engine == "jump-in-and-trail":
                 msg = f"Stopping because of Binance API exception: {error_msg}"
                 logging.critical(msg)
                 print(msg)
+                sys.exit(1)
             logger.info(f"Jumped in with buy order: {margin_order}")
 
             # Todo: Calculate the average price instead of using the price of the first execution:
