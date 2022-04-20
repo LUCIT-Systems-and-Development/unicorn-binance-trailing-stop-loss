@@ -7454,7 +7454,7 @@ function defaultPrefilter( elem, props, opts ) {
 				dataShow = dataPriv.access( elem, "fxshow", { display: restoreDisplay } );
 			}
 
-			// Store hidden/visible for toggle so `.stop_manager().toggle()` "reverses"
+			// Store hidden/visible for toggle so `.stop().toggle()` "reverses"
 			if ( toggle ) {
 				dataShow.hidden = !hidden;
 			}
@@ -7903,7 +7903,7 @@ jQuery.fx.tick = function() {
 	}
 
 	if ( !timers.length ) {
-		jQuery.fx.stop_manager();
+		jQuery.fx.stop();
 	}
 	fxNow = undefined;
 };
