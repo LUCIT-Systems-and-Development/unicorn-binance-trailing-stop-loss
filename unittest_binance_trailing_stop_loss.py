@@ -52,12 +52,12 @@ print(f"Starting unittests:")
 
 def callback_error(msg):
     print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {msg}")
-    UBTSL.stop()
+    UBTSL.stop_manager()
 
 
 def callback_finished(msg):
     print(f"STOP LOSS FINISHED - ENGINE IS SHUTTING DOWN! - {msg}")
-    UBTSL.stop()
+    UBTSL.stop_manager()
 
 
 UBTSL = BinanceTrailingStopLossManager(callback_error=callback_error,
@@ -83,7 +83,7 @@ UBTSL = BinanceTrailingStopLossManager(callback_error=callback_error,
 
 class TestBinanceComManager(unittest.TestCase):
     def test_stop(self):
-        self.assertTrue(UBTSL.stop())
+        self.assertTrue(UBTSL.stop_manager())
 
 
 if __name__ == '__main__':

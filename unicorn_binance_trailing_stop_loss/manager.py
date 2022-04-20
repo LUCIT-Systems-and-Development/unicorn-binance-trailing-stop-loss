@@ -51,7 +51,7 @@ import time
 VERSION = "0.1.2"
 
 
-class BinanceTrailingStopLossManager:
+class BinanceTrailingStopLossManager(threading.Thread):
     """
     unicorn-binance-trailing-stop-loss for managing Stop/Loss orders and sending notifications.
 
@@ -141,6 +141,7 @@ class BinanceTrailingStopLossManager:
                  trading_fee_discount_spot_percent: float = 25.0,
                  trading_fee_percent: float = 0.1,
                  trading_fee_use_bnb: bool = False):
+        threading.Thread.__init__(self)
         self.binance_public_key = binance_public_key
         self.binance_private_key = binance_private_key
         self.callback_error = callback_error
@@ -200,6 +201,7 @@ class BinanceTrailingStopLossManager:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
             exit()
         self.version = VERSION
+        self.start()
 
     def calculate_stop_loss_amount(self,
                                    amount: float) -> Optional[float]:
@@ -227,19 +229,24 @@ class BinanceTrailingStopLossManager:
         return amount_without_fee
 
     def calculate_stop_loss_price(self,
-                                  price: float) -> Optional[float]:
+                                  price: float,
+                                  limit: str = None) -> Optional[float]:
         """
         Calculate the stop/loss price.
 
         :param price: Base price used for the calculation
         :type price: float
+        :param limit: Stop loss limit in percent or as fixed value
+        :type limit: str
 
         :return: float or None
         """
+        if limit is None:
+            limit = self.stop_loss_limit
         self.logger.debug(f"BinanceTrailingStopLossManager.calculate_stop_loss_price() - Calculation stop/loss price "
-                          f"of base price: {price}")
-        if "%" in self.stop_loss_limit:
-            limit_percent = float(self.stop_loss_limit.rstrip("%"))
+                          f"of base price: {price}, limit: {limit}")
+        if "%" in limit:
+            limit_percent = float(limit.rstrip("%"))
             sl_price = float(price/100)*float(100.0-limit_percent)
         else:
             sl_price = price - float(self.stop_loss_limit)
@@ -327,7 +334,7 @@ class BinanceTrailingStopLossManager:
                 self.logger.error(f"BinanceTrailingStopLossManager.create_stop_loss_order() - {msg}")
                 self.send_email_notificaton(msg)
                 self.send_telegram_notification(msg)
-                self.stop()
+                self.stop_manager()
                 if self.callback_error is not None:
                     self.callback_error(msg)
                 return False
@@ -539,11 +546,9 @@ class BinanceTrailingStopLossManager:
                     self.logger.info(f"BinanceTrailingStopLossManager.get_owning_amount() - {log_msg_short}")
                     self.send_telegram_notification(msg)
                     self.send_email_notificaton(msg)
-                    self.stop()
+                    self.stop_manager()
                     if self.callback_finished is not None:
                         self.callback_finished(msg_short)
-                    for thread in threading.enumerate():
-                        print(f"Thread: {thread.name}")
                     return True
                 elif stream_data['current_order_status'] == "CANCELED":
                     self.logger.info(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
@@ -688,15 +693,14 @@ class BinanceTrailingStopLossManager:
             self.logger.info(f"BinanceTrailingStopLossManager.start() - Using provided stop_loss_price="
                              f"{self.stop_loss_price}")
             self.create_stop_loss_order(self.stop_loss_price)
-        return None
 
-    def stop(self) -> bool:
+    def stop_manager(self) -> bool:
         """
         Stop stop_loss! :)
 
         :return: bool
         """
-        self.logger.info(f"BinanceTrailingStopLossManager.stop() - Gracefully stopping unicorn-binance-stop-loss "
+        self.logger.info(f"BinanceTrailingStopLossManager.stop_manager() - Gracefully stopping unicorn-binance-stop-loss "
                          f"engine ...")
         self.stop_request = True
         try:
@@ -752,7 +756,7 @@ class BinanceTrailingStopLossManager:
             self.logger.critical(msg)
             self.send_telegram_notification(msg)
             self.send_email_notificaton(msg)
-            self.stop()
+            self.stop_manager()
             if self.callback_error is not None:
                 self.callback_error(msg)
             return False

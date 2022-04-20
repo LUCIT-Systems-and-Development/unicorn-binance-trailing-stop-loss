@@ -36,11 +36,11 @@ import unicorn_binance_trailing_stop_loss
 
 def callback_error(msg):
     print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {msg}")
-    ubtsl.stop()
+    ubtsl.stop_manager()
 
 def callback_finished(msg):
     print(f"STOP LOSS FINISHED - ENGINE IS SHUTTING DOWN! - {msg}")
-    ubtsl.stop()
+    ubtsl.stop_manager()
     
     
 ubtsl = unicorn_binance_trailing_stop_loss.BinanceTrailingStopLossManager(callback_error=callback_error,

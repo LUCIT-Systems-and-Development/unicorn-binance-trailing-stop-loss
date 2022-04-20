@@ -104,10 +104,6 @@ parser.add_argument('--keepthreshold',
                     type=str,
                     help="Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...",
                     required=False)
-parser.add_argument('--limit',
-                    type=str,
-                    help='Stop/loss limit in integer or percent.',
-                    required=False)
 parser.add_argument('--logfile',
                     type=str,
                     help='Specify path including filename to the logfile.',
@@ -139,9 +135,17 @@ parser.add_argument('--resetstoplossprice',
                     type=str,
                     help='Reset the existing stop_loss_price! Usage: True anything else is False!',
                     required=False)
+parser.add_argument('--stoplosslimit',
+                    type=str,
+                    help='Stop/loss limit in integer or percent.',
+                    required=False)
 parser.add_argument('--stoplossprice',
                     type=float,
                     help='Set the starting stop/loss price.',
+                    required=False)
+parser.add_argument('--stoplossstartlimit',
+                    type=str,
+                    help='Stop/loss start limit in integer or percent. (only used in "jump-in-and-trail"',
                     required=False)
 parser.add_argument('--symbol',
                     type=str,
@@ -151,12 +155,12 @@ options = parser.parse_args()
 
 def callback_error(msg):
     print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {msg}")
-    ubtsl.stop()
+    ubtsl.stop_manager()
 
 
 def callback_finished(msg):
     print(f"STOP LOSS FINISHED - ENGINE IS SHUTTING DOWN! - {msg}")
-    ubtsl.stop()
+    ubtsl.stop_manager()
 
 
 if len(sys.argv) <= 1:
@@ -189,7 +193,7 @@ logging.basicConfig(level=loglevel,
                     format=LOG_FORMAT,
                     style="{")
 logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
-logger.info("Started ubtsl")
+logger.info(f"Started ubtsl_{VERSION}")
 
 # Load config.ini file
 if options.configfile is not None:
@@ -248,6 +252,7 @@ exchange = ""
 keep_threshold = ""
 stop_loss_market = ""
 stop_loss_limit = ""
+stop_loss_start_limit = ""
 stop_loss_order_type = ""
 stop_loss_price: float = 0.0
 stop_loss_side = ""
@@ -280,6 +285,10 @@ if options.profile is not None:
     except KeyError:
         pass
     try:
+        stop_loss_start_limit = profiles[options.profile]['stop_loss_start_limit']
+    except KeyError:
+        pass
+    try:
         stop_loss_order_type = profiles[options.profile]['stop_loss_order_type']
     except KeyError:
         pass
@@ -305,8 +314,10 @@ if options.keepthreshold is not None:
     keep_threshold = options.keepthreshold
 if options.symbol is not None:
     stop_loss_market = options.symbol
-if options.limit is not None:
-    stop_loss_limit = options.limit
+if options.stoplosslimit is not None:
+    stop_loss_limit = options.stoplosslimit
+if options.stoplossstartlimit is not None:
+    stop_loss_start_limit = options.stoplossstartlimit
 if options.ordertype is not None:
     stop_loss_order_type = options.ordertype
 if options.resetstoplossprice is not None:
@@ -328,29 +339,31 @@ if engine == "jump-in-and-trail":
         stop_loss_side = "SELL"
         isolated_margin_account = ubra.get_isolated_margin_account()
         if isolated_margin_account['assets'][0]['symbol'] == stop_loss_market:
+            # Todo: Calc borrow_threshold
             ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
-            amount_to_buy = float(float(isolated_margin_account['assets'][0]['quoteAsset']['free']) / float(ask_price))
+            free_quote_asset = isolated_margin_account['assets'][0]['quoteAsset']['free']
             try:
                 margin_order = ubra.create_margin_order(symbol=stop_loss_market,
                                                         isIsolated="TRUE",
                                                         side="BUY",
                                                         type="MARKET",
-                                                        quantity=str(round(amount_to_buy, 2)),
+                                                        quoteOrderQty=free_quote_asset,
                                                         sideEffectType="MARGIN_BUY")
             except BinanceAPIException as error_msg:
                 msg = f"Stopping because of Binance API exception: {error_msg}"
                 logging.critical(msg)
                 print(msg)
-                if "code=-1102" in str(error_msg):
-                    msg = f"Probably no free quote asset!"
-                    logging.critical(msg)
-                    print(msg)
-                sys.exit(1)
             logger.info(f"Jumped in with buy order: {margin_order}")
 
-            # Todo:
-            # Calculate the average price instead of using the price of the first execution:
-            stop_loss_price = margin_order['fills'][0]['price']
+            # Todo: Calculate the average price instead of using the price of the first execution:
+
+            # Todo: Use this block as a static method within ubtsl.manager
+            if "%" in stop_loss_start_limit:
+                limit_percent = float(stop_loss_start_limit.rstrip("%"))
+                sl_price = float(float(margin_order['fills'][0]['price']) / 100) * float(100.0 - limit_percent)
+            else:
+                sl_price = float(margin_order['fills'][0]['price']) - float(stop_loss_start_limit)
+            stop_loss_price = float(BinanceTrailingStopLossManager.round_decimals_down(sl_price, 2))
     else:
         logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange '{exchange}'.")
         sys.exit(1)
@@ -381,5 +394,4 @@ try:
         time.sleep(1)
 except KeyboardInterrupt:
     print("\nStopping ... just wait a few seconds!")
-    ubtsl.stop()
-print(f"Exit main file!")
+    ubtsl.stop_manager()
