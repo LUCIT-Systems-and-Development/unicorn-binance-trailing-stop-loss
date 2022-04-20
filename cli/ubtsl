@@ -185,7 +185,7 @@ elif options.loglevel == "ERROR":
 elif options.loglevel == "CRITICAL":
     loglevel = logging.CRITICAL
 else:
-    loglevel = logging.DEBUG
+    loglevel = logging.INFO
 
 # Config logger
 logging.basicConfig(level=loglevel,
