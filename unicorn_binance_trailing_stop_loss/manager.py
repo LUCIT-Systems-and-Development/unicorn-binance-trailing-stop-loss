@@ -617,12 +617,20 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return:
         """
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(self.send_from_email_server, self.send_from_email_port, context=context) as server:
-            server.login(self.send_from_email_address, self.send_from_email_password)
-            server.sendmail(self.send_from_email_address, self.send_to_email_address, message)
-            self.logger.info(f"BinanceTrailingStopLossManager.send_email_notificaton() - Email sent!")
-            return True
+        if self.send_to_email_address \
+                and self.send_from_email_address \
+                and self.send_from_email_server \
+                and self.send_from_email_port:
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(self.send_from_email_server, self.send_from_email_port, context=context) as server:
+                server.login(self.send_from_email_address, self.send_from_email_password)
+                server.sendmail(self.send_from_email_address, self.send_to_email_address, message)
+                self.logger.info(f"BinanceTrailingStopLossManager.send_email_notificaton() - Email sent!")
+                return True
+        else:
+            self.logger.debug(f"BinanceTrailingStopLossManager.send_email_notificaton() - Data for email dispatch not "
+                              f"available")
+            return False
 
     def send_telegram_notification(self,
                                    message: str = None) -> bool:
@@ -634,14 +642,20 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return:
         """
-        date = datetime.datetime.now().strftime("%H:%M:%S")
-        msg = message.replace("%25", "%")
-        logging.info(" ".join([msg, "at", date]))
-        request_url = f"https://api.telegram.org/bot{self.telegram_bot_token}/sendMessage?chat_id=" \
-                      f"{self.telegram_send_to}&parse_mode=HTML&text={message}"
-        response = requests.get(request_url)
-        self.logger.info(f"BinanceTrailingStopLossManager.send_telegram_message() - response: {response}")
-        return True
+        if self.telegram_send_to \
+                and self.telegram_bot_token:
+            date = datetime.datetime.now().strftime("%H:%M:%S")
+            msg = message.replace("%25", "%")
+            logging.info(" ".join([msg, "at", date]))
+            request_url = f"https://api.telegram.org/bot{self.telegram_bot_token}/sendMessage?chat_id=" \
+                          f"{self.telegram_send_to}&parse_mode=HTML&text={message}"
+            response = requests.get(request_url)
+            self.logger.info(f"BinanceTrailingStopLossManager.send_telegram_message() - response: {response}")
+            return True
+        else:
+            self.logger.debug(f"BinanceTrailingStopLossManager.send_telegram_message() - Data for Telegram dispatch "
+                              f"not available")
+            return False
 
     def run(self) -> None:
         """
