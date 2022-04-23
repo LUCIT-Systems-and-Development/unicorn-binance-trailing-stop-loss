@@ -11,6 +11,12 @@ and a
 [`ubtsl_profiles.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini) 
 file from the home and the current working directory.
 
+Test the notification settings:
+
+```
+$ ubtsl --test notification
+```
+
 If profiles are available, they can be activated with the `--profiles` parameter at startup. Any CLI parameters will 
 overwrite predefined values from the profile.
 

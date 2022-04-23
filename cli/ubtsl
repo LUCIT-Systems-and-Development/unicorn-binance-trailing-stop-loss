@@ -151,7 +151,13 @@ parser.add_argument('--symbol',
                     type=str,
                     help='The market symbol as used by Binance.',
                     required=False)
+parser.add_argument('--test',
+                    type=str,
+                    help='Use this to test specific systems like "notification". If test is not None the engine will '
+                         'NOT start! It only tests!',
+                    required=False)
 options = parser.parse_args()
+
 
 def callback_error(msg):
     print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {msg}")
@@ -194,6 +200,7 @@ logging.basicConfig(level=loglevel,
                     style="{")
 logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
 logger.info(f"Started ubtsl_{VERSION}")
+print(f"Started ubtsl_{VERSION}")
 
 # Load config.ini file
 if options.configfile is not None:
@@ -213,8 +220,12 @@ else:
     else:
         logger.critical("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
                         "the parameter --secretsfile is mandatory! Please use --help for further information!")
+        print("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
+              "the parameter --secretsfile is mandatory! Please use --help for further information!")
         sys.exit(1)
+
 logger.info(f"Loading configuration file `{config_file}`")
+print(f"Loading configuration file `{config_file}`")
 
 config = ConfigParser(interpolation=ExtendedInterpolation())
 config.read(config_file)
@@ -242,8 +253,12 @@ else:
     else:
         logger.critical("If ´ubtsl_profiles.ini´ is not in the home or current working directory or is renamed, then "
                         "the parameter --profilesfile is mandatory! Please use --help for further information!")
+        print("If ´ubtsl_profiles.ini´ is not in the home or current working directory or is renamed, then "
+              "the parameter --profilesfile is mandatory! Please use --help for further information!")
         sys.exit(1)
-logger.info(f"Loading profiles file {profiles_file}")
+
+logger.info(f"Loading profiles file `{profiles_file}`")
+print(f"Loading profiles file `{profiles_file}`")
 profiles = ConfigParser(interpolation=ExtendedInterpolation())
 profiles.read(profiles_file)
 
@@ -257,6 +272,7 @@ stop_loss_order_type = ""
 stop_loss_price: float = 0.0
 stop_loss_side = ""
 reset_stop_loss_price = False
+test = None
 
 # Load a profile is provided via argparse
 if options.profile is not None:
@@ -326,48 +342,55 @@ if options.stoplossprice is not None:
     stop_loss_price = options.stoplossprice
 if options.orderside is not None:
     stop_loss_side = options.orderside
+if options.test is not None:
+    test = options.test
 
 if str(reset_stop_loss_price).upper() == "TRUE":
     reset_stop_loss_price = True
 else:
     reset_stop_loss_price = False
 
-if engine == "jump-in-and-trail":
-    logger.info(f"Starting jump-in-and-trail engine")
-    ubra = BinanceRestApiManager(api_key=public_key, api_secret=private_key, exchange=exchange)
-    if exchange == "binance.com-isolated_margin":
-        stop_loss_side = "SELL"
-        isolated_margin_account = ubra.get_isolated_margin_account()
-        if isolated_margin_account['assets'][0]['symbol'] == stop_loss_market:
-            # Todo: Calc borrow_threshold
-            ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
-            free_quote_asset = isolated_margin_account['assets'][0]['quoteAsset']['free']
-            try:
-                margin_order = ubra.create_margin_order(symbol=stop_loss_market,
-                                                        isIsolated="TRUE",
-                                                        side="BUY",
-                                                        type="MARKET",
-                                                        quoteOrderQty=free_quote_asset,
-                                                        sideEffectType="MARGIN_BUY")
-            except BinanceAPIException as error_msg:
-                msg = f"Stopping because of Binance API exception: {error_msg}"
-                logging.critical(msg)
-                print(msg)
-                sys.exit(1)
-            logger.info(f"Jumped in with buy order: {margin_order}")
+if test is None:
+    if engine == "jump-in-and-trail":
+        logger.info(f"Starting jump-in-and-trail engine")
+        print(f"Starting jump-in-and-trail engine")
+        ubra = BinanceRestApiManager(api_key=public_key, api_secret=private_key, exchange=exchange)
+        if exchange == "binance.com-isolated_margin":
+            stop_loss_side = "SELL"
+            isolated_margin_account = ubra.get_isolated_margin_account()
+            if isolated_margin_account['assets'][0]['symbol'] == stop_loss_market:
+                # Todo: Calc borrow_threshold
+                # Todo: Take full loan
+                ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
+                free_quote_asset = isolated_margin_account['assets'][0]['quoteAsset']['free']
+                try:
+                    margin_order = ubra.create_margin_order(symbol=stop_loss_market,
+                                                            isIsolated="TRUE",
+                                                            side="BUY",
+                                                            type="MARKET",
+                                                            quoteOrderQty=free_quote_asset,
+                                                            sideEffectType="MARGIN_BUY")
+                except BinanceAPIException as error_msg:
+                    msg = f"Stopping because of Binance API exception: {error_msg}"
+                    logging.critical(msg)
+                    print(msg)
+                    sys.exit(1)
+                logger.info(f"Jumped in with buy order: {margin_order}")
+                print(f"Jumped in with buy price: {margin_order['fills'][0]['price']}")
 
-            # Todo: Calculate the average price instead of using the price of the first execution:
-
-            # Todo: Use this block as a static method within ubtsl.manager
-            if "%" in stop_loss_start_limit:
-                limit_percent = float(stop_loss_start_limit.rstrip("%"))
-                sl_price = float(float(margin_order['fills'][0]['price']) / 100) * float(100.0 - limit_percent)
-            else:
-                sl_price = float(margin_order['fills'][0]['price']) - float(stop_loss_start_limit)
-            stop_loss_price = float(BinanceTrailingStopLossManager.round_decimals_down(sl_price, 2))
-    else:
-        logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange '{exchange}'.")
-        sys.exit(1)
+                # Todo: Use this block as a static method within ubtsl.manager
+                # Todo: Calculate the average price instead of using the price of the first execution:
+                if "%" in stop_loss_start_limit:
+                    limit_percent = float(stop_loss_start_limit.rstrip("%"))
+                    sl_price = float(float(margin_order['fills'][0]['price']) / 100) * float(100.0 - limit_percent)
+                else:
+                    sl_price = float(margin_order['fills'][0]['price']) - float(stop_loss_start_limit)
+                stop_loss_price = float(BinanceTrailingStopLossManager.round_decimals_down(sl_price, 2))
+        else:
+            logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange "
+                            f"'{exchange}'.")
+            print(f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange '{exchange}'.")
+            sys.exit(1)
 
 
 ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
@@ -376,6 +399,7 @@ ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        binance_private_key=private_key,
                                        exchange=exchange,
                                        keep_threshold=keep_threshold,
+                                       print_notificatons=True,
                                        reset_stop_loss_price=reset_stop_loss_price,
                                        send_to_email_address=send_to_email_address,
                                        send_from_email_address=send_from_email_address,
@@ -388,11 +412,13 @@ ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        stop_loss_price=stop_loss_price,
                                        stop_loss_side=stop_loss_side,
                                        telegram_bot_token=telegram_bot_token,
-                                       telegram_send_to=telegram_send_to)
+                                       telegram_send_to=telegram_send_to,
+                                       test=test)
 
-try:
-    while ubtsl.stop_request is False:
-        time.sleep(1)
-except KeyboardInterrupt:
-    print("\nStopping ... just wait a few seconds!")
-    ubtsl.stop_manager()
+if test is None:
+    try:
+        while ubtsl.stop_request is False:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("\nStopping ... just wait a few seconds!")
+        ubtsl.stop_manager()
