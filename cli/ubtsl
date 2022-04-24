@@ -164,8 +164,15 @@ def callback_error(msg):
     ubtsl.stop_manager()
 
 
-def callback_finished(msg):
-    print(f"STOP LOSS FINISHED - ENGINE IS SHUTTING DOWN! - {msg}")
+def callback_finished(order):
+    if engine == "jump-in-and-trail":
+        fee = 0.2
+        print(f"===========================\r\n"
+              f"buy_price: {buy_price}\r\n"
+              f"sell_price: {order['order_price']}\r\n"
+              f"fee: {fee}%\r\n"
+              f"---------------------------\r\n"
+              f"profit: {(100.0+fee)*(float(order['order_price'])-float(buy_price))}")
     ubtsl.stop_manager()
 
 
@@ -380,6 +387,7 @@ if test is None:
 
                 # Todo: Use this block as a static method within ubtsl.manager
                 # Todo: Calculate the average price instead of using the price of the first execution:
+                buy_price = margin_order['fills'][0]['price']
                 if "%" in stop_loss_start_limit:
                     limit_percent = float(stop_loss_start_limit.rstrip("%"))
                     sl_price = float(float(margin_order['fills'][0]['price']) / 100) * float(100.0 - limit_percent)

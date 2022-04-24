@@ -112,6 +112,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
     """
 
     # Todo:
+    #   - PARTIALLY_FILLED how to handle? -> handle!
+    #   - Not deleting and creating a new order with same price, just leave it
     #   - Make notifications customizable
     #   - Precision dynamic
     #   - SELL/BUY
@@ -363,14 +365,6 @@ class BinanceTrailingStopLossManager(threading.Thread):
                              f"owning_amount={total}, "
                              f"owning_amount_free={free}, "
                              f"stop_loss_quantity={stop_loss_quantity} ...")
-            if self.print_notificatons:
-                print(f"Creating stop/loss "
-                      f"order: {current_price_str}"
-                      f"stop_price={self.get_stop_loss_trigger_price(stop_loss_price)}, "
-                      f"sell_price={stop_loss_price}, "
-                      f"owning_amount={total}, "
-                      f"owning_amount_free={free}, "
-                      f"stop_loss_quantity={stop_loss_quantity} ...")
             if stop_loss_quantity == 0:
                 msg = f"Empty stop_loss_quantity in create_stop_loss_order()"
                 self.logger.error(f"BinanceTrailingStopLossManager.create_stop_loss_order() - {msg}")
@@ -393,12 +387,12 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                timeInForce="GTC")
                 self.stop_loss_order_id = new_order['orderId']
                 self.logger.info(f"BinanceTrailingStopLossManager.create_stop_loss_order() - Created stop/loss order "
-                                 f"for market symbol {new_order['symbol']} with orderId="
+                                 f"for market {new_order['symbol']} with orderId="
                                  f"{new_order['orderId']} and side={new_order['side']}.")
                 if self.print_notificatons:
-                    print(f"Created stop/loss order "
-                          f"for market symbol {new_order['symbol']} with orderId="
-                          f"{new_order['orderId']} and side={new_order['side']}.")
+                    print(f"Created stop/loss order for market {new_order['symbol']}: "
+                          f"stop_loss_price={self.stop_loss_price} and "
+                          f"stop_loss_quantity={self.stop_loss_quantity}")
             except BinanceAPIException as error_msg:
                 self.logger.error(f"BinanceTrailingStopLossManager.create_stop_loss_order() - {error_msg}")
                 if self.print_notificatons:
@@ -639,7 +633,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                     self.send_email_notificaton(msg)
                     self.stop_manager()
                     if self.callback_finished is not None:
-                        self.callback_finished(msg_short)
+                        self.callback_finished(stream_data)
                     return True
                 elif stream_data['current_order_status'] == "CANCELED":
                     self.logger.info(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
@@ -647,9 +641,22 @@ class BinanceTrailingStopLossManager(threading.Thread):
                     print("Received CANCELED event, creating a new order ...")
                     self.create_stop_loss_order(self.stop_loss_price, current_price=self.current_price)
                     return False
+                elif stream_data['current_order_status'] == "PARTIALLY_FILLED":
+                    # Todo: Cerate new order?
+                    self.logger.warning(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
+                                        f"Received PARTIALLY_FILLED event, this is currently unhandled!!!")
+                    print("Received PARTIALLY_FILLED event, this is currently unhandled!!!")
+                    self.create_stop_loss_order(self.stop_loss_price, current_price=self.current_price)
+                    return False
+                elif stream_data['current_order_status'] == "NEW":
+                    self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received NEW event: "
+                                      f"{str(stream_data)}")
+                else:
+                    print("unknown, please report:", str(stream_data))
             else:
                 self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
                                   f"Received stream_data: {stream_data}")
+                print("test2:", str(stream_data))
         elif stream_data['event_type'] == "outboundAccountPosition":
             self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received: {stream_data}")
 

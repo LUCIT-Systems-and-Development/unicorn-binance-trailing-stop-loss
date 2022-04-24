@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Parameter `test` to lib and cli. Supported mode is "notification" to test email and telegram notifications.
 - Parameter `print_notificatons`. If True the lib is printing user friendly information to terminal. 
+- Count profit to CLI interface
+- General output to CLI interface
+### Changed
+- Returning order details instead of text msg to callback_finished function
 ### Fixed
 - Control notification settings to avoid exceptions
 
