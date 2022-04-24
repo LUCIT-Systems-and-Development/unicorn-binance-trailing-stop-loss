@@ -34,7 +34,7 @@
 # IN THE SOFTWARE.
 
 security-check() {
-    echo -n "Did you change the version in \`CHANGELOG.md\`, \`sphinx/source/conf.py\`, \`cli/ubtsl\` and \`unicorn_binance_trailing_stop_loss/manager.py\`? [yes|NO] "
+    echo -n "Did you change the version in \`CHANGELOG.md\`, \`sphinx/source/conf.py\` and \`unicorn_binance_trailing_stop_loss/manager.py\`? [yes|NO] "
     local SURE
     read SURE
     if [ "$SURE" != "yes" ]; then
