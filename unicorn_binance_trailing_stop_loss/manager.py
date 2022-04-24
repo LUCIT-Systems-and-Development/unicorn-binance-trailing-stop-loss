@@ -646,19 +646,28 @@ class BinanceTrailingStopLossManager(threading.Thread):
                     self.logger.warning(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
                                         f"Received PARTIALLY_FILLED event, this is currently unhandled!!!")
                     print("Received PARTIALLY_FILLED event, this is currently unhandled!!!")
-                    self.create_stop_loss_order(self.stop_loss_price, current_price=self.current_price)
                     return False
                 elif stream_data['current_order_status'] == "NEW":
-                    self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received NEW event: "
+                    self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received event: "
                                       f"{str(stream_data)}")
                 else:
-                    print("unknown, please report:", str(stream_data))
+                    print("Unknown, please report:", str(stream_data))
+            elif stream_data['current_order_status'] == "NEW":
+                self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received event: "
+                                  f"{str(stream_data)}")
+            elif stream_data['current_order_status'] == "CANCELED":
+                self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received event: "
+                                  f"{str(stream_data)}")
             else:
                 self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
                                   f"Received stream_data: {stream_data}")
-                print("test2:", str(stream_data))
+                print("Unknown, please report:", str(stream_data))
         elif stream_data['event_type'] == "outboundAccountPosition":
             self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received: {stream_data}")
+        else:
+            self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
+                              f"Received stream_data: {stream_data}")
+            print("Unknown, please report:", str(stream_data))
 
     def process_price_feed_stream(self,
                                   stream_data: dict = None,

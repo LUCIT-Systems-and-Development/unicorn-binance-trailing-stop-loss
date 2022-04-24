@@ -167,12 +167,12 @@ def callback_error(msg):
 def callback_finished(order):
     if engine == "jump-in-and-trail":
         fee = 0.2
-        print(f"===========================\r\n"
+        print(f"======================================================\r\n"
               f"buy_price: {buy_price}\r\n"
               f"sell_price: {order['order_price']}\r\n"
-              f"fee: {fee}%\r\n"
-              f"---------------------------\r\n"
-              f"profit: {(100.0+fee)*(float(order['order_price'])-float(buy_price))}")
+              f"fee: ~{fee}%\r\n"
+              f"------------------------------------------------------\r\n"
+              f"profit: {fee*(float(order['order_price'])-float(buy_price))}")
     ubtsl.stop_manager()
 
 
