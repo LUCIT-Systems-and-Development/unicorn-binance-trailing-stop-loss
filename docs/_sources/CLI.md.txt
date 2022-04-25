@@ -72,8 +72,28 @@ optional arguments:
 ## Example usage
 Arguments defined in the CLI overrule values from the loaded profile!
 
+Check if a new update is available:
+
 ```
-$ ubtsl --profile LUNAUSDT_SELL --configfile yourconfig.ini --stoplossprice 88.50 --stoplosslimit 0.5%
+$ ubtsl --checkupdate
+```
+
+Show program version:
+
+```
+$ ubtsl --version
+```
+
+Test notifications:
+
+```
+$ ubtsl --test notification
+```
+
+Start with profile "LUNAUSDT_SELL" and overwrite the stoplosslimit:
+
+```
+$ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
 ```
 
 ## Examples
