@@ -65,9 +65,6 @@ setuptools.setup(
      entry_points={
          "console_scripts": [
              "ubtsl = ubtsl.__main__:main",
-             "ubtsl = ubtsl.__main__:main",
-             "conda-ubtsl = ubtsl.__main__:main",
-             "conda-ubtsl = ubtsl.__main__:main",
          ]},
      classifiers=[
          "Development Status :: 4 - Beta",
