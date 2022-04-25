@@ -90,7 +90,7 @@
 <h1>UNICORN Binance Trailing Stop Loss CLI<a class="headerlink" href="#unicorn-binance-trailing-stop-loss-cli" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>The CLI interface <code class="docutils literal notranslate"><span class="pre">ubtsl</span></code> is installed during the
+<p>The CLI interface <code class="docutils literal notranslate"><span class="pre">ubtsl</span></code>/<code class="docutils literal notranslate"><span class="pre">ubtsl.exe</span></code> is installed during the
 <a class="reference external" href="https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade">installation</a>
 of <code class="docutils literal notranslate"><span class="pre">unicorn-binance-trailing-stop-loss</span></code> with PIP and is used to interact with the
 <a class="reference external" href="https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html"><code class="docutils literal notranslate"><span class="pre">UNICORN</span> <span class="pre">Binance</span> <span class="pre">Tailing</span> <span class="pre">Stop</span> <span class="pre">Loss</span></code></a> library.</p>
@@ -99,8 +99,18 @@ of <code class="docutils literal notranslate"><span class="pre">unicorn-binance-
 and a
 <a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini"><code class="docutils literal notranslate"><span class="pre">ubtsl_profiles.ini</span></code></a>
 file from the home and the current working directory.</p>
-<p>Test the notification settings:</p>
+<div class="section" id="test-the-notification-settings">
+<h3>Test the notification settings:<a class="headerlink" href="#test-the-notification-settings" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ubtsl --test notification
+</pre></div>
+</div>
+<p>Alternatively it is possible to start ubtsl cli like this:</p>
+<p>Linux/Mac:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ py -m ubtsl --test notification
+</pre></div>
+</div>
+<p>Windows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m ubtsl --test notification
 </pre></div>
 </div>
 <p>If profiles are available, they can be activated with the <code class="docutils literal notranslate"><span class="pre">--profiles</span></code> parameter at startup. Any CLI parameters will
@@ -159,6 +169,7 @@ optional arguments:
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="example-usage">
 <h2>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h2>
 <p>Check if a new update is available:</p>
@@ -213,7 +224,10 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">UNICORN Binance Trailing Stop Loss CLI</a><ul>
-<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#test-the-notification-settings">Test the notification settings:</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#example-usage">Example usage</a></li>
 <li><a class="reference internal" href="#examples">Examples</a></li>
 <li><a class="reference internal" href="#disclaimer">Disclaimer</a></li>
@@ -327,7 +341,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <div class="footer">
         <a href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues">Found a bug</a>?
         <br />
-        Last updated on Apr 26 2022 at 01:11 (CET).
+        Last updated on Apr 26 2022 at 01:39 (CET).
         <br />
         &copy; <a href="copyright.html">Copyright</a> 2022-2022, LUCIT Systems and Development and Oliver Zehentleitner.
         <br />

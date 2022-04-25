@@ -247,6 +247,10 @@ def main():
     logger.info(f"Started ubtsl_{version}")
     print(f"Started ubtsl_{version}")
 
+    test = None
+    if options.test is not None:
+        test = options.test
+
     # Load config.ini file
     if options.configfile is not None:
         # Load from cli arg if provided
@@ -263,11 +267,12 @@ def main():
         elif os.path.isfile(config_file_home):
             config_file = config_file_home
         else:
-            logger.critical("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
-                            "the parameter --secretsfile is mandatory! Please use --help for further information!")
-            print("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
-                  "the parameter --secretsfile is mandatory! Please use --help for further information!")
-            sys.exit(1)
+            if test is None:
+                logger.critical("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
+                                "the parameter --secretsfile is mandatory! Please use --help for further information!")
+                print("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
+                      "the parameter --secretsfile is mandatory! Please use --help for further information!")
+                sys.exit(1)
 
     logger.info(f"Loading configuration file `{config_file}`")
     print(f"Loading configuration file `{config_file}`")
@@ -296,12 +301,13 @@ def main():
         elif os.path.isfile(profiles_file_home):
             profiles_file = profiles_file_home
         else:
-            logger.critical("If ´ubtsl_profiles.ini´ is not in the home or current working directory or is renamed, "
-                            "then the parameter --profilesfile is mandatory! Please use --help for further "
-                            "information!")
-            print("If ´ubtsl_profiles.ini´ is not in the home or current working directory or is renamed, then "
-                  "the parameter --profilesfile is mandatory! Please use --help for further information!")
-            sys.exit(1)
+            if test is None:
+                logger.critical("If ´ubtsl_profiles.ini´ is not in the home or current working directory or is renamed, "
+                                "then the parameter --profilesfile is mandatory! Please use --help for further "
+                                "information!")
+                print("If ´ubtsl_profiles.ini´ is not in the home or current working directory or is renamed, then "
+                      "the parameter --profilesfile is mandatory! Please use --help for further information!")
+                sys.exit(1)
 
     logger.info(f"Loading profiles file `{profiles_file}`")
     print(f"Loading profiles file `{profiles_file}`")
@@ -318,7 +324,6 @@ def main():
     stop_loss_price: float = 0.0
     stop_loss_side = ""
     reset_stop_loss_price = False
-    test = None
 
     # Load a profile is provided via argparse
     if options.profile is not None:
@@ -388,8 +393,6 @@ def main():
         stop_loss_price = options.stoplossprice
     if options.orderside is not None:
         stop_loss_side = options.orderside
-    if options.test is not None:
-        test = options.test
 
     if str(reset_stop_loss_price).upper() == "TRUE":
         reset_stop_loss_price = True

@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [Semantic Versioning](http://semver.org/).
 
 ## 0.4.2.dev (development stage/unreleased/unstable)
+### Fixed
+- Ignore mssing ubtsl_profile.ini if test is not None
 
 ## 0.4.2
 ### Fixed

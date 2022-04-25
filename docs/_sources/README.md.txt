@@ -76,7 +76,7 @@ logging.getLogger("unicorn_binance_trailing_stop_loss")
 
 [Discover more possibilities](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html).
 
-## Start the engine on the command line:
+## Start the engine on the command line (Windows, Linux and Mac):
 ```
 $ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
 ```
