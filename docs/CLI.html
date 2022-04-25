@@ -4,9 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>UNICORN Binance Trailing Stop Loss CLI &#8212; unicorn-binance-trailing-stop-loss 0.2.0 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UNICORN Binance Trailing Stop Loss CLI &#8212; unicorn-binance-trailing-stop-loss 0.4.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css" />
     
@@ -52,7 +51,7 @@
         
     
     
-    <a href="index.html">unicorn-binance-trailing-stop-loss 0.2.0 documentation</a> &#187;
+    <a href="index.html">unicorn-binance-trailing-stop-loss 0.4.0 documentation</a> &#187;
     
 
         <li class="nav-item nav-item-this"><a href="">UNICORN Binance Trailing Stop Loss CLI</a></li>
@@ -69,9 +68,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="unicorn-binance-trailing-stop-loss-cli">
+  <div class="section" id="unicorn-binance-trailing-stop-loss-cli">
 <h1>UNICORN Binance Trailing Stop Loss CLI<a class="headerlink" href="#unicorn-binance-trailing-stop-loss-cli" title="Permalink to this headline">¶</a></h1>
-<section id="description">
+<div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>The CLI interface <code class="docutils literal notranslate"><span class="pre">ubtsl</span></code> is installed during the
 <a class="reference external" href="https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade">installation</a>
@@ -82,60 +81,75 @@ of <code class="docutils literal notranslate"><span class="pre">unicorn-binance-
 and a
 <a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini"><code class="docutils literal notranslate"><span class="pre">ubtsl_profiles.ini</span></code></a>
 file from the home and the current working directory.</p>
+<p>Test the notification settings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ubtsl --test notification
+</pre></div>
+</div>
 <p>If profiles are available, they can be activated with the <code class="docutils literal notranslate"><span class="pre">--profiles</span></code> parameter at startup. Any CLI parameters will
 overwrite predefined values from the profile.</p>
 <p>Once the tool is started, it trailes the stop/loss order until it is completely fulfilled and then calls the function
 passed with the <code class="docutils literal notranslate"><span class="pre">callback_finished</span></code> parameter.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ubtsl 
-usage: UNICORN Binance Trailing Stop Loss CLI 0.1.1 (MIT License) [-h] [--apikey APIKEY] [--apisecret APISECRET] [--exchange EXCHANGE] [--configfile CONFIGFILE] [--keepthreshold KEEPTHRESHOLD] [--limit LIMIT] [--logfile LOGFILE]
-                                                                  [--loglevel LOGLEVEL] [--orderside ORDERSIDE] [--ordertype ORDERTYPE] [--profile PROFILE] [--profilesfile PROFILESFILE] [--resetstoplossprice RESETSTOPLOSSPRICE]
-                                                                  [--stoplossprice STOPLOSSPRICE] [--symbol SYMBOL]
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ubtsl --help
+usage: UNICORN Binance Trailing Stop Loss CLI 0.3.0 (MIT License) [-h] [-ak APIKEY] [-as APISECRET] [-cf CONFIGFILE] [-cu] [-e EXCHANGE] [-n ENGINE] [-k KEEPTHRESHOLD] [-lf LOGFILE] [-ll LOGLEVEL] [-os ORDERSIDE] [-ot ORDERTYPE]
+                                                                  [-pf PROFILE] [-pff PROFILESFILE] [-r RESETSTOPLOSSPRICE] [-l STOPLOSSLIMIT] [-p STOPLOSSPRICE] [-sl STOPLOSSSTARTLIMIT] [-s SYMBOL] [-t TEST] [-v]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --apikey APIKEY       The API key!
-  --apisecret APISECRET
-                        The API secret!
-  --configfile CONFIGFILE
-                        Specify path including filename to the config file. (Ex: `~/config.ini`) If not available it 
-                        tries to load a ubtsl_config.ini from the home and the current working directory.
-  --exchange EXCHANGE   Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
-  --keepthreshold KEEPTHRESHOLD
-                        Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
-  --limit LIMIT         Stop/loss limit in integer or percent.
-  --logfile LOGFILE     Specify path including filename to the logfile.
-  --loglevel LOGLEVEL   Choose a log level (DEBUG, INFO, WARNING, ERROR or CRITICAL). Default is `INFO.
-  --orderside ORDERSIDE
-                        Specify whether the trailing stop loss should be in buying or selling mode. (Ex: &#39;buy&#39; or &#39;sell&#39;).
-  --ordertype ORDERTYPE
-                        Use `limit` or `market`.
-  --profile PROFILE     Name of the profile to load from profiles.ini!
-  --profilesfile PROFILESFILE
-                        Specify path including filename to the profiles file. (Ex: `~/profiles.ini`) If not available 
-                        it tries to load a ubtsl_profile.ini from the home and the current working directory.
-  --resetstoplossprice RESETSTOPLOSSPRICE
-                        Reset the existing stop_loss_price! Usage: True anything else is False!
-  --stoplossprice STOPLOSSPRICE
-                        Set the starting stop/loss price.
-  --symbol SYMBOL       The market symbol as used by Binance.
+  -ak APIKEY, --apikey APIKEY
+                        the API key
+  -as APISECRET, --apisecret APISECRET
+                        the API secret
+  -cf CONFIGFILE, --configfile CONFIGFILE
+                        specify path including filename to the config file (ex: `~/my_config.ini`). if not provided ubtsl tries to load a `ubtsl_config.ini` from the home and the current working directory.
+  -cu, --checkupdate    check if update is available
+  -e EXCHANGE, --exchange EXCHANGE
+                        exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+  -n ENGINE, --engine ENGINE
+                        default: `trail` options: - `jump-in-and-trail` to place a market buy order and trail
+  -k KEEPTHRESHOLD, --keepthreshold KEEPTHRESHOLD
+                        exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+  -lf LOGFILE, --logfile LOGFILE
+                        specify path including filename to the logfile
+  -ll LOGLEVEL, --loglevel LOGLEVEL
+                        default: INFO available log levels: DEBUG, INFO, WARNING, ERROR and CRITICAL
+  -os ORDERSIDE, --orderside ORDERSIDE
+                        specify whether the trailing stop loss should be in buying or selling mode. (ex: &#39;buy&#39; or &#39;sell&#39;)
+  -ot ORDERTYPE, --ordertype ORDERTYPE
+                        use `limit` or `market`
+  -pf PROFILE, --profile PROFILE
+                        name of the profile to load from ubtsl_profiles.ini!
+  -pff PROFILESFILE, --profilesfile PROFILESFILE
+                        specify path including filename to the profiles file (ex: `~/my_profiles.ini`). if not available ubtsl tries to load a ubtsl_profile.ini from the home and the current working directory
+  -r RESETSTOPLOSSPRICE, --resetstoplossprice RESETSTOPLOSSPRICE
+                        reset the existing stop_loss_price! usage: True anything else is False
+  -l STOPLOSSLIMIT, --stoplosslimit STOPLOSSLIMIT
+                        stop/loss limit in float or percent
+  -p STOPLOSSPRICE, --stoplossprice STOPLOSSPRICE
+                        set the start stop/loss price as float value
+  -sl STOPLOSSSTARTLIMIT, --stoplossstartlimit STOPLOSSSTARTLIMIT
+                        set the start stop/loss limit in float or percent. (only used in &quot;jump-in-and-trail&quot;
+  -s SYMBOL, --symbol SYMBOL
+                        the market symbol as used by binance
+  -t TEST, --test TEST  use this to test specific systems like &quot;notification&quot;. if test is not None the engine will NOT start! It only tests!
+  -v, --version         show the program version, which is `0.3.0` by the way :)
 </pre></div>
 </div>
-</section>
-<section id="example-usage">
+</div>
+<div class="section" id="example-usage">
 <h2>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h2>
 <p>Arguments defined in the CLI overrule values from the loaded profile!</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ubtsl --profile LUNAUSDT_SELL --configfile yourconfig.ini --stoplossprice 88.50 --limit 0.5%
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ubtsl --profile LUNAUSDT_SELL --configfile yourconfig.ini --stoplossprice 88.50 --stoplosslimit 0.5%
 </pre></div>
 </div>
-</section>
-<section id="examples">
+</div>
+<div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini">example_ubtsl_config.ini</a></p></li>
 <li><p><a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini">example_ubtsl_profiles.ini</a></p></li>
 </ul>
-</section>
-<section id="disclaimer">
+</div>
+<div class="section" id="disclaimer">
 <h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h2>
 <p>This project is for informational purposes only. You should not construe this information or any other material as
 legal, tax, investment, financial or other advice. Nothing contained herein constitutes a solicitation, recommendation,
@@ -145,15 +159,15 @@ jurisdiction.</p>
 <p><em><strong>If you intend to use real money, use it at your own risk.</strong></em></p>
 <p>Under no circumstances will we be responsible or liable for any claims, damages, losses, expenses, costs or liabilities
 of any kind, including but not limited to direct or indirect damages for loss of profits.</p>
-</section>
-<section id="commercial-support">
+</div>
+<div class="section" id="commercial-support">
 <h2>Commercial Support<a class="headerlink" href="#commercial-support" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://www.lucit.tech"><img alt="LUCIT" src="https://www.lucit.tech/files/images/logos/LUCIT-LOGO.png" /></a></p>
 <p><em><strong>Do you need a developer, operator or consultant?</strong></em></p>
 <p>Contact <a class="reference external" href="https://about.me/oliver-zehentleitner">me</a> for a non-binding initial consultation via my company
 <a class="reference external" href="https://www.lucit.tech">LUCIT</a> from Vienna (Austria) or via <a class="reference external" href="https://t.me/LUCIT_OZ">Telegram</a>/<a class="reference external" href="https://wa.me/436602456535">WhatsApp</a>.</p>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -266,7 +280,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
         
     
     
-    <a href="index.html">unicorn-binance-trailing-stop-loss 0.2.0 documentation</a> &#187;
+    <a href="index.html">unicorn-binance-trailing-stop-loss 0.4.0 documentation</a> &#187;
     
 
         <li class="nav-item nav-item-this"><a href="">UNICORN Binance Trailing Stop Loss CLI</a></li>
@@ -280,7 +294,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <div class="footer">
         <a href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues">Found a bug</a>?
         <br />
-        Last updated on Apr 20 2022 at 20:00 (CET).
+        Last updated on Apr 25 2022 at 23:32 (CET).
         <br />
         &copy; <a href="copyright.html">Copyright</a> 2022-2022, LUCIT Systems and Development and Oliver Zehentleitner.
         <br />
