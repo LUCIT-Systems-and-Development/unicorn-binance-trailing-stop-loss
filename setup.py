@@ -64,7 +64,7 @@ setuptools.setup(
      packages=setuptools.find_packages(),
      entry_points={
          "console_scripts": [
-             "ubtsl = ubtsl.__main__:main",
+             "ubtsl = unicorn_binance_trailing_stop_loss.__main__:main",
          ]},
      classifiers=[
          "Development Status :: 4 - Beta",

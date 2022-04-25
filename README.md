@@ -85,10 +85,10 @@ Read about the [CLI usage](https://www.lucit.tech/ubtsl-cli.html).
 
 ## Description
 The Python package [UNICORN Binance Trailing Stop Loss](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) 
-provides a reuseable library and CLI interface.
+provides a reuseable library and [CLI interface](https://www.lucit.tech/ubtsl-cli.html).
 
-Once the engine is started, it trailes the stop/loss order until it is completely fulfilled and then calls the function 
-passed with the `callback_finished` parameter. On error it calls `callback_error`.
+Once the engine is started, it trails the stop/loss order until it is completely fulfilled and then calls the function 
+passed with the `callback_finished` parameter. On error it calls the function passed to `callback_error`.
 
 ### What are the benefits of the UNICORN Binance Trailing Stop Loss?
 - Using websockets for push notifications about price updates and order updates. (Fast and low used API weight!)
