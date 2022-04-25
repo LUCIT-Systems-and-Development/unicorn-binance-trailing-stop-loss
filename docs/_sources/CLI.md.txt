@@ -96,8 +96,6 @@ optional arguments:
 ```
 
 ## Example usage
-Arguments defined in the CLI overrule values from the loaded profile!
-
 Check if a new update is available:
 
 ```
@@ -109,6 +107,8 @@ Show program version:
 ```
 $ ubtsl --version
 ```
+
+Arguments defined in the CLI overrule values from the loaded profile!
 
 Start with profile "LUNAUSDT_SELL" and overwrite the stoplosslimit:
 
