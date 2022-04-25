@@ -24,45 +24,56 @@ Once the tool is started, it trailes the stop/loss order until it is completely 
 passed with the `callback_finished` parameter.
 
 ```
-$ ubtsl 
-usage: UNICORN Binance Trailing Stop Loss CLI 0.1.1 (MIT License) [-h] [--apikey APIKEY] [--apisecret APISECRET] [--exchange EXCHANGE] [--configfile CONFIGFILE] [--keepthreshold KEEPTHRESHOLD] [--limit LIMIT] [--logfile LOGFILE]
-                                                                  [--loglevel LOGLEVEL] [--orderside ORDERSIDE] [--ordertype ORDERTYPE] [--profile PROFILE] [--profilesfile PROFILESFILE] [--resetstoplossprice RESETSTOPLOSSPRICE]
-                                                                  [--stoplossprice STOPLOSSPRICE] [--symbol SYMBOL]
+$ ubtsl --help
+usage: UNICORN Binance Trailing Stop Loss CLI 0.3.0 (MIT License) [-h] [-ak APIKEY] [-as APISECRET] [-cf CONFIGFILE] [-cu] [-e EXCHANGE] [-n ENGINE] [-k KEEPTHRESHOLD] [-lf LOGFILE] [-ll LOGLEVEL] [-os ORDERSIDE] [-ot ORDERTYPE]
+                                                                  [-pf PROFILE] [-pff PROFILESFILE] [-r RESETSTOPLOSSPRICE] [-l STOPLOSSLIMIT] [-p STOPLOSSPRICE] [-sl STOPLOSSSTARTLIMIT] [-s SYMBOL] [-t TEST] [-v]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --apikey APIKEY       The API key!
-  --apisecret APISECRET
-                        The API secret!
-  --configfile CONFIGFILE
-                        Specify path including filename to the config file. (Ex: `~/config.ini`) If not available it 
-                        tries to load a ubtsl_config.ini from the home and the current working directory.
-  --exchange EXCHANGE   Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
-  --keepthreshold KEEPTHRESHOLD
-                        Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
-  --limit LIMIT         Stop/loss limit in integer or percent.
-  --logfile LOGFILE     Specify path including filename to the logfile.
-  --loglevel LOGLEVEL   Choose a log level (DEBUG, INFO, WARNING, ERROR or CRITICAL). Default is `INFO.
-  --orderside ORDERSIDE
-                        Specify whether the trailing stop loss should be in buying or selling mode. (Ex: 'buy' or 'sell').
-  --ordertype ORDERTYPE
-                        Use `limit` or `market`.
-  --profile PROFILE     Name of the profile to load from profiles.ini!
-  --profilesfile PROFILESFILE
-                        Specify path including filename to the profiles file. (Ex: `~/profiles.ini`) If not available 
-                        it tries to load a ubtsl_profile.ini from the home and the current working directory.
-  --resetstoplossprice RESETSTOPLOSSPRICE
-                        Reset the existing stop_loss_price! Usage: True anything else is False!
-  --stoplossprice STOPLOSSPRICE
-                        Set the starting stop/loss price.
-  --symbol SYMBOL       The market symbol as used by Binance.
+  -ak APIKEY, --apikey APIKEY
+                        the API key
+  -as APISECRET, --apisecret APISECRET
+                        the API secret
+  -cf CONFIGFILE, --configfile CONFIGFILE
+                        specify path including filename to the config file (ex: `~/my_config.ini`). if not provided ubtsl tries to load a `ubtsl_config.ini` from the home and the current working directory.
+  -cu, --checkupdate    check if update is available
+  -e EXCHANGE, --exchange EXCHANGE
+                        exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+  -n ENGINE, --engine ENGINE
+                        default: `trail` options: - `jump-in-and-trail` to place a market buy order and trail
+  -k KEEPTHRESHOLD, --keepthreshold KEEPTHRESHOLD
+                        exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+  -lf LOGFILE, --logfile LOGFILE
+                        specify path including filename to the logfile
+  -ll LOGLEVEL, --loglevel LOGLEVEL
+                        default: INFO available log levels: DEBUG, INFO, WARNING, ERROR and CRITICAL
+  -os ORDERSIDE, --orderside ORDERSIDE
+                        specify whether the trailing stop loss should be in buying or selling mode. (ex: 'buy' or 'sell')
+  -ot ORDERTYPE, --ordertype ORDERTYPE
+                        use `limit` or `market`
+  -pf PROFILE, --profile PROFILE
+                        name of the profile to load from ubtsl_profiles.ini!
+  -pff PROFILESFILE, --profilesfile PROFILESFILE
+                        specify path including filename to the profiles file (ex: `~/my_profiles.ini`). if not available ubtsl tries to load a ubtsl_profile.ini from the home and the current working directory
+  -r RESETSTOPLOSSPRICE, --resetstoplossprice RESETSTOPLOSSPRICE
+                        reset the existing stop_loss_price! usage: True anything else is False
+  -l STOPLOSSLIMIT, --stoplosslimit STOPLOSSLIMIT
+                        stop/loss limit in float or percent
+  -p STOPLOSSPRICE, --stoplossprice STOPLOSSPRICE
+                        set the start stop/loss price as float value
+  -sl STOPLOSSSTARTLIMIT, --stoplossstartlimit STOPLOSSSTARTLIMIT
+                        set the start stop/loss limit in float or percent. (only used in "jump-in-and-trail"
+  -s SYMBOL, --symbol SYMBOL
+                        the market symbol as used by binance
+  -t TEST, --test TEST  use this to test specific systems like "notification". if test is not None the engine will NOT start! It only tests!
+  -v, --version         show the program version, which is `0.3.0` by the way :)
 ```
 
 ## Example usage
 Arguments defined in the CLI overrule values from the loaded profile!
 
 ```
-$ ubtsl --profile LUNAUSDT_SELL --configfile yourconfig.ini --stoplossprice 88.50 --limit 0.5%
+$ ubtsl --profile LUNAUSDT_SELL --configfile yourconfig.ini --stoplossprice 88.50 --stoplosslimit 0.5%
 ```
 
 ## Examples

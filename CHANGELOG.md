@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [Semantic Versioning](http://semver.org/).
 
 ## 0.3.0.dev (development stage/unreleased/unstable)
+### CHANGED
+- The command line interface `ubtsl`
 
 ## 0.3.0
 ### Added

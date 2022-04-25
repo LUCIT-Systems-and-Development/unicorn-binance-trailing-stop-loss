@@ -33,6 +33,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
+__version__ = "0.3.0"
+
+# Todo:
+#   - PARTIALLY_FILLED how to handle? -> handle!
+#   - Not deleting and creating a new order with same price, just leave it
+#   - Make notifications customizable
+#   - Precision dynamic
+#   - SELL/BUY
+#   - Notification if partially filled
+#   - Callback partial filled
+#   - Fees: how to handle? / VIP Fees
+#   - Exchanges
+#   - Notifications with missing parameters (exception handling)
+#   - use different callback functions for each stream within one ubwam instance
+
 
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
 from unicorn_binance_rest_api.exceptions import BinanceAPIException
@@ -48,8 +63,6 @@ import requests
 import ssl
 import threading
 import time
-
-VERSION = "0.3.0" 
 
 
 class BinanceTrailingStopLossManager(threading.Thread):
@@ -89,6 +102,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type send_from_email_server: str
     :param send_from_email_port: Port of SMTP server
     :type send_from_email_port: int
+    :param start_engine: Start the trailing stop loss engine. Default is True
+    :type start_engine: bool
     :param stop_loss_market: The market to enforce stop/loss.
     :type stop_loss_market: str
     :param stop_loss_order_type: Can be `limit` or `market` - default is None which leads to a stop of the algorithm.
@@ -111,19 +126,6 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type trading_fee_use_bnb: bool
     """
 
-    # Todo:
-    #   - PARTIALLY_FILLED how to handle? -> handle!
-    #   - Not deleting and creating a new order with same price, just leave it
-    #   - Make notifications customizable
-    #   - Precision dynamic
-    #   - SELL/BUY
-    #   - Notification if partially filled
-    #   - Callback partial filled
-    #   - Fees: how to handle? / VIP Fees
-    #   - Exchanges
-    #   - Notifications with missing parameters (exception handling)
-    #   - use different callback functions for each stream within one ubwam instance
-
     def __init__(self,
                  binance_public_key: str = None,
                  binance_private_key: str = None,
@@ -138,6 +140,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  send_from_email_password: str = None,
                  send_from_email_server: str = None,
                  send_from_email_port: int = None,
+                 start_engine: bool = True,
                  stop_loss_limit: str = None,
                  stop_loss_market: str = None,
                  stop_loss_order_type: str = None,
@@ -155,7 +158,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         threading.Thread.__init__(self)
         self.name = "unicorn_binance_trailing_stop_loss"
         self.logger = logging.getLogger(self.name)
-        self.version = VERSION
+        self.version = __version__
         self.logger.info(f"New instance of {self.get_user_agent()} on "
                          f"{str(platform.system())} {str(platform.release())} for exchange {exchange} started ...")
         if print_notificatons:
@@ -180,6 +183,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.precision_fiat: int = 2  # Todo: make dynamic
         self.print_notificatons = print_notificatons
         self.reset_stop_loss_price = True if reset_stop_loss_price is True else False
+        self.start_engine = start_engine
         self.stop_loss_asset_name: str = ""
         self.stop_loss_asset_amount: float = 0.0
         self.stop_loss_asset_amount_free: float = 0.0
@@ -226,7 +230,10 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 if self.print_notificatons:
                     print(f"Please use a valid exchange!")
                 exit()
-        if test is None:
+        if test is None and start_engine is True:
+            msg = f"Starting thread  ..."
+            self.logger.info(msg)
+            print(msg)
             self.start()
         elif test == "notification":
             msg = f"Starting notification test ..."
@@ -606,7 +613,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         Get the package/module version
         :return: str
         """
-        return VERSION
+        return __version__
 
     def process_userdata_stream(self,
                                 stream_data: dict = None,
@@ -823,6 +830,14 @@ class BinanceTrailingStopLossManager(threading.Thread):
             self.logger.info(f"BinanceTrailingStopLossManager.start() - Using provided stop_loss_price="
                              f"{self.stop_loss_price}")
             self.create_stop_loss_order(self.stop_loss_price)
+
+    def stop(self) -> bool:
+        """
+        Stop stop_loss! :)
+
+        :return: bool
+        """
+        return self.stop_manager()
 
     def stop_manager(self) -> bool:
         """
