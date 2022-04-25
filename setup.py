@@ -62,7 +62,13 @@ setuptools.setup(
      },
      python_requires='>=3.7.0',
      packages=setuptools.find_packages(),
-     scripts=['cli/ubtsl'],
+     entry_points={
+         "console_scripts": [
+             "ubtsl = ubtsl.__main__:main",
+             "ubtsl = ubtsl.__main__:main",
+             "conda-ubtsl = ubtsl.__main__:main",
+             "conda-ubtsl = ubtsl.__main__:main",
+         ]},
      classifiers=[
          "Development Status :: 4 - Beta",
          "Programming Language :: Python :: 3.7",

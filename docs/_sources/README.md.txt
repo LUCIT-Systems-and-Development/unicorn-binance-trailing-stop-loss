@@ -24,12 +24,12 @@
 [Notifications](#receive-notifications) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
 [Contributing](#contributing) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
 
-A Python library with a command line interface for a trailing stop loss on Binance Exchange in a easy, fast, flexible,
-robust and fully-featured way.
+A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss on 
+Binance Exchange in a easy, fast, flexible, robust and fully-featured way.
 
 Part of ['UNICORN Binance Suite'](https://www.lucit.tech/unicorn-binance-suite.html).
 
-### How to start the trailing stop loss engine:
+## How to start the trailing stop loss engine:
 ```
 import unicorn_binance_trailing_stop_loss
 
@@ -64,7 +64,10 @@ ubtsl = unicorn_binance_trailing_stop_loss.BinanceTrailingStopLossManager(callba
                                                                           telegram_send_to="telegram_send_to")
 ```
 
-Read about the [CLI usage](https://www.lucit.tech/ubtsl-cli.html).
+### Stop the engine:
+```
+ubtsl.stop_manager()
+```
 
 ### Get the right [logger](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_logging.py):
 ```
@@ -72,6 +75,13 @@ logging.getLogger("unicorn_binance_trailing_stop_loss")
 ```
 
 [Discover more possibilities](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html).
+
+## Start the engine on the command line:
+```
+$ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
+```
+
+Read about the [CLI usage](https://www.lucit.tech/ubtsl-cli.html).
 
 ## Description
 The Python package [UNICORN Binance Trailing Stop Loss](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) 

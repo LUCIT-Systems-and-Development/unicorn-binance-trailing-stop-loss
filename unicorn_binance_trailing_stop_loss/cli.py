@@ -118,9 +118,7 @@ def main():
                         required=False)
     parser.add_argument('-n', '--engine',
                         type=str,
-                        help='default: `trail`\r\n'
-                             'options: \r\n'
-                             ' - `jump-in-and-trail` to place a market buy order and trail',
+                        help='default: `trail`, options: `jump-in-and-trail` to place a market buy order and trail',
                         required=False)
     parser.add_argument('-k', '--keepthreshold',
                         type=str,
@@ -156,7 +154,7 @@ def main():
                         required=False)
     parser.add_argument('-r', '--resetstoplossprice',
                         type=str,
-                        help='reset the existing stop_loss_price!\r\nusage: True anything else is False',
+                        help='reset the existing stop_loss_price! usage: True anything else is False',
                         required=False)
     parser.add_argument('-l', '--stoplosslimit',
                         type=str,
@@ -168,7 +166,7 @@ def main():
                         required=False)
     parser.add_argument('-sl', '--stoplossstartlimit',
                         type=str,
-                        help='set the start stop/loss limit in float or percent. (only used in "jump-in-and-trail"',
+                        help='set the start stop/loss limit in float or percent. (only used in `jump-in-and-trail`',
                         required=False)
     parser.add_argument('-s', '--symbol',
                         type=str,
@@ -177,7 +175,7 @@ def main():
     parser.add_argument('-t', '--test',
                         type=str,
                         help='use this to test specific systems like "notification". if test is not None the engine '
-                             'will NOT start! It only tests!',
+                             'will NOT start! it only tests!',
                         required=False)
     parser.add_argument('-v', '--version',
                         help=f'show the program version, which is `{version}` by the way :)',
