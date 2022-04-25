@@ -40,11 +40,13 @@ $ ubtsl --test notification
 Alternatively it is possible to start ubtsl cli like this:
 
 Linux/Mac:
+
 ```
 $ py -m ubtsl --test notification
 ```
 
 Windows:
+
 ```
 $ python3 -m ubtsl --test notification
 ```
