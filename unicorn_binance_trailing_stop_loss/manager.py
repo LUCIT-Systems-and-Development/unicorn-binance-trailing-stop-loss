@@ -124,6 +124,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :param trading_fee_use_bnb: Default is False. Set to True to use BNB for a discount on trading fees:
                                 https://www.binance.com/en/support/faq/115000583311.
     :type trading_fee_use_bnb: bool
+    :param warn_on_update: set to `False` to disable the update warning
+    :type warn_on_update: bool
     """
 
     def __init__(self,
@@ -154,7 +156,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  trading_fee_discount_margin_percent: float = 25.0,
                  trading_fee_discount_spot_percent: float = 25.0,
                  trading_fee_percent: float = 0.1,
-                 trading_fee_use_bnb: bool = False):
+                 trading_fee_use_bnb: bool = False,
+                 warn_on_update=True):
         threading.Thread.__init__(self)
         self.name = "unicorn_binance_trailing_stop_loss"
         self.logger = logging.getLogger(self.name)
@@ -209,6 +212,12 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.ubra_user: BinanceRestApiManager = BinanceRestApiManager(self.binance_public_key,
                                                                       self.binance_private_key,
                                                                       exchange=self.exchange)
+        if warn_on_update and self.is_update_available():
+            update_msg = f"Release {self.name}_" + self.get_latest_version() + " is available, " \
+                                                                               "please consider updating! (Changelog: https://github.com/LUCIT-Systems-and-Development/" \
+                                                                               "unicorn-binance-trailing-stop-loss/blob/master/CHANGELOG.md)"
+            print(update_msg)
+            self.logger.warning(update_msg)
         if self.exchange == "binance.com-isolated_margin":
             exchange = "binance.com"
         else:
