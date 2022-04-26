@@ -42,13 +42,13 @@ Alternatively it is possible to start ubtsl cli like this:
 Linux/Mac:
 
 ```
-$ py -m ubtsl --test notification
+$ python3 -m ubtsl --test notification
 ```
 
 Windows:
 
 ```
-$ python3 -m ubtsl --test notification
+$ py -m ubtsl --test notification
 ```
 
 If profiles are available, they can be activated with the `--profiles` parameter at startup. Any CLI parameters will 
