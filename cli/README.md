@@ -55,6 +55,8 @@ Windows:
 $ py -m ubtsl --test notification
 ```
 
+### Usage:
+
 If profiles are available, they can be activated with the `--profiles` parameter at startup. 
 
 ```
@@ -65,8 +67,8 @@ Instead of loading the values from profiles, they can also be defined explicitly
 
 Any CLI parameters will overwrite predefined values from the profile.
 
-Once the tool is started, it trailes the stop/loss order until it is completely fulfilled and then calls the function 
-passed with the `callback_finished` parameter.
+Once the tool is started, it trailes the stop/loss order until it is completely fulfilled, sends the notifications and
+then it stops.
 
 ```
 $ ubtsl --help
@@ -75,7 +77,7 @@ usage: ubtsl [-h] [-ak APIKEY] [-as APISECRET] [-cf CONFIGFILE] [-cu] [-e EXCHAN
              [-r RESETSTOPLOSSPRICE] [-l STOPLOSSLIMIT] [-p STOPLOSSPRICE] [-sl STOPLOSSSTARTLIMIT] [-s SYMBOL]
              [-t TEST] [-v]
 
-UNICORN Binance Trailing Stop Loss CLI 0.4.2 (MIT License)
+UNICORN Binance Trailing Stop Loss 0.4.2 (MIT License)
 
 options:
   -h, --help            show this help message and exit
