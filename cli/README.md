@@ -21,8 +21,8 @@
 
 ## Description
 The CLI interface `ubtsl`/`ubtsl.exe` is installed during the 
-[installation](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
-of `unicorn-binance-trailing-stop-loss` with PIP and is used to interact with the 
+[installation of `unicorn-binance-trailing-stop-loss` with PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade)  
+and is used to interact with the 
 [`unicorn-binance-trailing-stop-loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) Python library.
 
 If you are looking for a standalone version that runs without an installed Python environment, you can use
