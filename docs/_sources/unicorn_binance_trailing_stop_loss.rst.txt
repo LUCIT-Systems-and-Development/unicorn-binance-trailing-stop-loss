@@ -4,22 +4,6 @@ unicorn\_binance\_trailing\_stop\_loss package
 Submodules
 ----------
 
-bot module
----------------------------------------------------------------------------------------------
-
-.. automodule:: bot
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-cli module
----------------------------------------------------------------------------------------------
-
-.. automodule:: cli
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 unicorn\_binance\_trailing\_stop\_loss.manager module
 ---------------------------------------------------------------------------------------------
 
