@@ -34,8 +34,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-import unicorn_binance_trailing_stop_loss
-from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
+from manager import BinanceTrailingStopLossManager
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 import argparse
@@ -57,7 +56,8 @@ def main():
     log_format = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
     parser = argparse.ArgumentParser(
-          prog=f"UNICORN Binance Trailing Stop Loss CLI {version} (MIT License)",
+          description=f"UNICORN Binance Trailing Stop Loss CLI {version} (MIT License)",
+          prog=f"ubtsl",
           formatter_class=argparse.RawDescriptionHelpFormatter,
           epilog=textwrap.dedent('''\
              examples:
@@ -200,7 +200,7 @@ def main():
 
     # Print the version
     if options.version is True:
-        print(f"{version}")
+        print(f"UNICORN Binance Trailing Stop Loss {version}")
         sys.exit(0)
 
     def callback_error(message):
