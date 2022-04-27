@@ -123,6 +123,7 @@ options:
   -t TEST, --test TEST  use this to test specific systems like "notification". if test is not None the engine will NOT
                         start! it only tests!
   -v, --version         show the program version, which is `0.4.2` by the way :)```
+```
 
 ## Example usage
 Check if a new update is available:
