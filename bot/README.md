@@ -20,7 +20,7 @@
 # UNICORN Binance Trailing Stop Loss Bot
 
 ## Description
-The UNICORN Binance Trailing Stop Loss Bot uses the engine of the Python library 
+The `UNICORN Binance Trailing Stop Loss Bot` uses the engine of the Python library 
 [`unicorn-binance-trailing-stop-loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) 
 and has the exact same interface and configuration setup as the 
 [`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html). 
@@ -29,7 +29,9 @@ The bot only does not
 require a pre-installed Python environment and can be easily installed on Windows and Mac with a setup file.
 
 By activating the `jump-in-and-trail` engine, the bot first buys the predefined amount of assests and then 
-trails them automatically. For more information read the [ubtsl cli README](https://www.lucit.tech/ubtsl-cli.html).
+trails them automatically. 
+
+For more information [read here](https://www.lucit.tech/ubtsl-cli.html).
 
 ## Disclaimer
 This project is for informational purposes only. You should not construe this information or any other material as 
