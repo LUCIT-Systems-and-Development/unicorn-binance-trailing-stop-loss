@@ -57,6 +57,10 @@ $ py -m ubtsl --test notification
 
 If profiles are available, they can be activated with the `--profiles` parameter at startup. 
 
+```
+$ ubtsl --profile LUNAUSDT_SELL
+```
+
 Instead of loading the values from profiles, they can also be defined explicitly via command line parameters. Any CLI 
 parameters will overwrite predefined values from the profile.
 
@@ -65,28 +69,27 @@ passed with the `callback_finished` parameter.
 
 ```
 $ ubtsl --help
-usage: UNICORN Binance Trailing Stop Loss CLI 0.4.0 (MIT License) [-h] [-ak APIKEY] [-as APISECRET]
-                                                                  [-cf CONFIGFILE] [-cu] [-e EXCHANGE] [-n ENGINE]
-                                                                  [-k KEEPTHRESHOLD] [-lf LOGFILE] [-ll LOGLEVEL]
-                                                                  [-os ORDERSIDE] [-ot ORDERTYPE] [-pf PROFILE]
-                                                                  [-pff PROFILESFILE] [-r RESETSTOPLOSSPRICE]
-                                                                  [-l STOPLOSSLIMIT] [-p STOPLOSSPRICE]
-                                                                  [-sl STOPLOSSSTARTLIMIT] [-s SYMBOL] [-t TEST]
-                                                                  [-v]
+usage: ubtsl [-h] [-ak APIKEY] [-as APISECRET] [-cf CONFIGFILE] [-cu] [-e EXCHANGE] [-n ENGINE] [-k KEEPTHRESHOLD]
+             [-lf LOGFILE] [-ll LOGLEVEL] [-os ORDERSIDE] [-ot ORDERTYPE] [-pf PROFILE] [-pff PROFILESFILE]
+             [-r RESETSTOPLOSSPRICE] [-l STOPLOSSLIMIT] [-p STOPLOSSPRICE] [-sl STOPLOSSSTARTLIMIT] [-s SYMBOL]
+             [-t TEST] [-v]
 
-optional arguments:
+UNICORN Binance Trailing Stop Loss CLI 0.4.2 (MIT License)
+
+options:
   -h, --help            show this help message and exit
   -ak APIKEY, --apikey APIKEY
                         the API key
   -as APISECRET, --apisecret APISECRET
                         the API secret
   -cf CONFIGFILE, --configfile CONFIGFILE
-                        specify path including filename to the config file (ex: `~/my_config.ini`). if not provided ubtsl tries to load a `ubtsl_config.ini` from the home and the current working directory.
+                        specify path including filename to the config file (ex: `~/my_config.ini`). if not provided
+                        ubtsl tries to load a `ubtsl_config.ini` from the home and the current working directory.
   -cu, --checkupdate    check if update is available
   -e EXCHANGE, --exchange EXCHANGE
                         exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
   -n ENGINE, --engine ENGINE
-                        default: `trail` options: - `jump-in-and-trail` to place a market buy order and trail
+                        default: `trail`, options: `jump-in-and-trail` to place a market buy order and trail
   -k KEEPTHRESHOLD, --keepthreshold KEEPTHRESHOLD
                         exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
   -lf LOGFILE, --logfile LOGFILE
@@ -94,13 +97,16 @@ optional arguments:
   -ll LOGLEVEL, --loglevel LOGLEVEL
                         default: INFO available log levels: DEBUG, INFO, WARNING, ERROR and CRITICAL
   -os ORDERSIDE, --orderside ORDERSIDE
-                        specify whether the trailing stop loss should be in buying or selling mode. (ex: 'buy' or 'sell')
+                        specify whether the trailing stop loss should be in buying or selling mode. (ex: 'buy' or
+                        'sell')
   -ot ORDERTYPE, --ordertype ORDERTYPE
                         use `limit` or `market`
   -pf PROFILE, --profile PROFILE
                         name of the profile to load from ubtsl_profiles.ini!
   -pff PROFILESFILE, --profilesfile PROFILESFILE
-                        specify path including filename to the profiles file (ex: `~/my_profiles.ini`). if not available ubtsl tries to load a ubtsl_profile.ini from the home and the current working directory
+                        specify path including filename to the profiles file (ex: `~/my_profiles.ini`). if not
+                        available ubtsl tries to load a ubtsl_profile.ini from the home and the current working
+                        directory
   -r RESETSTOPLOSSPRICE, --resetstoplossprice RESETSTOPLOSSPRICE
                         reset the existing stop_loss_price! usage: True anything else is False
   -l STOPLOSSLIMIT, --stoplosslimit STOPLOSSLIMIT
@@ -108,12 +114,12 @@ optional arguments:
   -p STOPLOSSPRICE, --stoplossprice STOPLOSSPRICE
                         set the start stop/loss price as float value
   -sl STOPLOSSSTARTLIMIT, --stoplossstartlimit STOPLOSSSTARTLIMIT
-                        set the start stop/loss limit in float or percent. (only used in "jump-in-and-trail"
+                        set the start stop/loss limit in float or percent. (only used in `jump-in-and-trail`
   -s SYMBOL, --symbol SYMBOL
                         the market symbol as used by binance
-  -t TEST, --test TEST  use this to test specific systems like "notification". if test is not None the engine will NOT start! It only tests!
-  -v, --version         show the program version, which is `0.3.0` by the way :)
-```
+  -t TEST, --test TEST  use this to test specific systems like "notification". if test is not None the engine will NOT
+                        start! it only tests!
+  -v, --version         show the program version, which is `0.4.2` by the way :)```
 
 ## Example usage
 Check if a new update is available:
