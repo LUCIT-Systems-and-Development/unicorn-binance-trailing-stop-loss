@@ -56,7 +56,7 @@ def main():
     log_format = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
     parser = argparse.ArgumentParser(
-          description=f"UNICORN Binance Trailing Stop Loss CLI {version} (MIT License)",
+          description=f"UNICORN Binance Trailing Stop Loss {version} (MIT License)",
           prog=f"ubtsl",
           formatter_class=argparse.RawDescriptionHelpFormatter,
           epilog=textwrap.dedent('''\
