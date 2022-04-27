@@ -41,7 +41,7 @@ file from the home and the current working directory. Alternatively, you can spe
 $ ubtsl --test notification
 ```
 
-Alternatively it is possible to start ubtsl cli like this:
+Alternatively it is possible to start `ubtsl` like this:
 
 Linux/Mac:
 
@@ -61,8 +61,9 @@ If profiles are available, they can be activated with the `--profiles` parameter
 $ ubtsl --profile LUNAUSDT_SELL
 ```
 
-Instead of loading the values from profiles, they can also be defined explicitly via command line parameters. Any CLI 
-parameters will overwrite predefined values from the profile.
+Instead of loading the values from profiles, they can also be defined explicitly via command line parameters. 
+
+Any CLI parameters will overwrite predefined values from the profile.
 
 Once the tool is started, it trailes the stop/loss order until it is completely fulfilled and then calls the function 
 passed with the `callback_finished` parameter.
