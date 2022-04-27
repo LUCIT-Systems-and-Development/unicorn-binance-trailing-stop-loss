@@ -33,6 +33,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
+from unicorn_binance_trailing_stop_loss.cli import main
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 import logging
 import unittest
@@ -84,6 +85,9 @@ UBTSL = BinanceTrailingStopLossManager(callback_error=callback_error,
 class TestBinanceComManager(unittest.TestCase):
     def test_stop(self):
         self.assertTrue(UBTSL.stop_manager())
+
+    def test_cli(self):
+        main()
 
 
 if __name__ == '__main__':
