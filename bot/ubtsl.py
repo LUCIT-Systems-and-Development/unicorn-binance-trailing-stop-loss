@@ -34,9 +34,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-import sys
-sys.path.append("..")
-
-from unicorn_binance_trailing_stop_loss.cli import main  # noqa: E402
+from unicorn_binance_trailing_stop_loss.cli import main
 
 main()
