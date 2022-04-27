@@ -20,10 +20,7 @@
 # UNICORN Binance Trailing Stop Loss Bot
 
 ## Description
-The UNICORN Binance Trailing Stop Loss Bot `ubtsl`/`ubtsl.exe` is installed during the 
-[installation](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
-of `unicorn-binance-trailing-stop-loss` with PIP and is used to interact with the 
-[`UNICORN Binance Tailing Stop Loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) library.
+The UNICORN Binance Trailing Stop Loss Bot is installed by ...
 
 ## Disclaimer
 This project is for informational purposes only. You should not construe this information or any other material as 
