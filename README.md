@@ -119,6 +119,9 @@ The current dependencies are listed
 
 If you run into errors during the installation take a look [here](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki/Installation).
 
+If you just want to install the `UNICORN Binance Trailing Stop Loss Bot` read 
+[this!](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html)
+
 ### A wheel and a source file of the latest release with `pip` from [PyPI](https://pypi.org/project/unicorn-binance-trailing-stop-loss/)
 `pip install unicorn-binance-trailing-stop-loss --upgrade`
 
