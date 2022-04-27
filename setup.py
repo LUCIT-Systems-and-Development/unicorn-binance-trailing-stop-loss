@@ -61,7 +61,7 @@ setuptools.setup(
         'Telegram': 'https://t.me/unicorndevs',
      },
      python_requires='>=3.7.0',
-     packages=setuptools.find_packages(),
+     packages=setuptools.find_packages(exclude=["images", "pypi", "sphinx", "docs", ".github", "bot", "cli"]),
      entry_points={
          "console_scripts": [
              "ubtsl = unicorn_binance_trailing_stop_loss.__main__:main",
