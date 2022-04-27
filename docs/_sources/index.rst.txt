@@ -11,6 +11,7 @@ Welcome to unicorn-binance-trailing-stop-loss's documentation!
    :caption: Contents:
 
    Readme <README.md>
+   BOT <BOT.md>
    CLI <CLI.md>
    Modules <modules.rst>
    ChangeLog <CHANGELOG.md>
