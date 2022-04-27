@@ -211,7 +211,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.lock_create_stop_loss_order = threading.Lock()
         self.ubra_user: BinanceRestApiManager = BinanceRestApiManager(self.binance_public_key,
                                                                       self.binance_private_key,
-                                                                      exchange=self.exchange)
+                                                                      exchange=self.exchange,
+                                                                      warn_on_update=warn_on_update)
         if warn_on_update and self.is_update_available():
             update_msg = f"Release {self.name}_" + self.get_latest_version() + " is available, " \
                                                                                "please consider updating! (Changelog: https://github.com/LUCIT-Systems-and-Development/" \
@@ -227,12 +228,14 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 BinanceWebSocketApiManager(exchange=exchange,
                                            process_stream_data=self.process_price_feed_stream,
                                            output_default="UnicornFy",
-                                           high_performance=True)
+                                           high_performance=True,
+                                           warn_on_update=warn_on_update)
             self.ubwa_user: BinanceWebSocketApiManager = \
                 BinanceWebSocketApiManager(exchange=self.exchange,
                                            process_stream_data=self.process_userdata_stream,
                                            output_default="UnicornFy",
-                                           high_performance=True)
+                                           high_performance=True,
+                                           warn_on_update=warn_on_update)
         except UnknownExchange:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
             if test is None:
@@ -854,8 +857,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: bool
         """
-        self.logger.info(f"BinanceTrailingStopLossManager.stop_manager() - Gracefully stopping unicorn-binance-stop-loss "
-                         f"engine ...")
+        self.logger.info(f"BinanceTrailingStopLossManager.stop_manager() - Gracefully stopping "
+                         f"unicorn-binance-stop-loss engine ...")
         self.stop_request = True
         try:
             self.ubwa_pub.stop_manager_with_all_streams()

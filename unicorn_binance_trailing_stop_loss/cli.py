@@ -187,9 +187,9 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    # Print the version
+    # Update available?
     if options.checkupdate is True:
-        ubtsl = unicorn_binance_trailing_stop_loss.BinanceTrailingStopLossManager(start_engine=False)
+        ubtsl = BinanceTrailingStopLossManager(start_engine=False, warn_on_update=False)
         if ubtsl.is_update_available():
             print("A new update is available: https://github.com/LUCIT-Systems-and-Development/"
                   "unicorn-binance-trailing-stop-loss/releases/latest")
@@ -410,7 +410,7 @@ def main():
                 if isolated_margin_account['assets'][0]['symbol'] == stop_loss_market:
                     # Todo: Calc borrow_threshold
                     # Todo: Take full loan
-                    ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
+                    # ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
                     free_quote_asset = isolated_margin_account['assets'][0]['quoteAsset']['free']
                     try:
                         margin_order = ubra.create_margin_order(symbol=stop_loss_market,
