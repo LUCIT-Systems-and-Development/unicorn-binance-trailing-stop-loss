@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - `config` and `pandas` to dependencies
 ### Changed
 - CLI help msg
-- Config file path to {home}/lucit/ubtsl_*.ini
+- Config file path to {home}/.lucit/ubtsl_*.ini
 ### Fixed
 - Ignore missing ubtsl_profile.ini if test is not None
 - `Optional` bracket in `manager.get_exchange_info()`
