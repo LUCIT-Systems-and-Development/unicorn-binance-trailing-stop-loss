@@ -37,8 +37,8 @@ For more information [read here](https://www.lucit.tech/ubtsl-cli.html).
 
 ## Download
 ### Windows
-Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/download/0.5.0/ubtsl_setup.exe)
-for Windows.
+Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest)
+from GitHub.
 
 ### Mac
 Comming soon!
