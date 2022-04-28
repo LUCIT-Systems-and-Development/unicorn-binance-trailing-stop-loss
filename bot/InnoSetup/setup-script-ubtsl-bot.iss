@@ -40,8 +40,6 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
 Source: "Z:\unicorn-binance-trailing-stop-loss\dist\ubtsl\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\unicorn-binance-trailing-stop-loss\bot\InnoSetup\ubtsl_config.ini"; DestDir: "{%USERPROFILE}\.lucit"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "Z:\unicorn-binance-trailing-stop-loss\bot\InnoSetup\ubtsl_profiles.ini"; DestDir: "{%USERPROFILE}\.lucit"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Z:\unicorn-binance-trailing-stop-loss\dist\ubtsl\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -69,9 +67,7 @@ end;
 [Run]
 Filename: "{cmd}"; Parameters: "/C mkdir ""{app}\bin"""
 Filename: "{cmd}"; Parameters: "/C mklink /D ""{app}\bin\ubtsl.exe"" ""{app}\ubtsl.exe"""
-Filename: "{%USERPROFILE}\.lucit\ubtsl_config.ini"; Description: "Edit the `ubtsl_config.ini` file."; Flags: postinstall shellexec skipifsilent 
-Filename: "{%USERPROFILE}\.lucit\ubtsl_profiles.ini"; Description: "Edit the `ubtsl_profiles.ini` file."; Flags: postinstall shellexec skipifsilent
-Filename: "https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html"; Description: "Open the info web page to read about further information."; Flags: shellexec runasoriginaluser postinstall 
+Filename: "https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html"; Description: "Open the info web page to read about further information."; Flags: shellexec runasoriginaluser postinstall
 Filename: "https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss"; Description: "If you like this project, we would be very happy about a star on GitHub."; Flags: shellexec runasoriginaluser postinstall unchecked 
 Filename: "https://twitter.com/LUCIT_SysDev"; Description: "Follow us on Twitter to be informed about new software releases."; Flags: shellexec runasoriginaluser postinstall unchecked
 

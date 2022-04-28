@@ -3,8 +3,6 @@
 # ./setup.py
 # https://github.com/conda-forge/unicorn-binance-trailing-stop-loss-feedstock/blob/main/recipe/meta.yaml
 
-config
-pandas
 requests
 ubtsl
 unicorn-binance-rest-api
