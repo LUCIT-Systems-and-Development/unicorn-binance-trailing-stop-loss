@@ -10,11 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 0.5.0
 ### Added
 - Warn on updates parameter
+- `config` and `pandas` to dependencies
 ### Changed
 - CLI help msg
+- Config file path to {home}/lucit/ubtsl_*.ini
 ### Fixed
 - Ignore missing ubtsl_profile.ini if test is not None
-
 ## 0.4.2
 ### Fixed
 - Module name for console_scripts in setup.py
