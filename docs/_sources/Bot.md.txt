@@ -28,7 +28,7 @@ and has the exact same interface and configuration setup as the
 The bot only does not require a pre-installed Python environment and can be easily installed on Windows and Mac with a 
 setup file. If you already have an installed Python environment, we recommend 
 [installing via PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) and using
-the [`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html)
+the [`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html).
 
 By activating the `jump-in-and-trail` engine, the bot first buys the predefined amount of assests and then 
 trails them automatically. 

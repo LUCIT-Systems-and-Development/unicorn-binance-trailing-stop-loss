@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - Ignore missing ubtsl_profile.ini if test is not None
 - `Optional` bracket in `manager.get_exchange_info()`
+- Using `\` as path separator in windows
 
 ## 0.4.2
 ### Fixed
