@@ -28,7 +28,7 @@ A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cl
 Binance Exchange in a easy, fast, flexible, robust and fully-featured way.
 
 As [`UNICORN Binance Trailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html)
-we also offer a stand-alone version that does not require an installed Python environment.
+we also offer a standalone version that does not require an installed Python environment.
 
 Part of ['UNICORN Binance Suite'](https://www.lucit.tech/unicorn-binance-suite.html).
 
