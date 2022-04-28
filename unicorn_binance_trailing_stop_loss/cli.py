@@ -39,6 +39,7 @@ from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIEx
 from configparser import ConfigParser, ExtendedInterpolation
 import argparse
 import logging
+import platform
 import os
 import sys
 import textwrap
@@ -52,7 +53,12 @@ from pathlib import Path
 
 def main():
     version = BinanceTrailingStopLossManager.get_version()
-    home_path = str(Path.home()) + "/"
+    os_type = platform.system()
+    if os_type == "Windows":
+        path_separator = "\\"
+    else:
+        path_separator = "/"
+    home_path = str(Path.home()) + path_separator
     log_format = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
     parser = argparse.ArgumentParser(
@@ -257,9 +263,9 @@ def main():
         config_file = str(options.configfile)
     else:
         # Load secrets from default filenames
-        config_file_lucit = f"{home_path}lucit/trading_tools.ini"
+        config_file_lucit = f"{home_path}.lucit/trading_tools.ini"
         config_file_cwd = f"ubtsl_config.ini"
-        config_file_home = f"{home_path}lucit/ubtsl_config.ini"
+        config_file_home = f"{home_path}.lucit/ubtsl_config.ini"
         if os.path.isfile(config_file_lucit):
             config_file = config_file_lucit
         elif os.path.isfile(config_file_cwd):
@@ -295,7 +301,7 @@ def main():
         profiles_file = str(options.profilesfile)
     else:
         profiles_file_cwd = "ubtsl_profiles.ini"
-        profiles_file_home = f"{home_path}ubtsl_profiles.ini"
+        profiles_file_home = f"{home_path}.lucit/ubtsl_profiles.ini"
         if os.path.isfile(profiles_file_cwd):
             profiles_file = profiles_file_cwd
         elif os.path.isfile(profiles_file_home):
