@@ -40,8 +40,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
 Source: "C:\Users\Oliver\PycharmProjects\unicorn-binance-trailing-stop-loss\bot\dist\ubtsl\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\unicorn-binance-trailing-stop-loss\bot\InnoSetup\ubtsl_config.ini"; DestDir: "{USERPROFILE}\lucit"; Flags: ignoreversion
-Source: "Z:\unicorn-binance-trailing-stop-loss\bot\InnoSetup\ubtsl_profiles.ini"; DestDir: "{USERPROFILE\lucit}"; Flags: ignoreversion
+Source: "Z:\unicorn-binance-trailing-stop-loss\bot\InnoSetup\ubtsl_config.ini"; DestDir: "{%USERPROFILE}\lucit"; Flags: ignoreversion
+Source: "Z:\unicorn-binance-trailing-stop-loss\bot\InnoSetup\ubtsl_profiles.ini"; DestDir: "{%USERPROFILE}\lucit"; Flags: ignoreversion
 Source: "C:\Users\Oliver\PycharmProjects\unicorn-binance-trailing-stop-loss\bot\dist\ubtsl\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -62,9 +62,12 @@ procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 begin
     if CurUninstallStep = usPostUninstall
     then EnvRemovePath(ExpandConstant('{app}') +'\bin');
+    if CurUninstallStep = usPostUninstall
+    then DelTree(ExpandConstant('{app}') +'\bin', True, True, True);
 end;
 
 [Run]
-Filename: "{USERPROFILE}\lucit\ubtsl_config.ini"; Description: "Edit the ubtsl_config.ini file"; Flags: postinstall shellexec skipifsilent
-Filename: "{USERPROFILE}\lucit\ubtsl_profiles.ini"; Description: "Edit the ubtsl_profiles.ini file"; Flags: postinstall shellexec skipifsilent
-Filename: "{cmd}"; Parameters: "/K ubtsl --help"; Description: "Launch cmd.exe"; Flags: postinstall nowait skipifsilent unchecked
+Filename: "{cmd}"; Parameters: "/C mkdir ""{app}\bin"""
+Filename: "{cmd}"; Parameters: "/C mklink /D ""{app}\bin\ubtsl.exe"" ""{app}\ubtsl.exe"""
+Filename: "{%USERPROFILE}\lucit\ubtsl_config.ini"; Description: "Edit the ubtsl_config.ini file"; Flags: postinstall shellexec skipifsilent
+Filename: "{%USERPROFILE}\lucit\ubtsl_profiles.ini"; Description: "Edit the ubtsl_profiles.ini file"; Flags: postinstall shellexec skipifsilent
