@@ -34,7 +34,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-from .manager import BinanceTrailingStopLossManager
+from manager import BinanceTrailingStopLossManager
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 import argparse
@@ -257,9 +257,9 @@ def main():
         config_file = str(options.configfile)
     else:
         # Load secrets from default filenames
-        config_file_lucit = f"{home_path}.lucit_trading_tools.ini"
+        config_file_lucit = f"{home_path}lucit/trading_tools.ini"
         config_file_cwd = f"ubtsl_config.ini"
-        config_file_home = f"{home_path}ubtsl_config.ini"
+        config_file_home = f"{home_path}lucit/ubtsl_config.ini"
         if os.path.isfile(config_file_lucit):
             config_file = config_file_lucit
         elif os.path.isfile(config_file_cwd):
@@ -267,12 +267,12 @@ def main():
         elif os.path.isfile(config_file_home):
             config_file = config_file_home
         else:
-            if test is None:
-                logger.critical("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
-                                "the parameter --secretsfile is mandatory! Please use --help for further information!")
-                print("If ´ubtsl_secrets.ini´ is not in the home or current working directory or is renamed, then "
-                      "the parameter --secretsfile is mandatory! Please use --help for further information!")
-                sys.exit(1)
+            logger.critical(f"If ´ubtsl_secrets.ini´ is not in the `{home_path}lucit` or current working directory or "
+                            f"is renamed, then the parameter --secretsfile is mandatory! Please use --help for "
+                            f"further information!")
+            print(f"If ´ubtsl_secrets.ini´ is not in the `{home_path}lucit` or current working directory or is renamed"
+                  f", then the parameter --secretsfile is mandatory! Please use --help for further information!")
+            sys.exit(1)
 
     logger.info(f"Loading configuration file `{config_file}`")
     print(f"Loading configuration file `{config_file}`")

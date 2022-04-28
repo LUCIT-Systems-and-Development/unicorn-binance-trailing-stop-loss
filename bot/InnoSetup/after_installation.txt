@@ -1,0 +1,9 @@
+Finally you have to set up manually the `ubtsl_config.ini` and `ubtsl_profiles.ini` files.
+
+To run the bot start a terminal/console window like `cmd.exe` and then type `ubtsl.exe --test notification`.
+
+For further information visit:
+https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html
+
+Get customized trading software by LUCIT:
+https://www.lucit.tech

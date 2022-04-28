@@ -9,7 +9,6 @@
 # Documentation: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech
 # PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss
 #
-#
 # Author: LUCIT Systems and Development
 #
 # Copyright (c) 2022-2022, LUCIT Systems and Development (https://www.lucit.tech) and Oliver Zehentleitner
