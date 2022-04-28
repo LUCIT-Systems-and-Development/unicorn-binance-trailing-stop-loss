@@ -37,6 +37,6 @@ py -m pip install "Z:\unicorn-binance-trailing-stop-loss\dist\unicorn_binance_tr
 echo Creating ubtsl.exe ...
 cd bot
 pyinstaller ubtsl.py
-robocopy dist Z:\unicorn-binance-trailing-stop-loss\dist\ /s /e
+robocopy dist Z:\unicorn-binance-trailing-stop-loss\bot\ /s /e
 cd ..
 bot\remove_win_exe.bat
