@@ -49,7 +49,8 @@ setuptools.setup(
      long_description=long_description,
      long_description_content_type="text/markdown",
      license='MIT License',
-     install_requires=['requests', 'unicorn-binance-websocket-api', 'unicorn-binance-rest-api', 'ubtsl'],
+     install_requires=['config', 'pandas', 'requests', 'unicorn-binance-websocket-api', 'unicorn-binance-rest-api',
+                       'ubtsl'],
      keywords='binance, ',
      project_urls={
         'Documentation': 'https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss',
