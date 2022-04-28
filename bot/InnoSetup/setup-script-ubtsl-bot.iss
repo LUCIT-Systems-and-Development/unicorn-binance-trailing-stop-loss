@@ -28,7 +28,7 @@ InfoAfterFile=C:\Users\Oliver\PycharmProjects\unicorn-binance-trailing-stop-loss
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir=C:\Users\Oliver\PycharmProjects\unicorn-binance-trailing-stop-loss\bot\dist
+OutputDir=Z:\unicorn-binance-trailing-stop-loss\dist
 OutputBaseFilename=ubtsl_setup
 Compression=lzma
 SolidCompression=yes
