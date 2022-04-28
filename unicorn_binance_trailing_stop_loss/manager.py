@@ -466,7 +466,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         else:
             return True
 
-    def get_exchange_info(self) -> [dict]:
+    def get_exchange_info(self) -> Optional[dict]:
         """
         Get the exchange info.
 

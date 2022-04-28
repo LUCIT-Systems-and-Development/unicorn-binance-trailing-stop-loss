@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Config file path to {home}/lucit/ubtsl_*.ini
 ### Fixed
 - Ignore missing ubtsl_profile.ini if test is not None
+- `Optional` bracket in `manager.get_exchange_info()`
+
 ## 0.4.2
 ### Fixed
 - Module name for console_scripts in setup.py
