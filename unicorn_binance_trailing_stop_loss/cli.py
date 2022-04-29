@@ -272,7 +272,7 @@ def main():
                   f"profit: {fee*(float(order['order_price'])-float(buy_price))}")
         ubtsl.stop_manager()
 
-    def load_examples_ini_from_git_hub(example_name: str = None) -> Optional[str]:
+    def load_examples_ini_from_github(example_name: str = None) -> Optional[str]:
         """
         Load example_*.ini files from GitHub
 
@@ -280,7 +280,7 @@ def main():
         :type example_name: str
         :return: str or None
         """
-        logger.info(f"load_examples_ini_from_git_hub() started ...")
+        logger.info(f"load_examples_ini_from_github() started ...")
         if example_name is None:
             return None
         example_ini = f"https://raw.githubusercontent.com/LUCIT-Systems-and-Development/" \
@@ -319,7 +319,7 @@ def main():
             if decision.upper() != "Y":
                 return False
         create_directory(config_path)
-        content = load_examples_ini_from_git_hub("config")
+        content = load_examples_ini_from_github("config")
         with open(config_file_path, "w+") as fh_config_file:
             fh_config_file.write(content)
         print(f"New config file `{config_file_path}` successfully created.")
@@ -335,7 +335,7 @@ def main():
             if decision.upper() != "Y":
                 return False
         create_directory(config_path)
-        content = load_examples_ini_from_git_hub("profiles")
+        content = load_examples_ini_from_github("profiles")
         with open(profiles_file_path, "w+") as fh_profiles_file:
             fh_profiles_file.write(content)
         print(f"New profiles file `{profiles_file_path}` successfully created.")
@@ -361,14 +361,14 @@ def main():
     # Print examples ini files:
     if options.example is not None:
         if options.example == "config":
-            print(f"{options.example}.ini example:\r\n{load_examples_ini_from_git_hub(example_name=options.example)}")
+            print(f"{options.example}.ini example:\r\n{load_examples_ini_from_github(example_name=options.example)}")
         if options.example == "profiles":
-            print(f"{options.example}.ini example:\r\n{load_examples_ini_from_git_hub(example_name=options.example)}")
+            print(f"{options.example}.ini example:\r\n{load_examples_ini_from_github(example_name=options.example)}")
         sys.exit(0)
 
     # Create config ini
     if options.createconfigini:
-        config_ini_text = load_examples_ini_from_git_hub(example_name="config")
+        config_ini_text = load_examples_ini_from_github(example_name="config")
 
     # Init test var
     test = None
