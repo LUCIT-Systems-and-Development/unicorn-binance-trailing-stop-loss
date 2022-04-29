@@ -30,6 +30,10 @@ Binance Exchange in a easy, fast, flexible, robust and fully-featured way.
 As [`UNICORN Binance Trailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html)
 we also offer a standalone version that does not require an installed Python environment.
 
+Please read carefully all provided documentation before using this lib!
+
+If you put this engine on a market, you should stop trading manually on this market yourself!
+
 Part of ['UNICORN Binance Suite'](https://www.lucit.tech/unicorn-binance-suite.html).
 
 ## How to start the trailing stop loss engine:

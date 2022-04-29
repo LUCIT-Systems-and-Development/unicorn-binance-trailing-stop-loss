@@ -1,8 +1,12 @@
-Finally you have to set up manually the `ubtsl_config.ini` and `ubtsl_profiles.ini` files. These files are located in your home directory under the folder `.lucit`.
+If you put this bot on a market, you should stop trading manually on this market yourself!
 
-To run the Bot start a terminal/console window like `cmd.exe` and then type `ubtsl.exe --test notification`.
+To work with `ubtsl` you have to open a shell/terminal/console window like `cmd.exe` or `powershell.exe`!
 
-For further information visit:
+If you want to use the config and profiles ini files, then run these commands after the installation in a terminal:
+$ ubtsl --createconfigini
+$ ubtsl --createprofilesini
+
+Please read carefully all provided documentation before using this tool and use it at your own risk:
 https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html
 
 If you like this project, we would be very happy about a star on GitHub:

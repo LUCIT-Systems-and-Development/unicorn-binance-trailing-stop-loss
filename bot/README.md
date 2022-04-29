@@ -28,6 +28,10 @@ and [Mac](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#mac
 setup file. If you already have an installed Python environment, we recommend [installing via PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
 and using the [`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html).
 
+Please read carefully all provided documentation before using this tool and use it at your own risk!
+
+If you put this bot on a market, you should stop trading manually on this market yourself!
+
 For more information about the usage [read here](https://www.lucit.tech/ubtsl-cli.html).
 
 ## Download

@@ -37,6 +37,7 @@
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
+from pathlib import Path
 from typing import Optional
 import argparse
 import logging
@@ -46,7 +47,7 @@ import requests
 import sys
 import textwrap
 import time
-from pathlib import Path
+import webbrowser
 
 """
     UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
@@ -63,6 +64,7 @@ def main():
     else:
         path_separator = "/"
     home_path = str(Path.home()) + path_separator
+    config_path = f"{home_path}.lucit{path_separator}"
     log_format = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
     parser = argparse.ArgumentParser(
@@ -122,9 +124,9 @@ def main():
                         action='store_true')
     parser.add_argument('-cf', '--configfile',
                         type=str,
-                        help='specify path including filename to the config file (ex: `~/my_config.ini`). if not '
-                             'provided ubtsl tries to load a `ubtsl_config.ini` from the home and the current working '
-                             'directory.',
+                        help=f"specify path including filename to the config file (ex: `~/my_config.ini`). if not "
+                             f"provided ubtsl tries to load a `ubtsl_config.ini` from the `{config_path}` and the "
+                             f"current working directory.",
                         required=False)
     parser.add_argument('-cu', '--checkupdate',
                         help=f'check if update is available and then stop.',
@@ -178,9 +180,9 @@ def main():
                         required=False)
     parser.add_argument('-pff', '--profilesfile',
                         type=str,
-                        help='specify path including filename to the profiles file (ex: `~/my_profiles.ini`). if not '
-                             'available ubtsl tries to load a ubtsl_profile.ini from the home and the current working '
-                             'directory',
+                        help=f"specify path including filename to the profiles file (ex: `~/my_profiles.ini`). if not "
+                             f"available ubtsl tries to load a ubtsl_profile.ini from the `{config_path}` and the "
+                             f"current working directory",
                         required=False)
     parser.add_argument('-r', '--resetstoplossprice',
                         type=str,
@@ -213,9 +215,132 @@ def main():
                         action='store_true')
     options = parser.parse_args()
 
+    # Log file
+    if options.logfile is True:
+        logfile = options.logfile
+    else:
+        logfile = os.path.basename(__file__) + '.log'
+
+    # Log level
+    if options.loglevel == "DEBUG":
+        loglevel = logging.DEBUG
+    elif options.loglevel == "INFO":
+        loglevel = logging.INFO
+    elif options.loglevel == "WARN" or options.loglevel == "WARNING":
+        loglevel = logging.WARNING
+    elif options.loglevel == "ERROR":
+        loglevel = logging.ERROR
+    elif options.loglevel == "CRITICAL":
+        loglevel = logging.CRITICAL
+    else:
+        loglevel = logging.INFO
+
+    # Config logger
+    logging.basicConfig(level=loglevel,
+                        filename=logfile,
+                        format=log_format,
+                        style="{")
+    logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
+
+    # Functions
+    def callback_error(message):
+        """
+        Callback function for error event provided to the unicorn-binance-trailing-stop-loss engine
+
+        :param message: Text message provided by ubtsl lib
+        :return: None
+        """
+        logger.debug(f"callback_error() started ...")
+        print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {message}")
+        ubtsl.stop_manager()
+
+    def callback_finished(order):
+        """
+        Callback function for finished event provided to the unicorn-binance-trailing-stop-loss engine
+
+        :param order: Details of the fullfilled stop/loss order
+        :return: None
+        """
+        logger.debug(f"callback_finished() started ...")
+        if engine == "jump-in-and-trail":
+            fee = 0.2
+            print(f"======================================================\r\n"
+                  f"buy_price: {float(buy_price):g}\r\n"
+                  f"sell_price: {float(order['order_price']):g}\r\n"
+                  f"fee: ~{fee}%\r\n"
+                  f"------------------------------------------------------\r\n"
+                  f"profit: {fee*(float(order['order_price'])-float(buy_price))}")
+        ubtsl.stop_manager()
+
+    def load_examples_ini_from_git_hub(example_name: str = None) -> Optional[str]:
+        """
+        Load example_*.ini files from GitHub
+
+        :param example_name: `config` or `profiles`
+        :type example_name: str
+        :return: str or None
+        """
+        logger.info(f"load_examples_ini_from_git_hub() started ...")
+        if example_name is None:
+            return None
+        example_ini = f"https://raw.githubusercontent.com/LUCIT-Systems-and-Development/" \
+                      f"unicorn-binance-trailing-stop-loss/master/cli/example_ubtsl_{example_name}.ini"
+        response = requests.get(example_ini)
+        return response.text
+
+    def create_directory(directory: str = None) -> bool:
+        """
+        Create a directory if not exists.
+
+        Returns True if exists or is successfully created
+
+        :param directory: The full path of the directory to create
+        :type directory: str
+        :return: bool
+        """
+        logger.info(f"create_directory() started ...")
+        if os.path.isdir(directory):
+            return True
+        else:
+            os.makedirs(directory)
+            return True
+
+    # Exit if no args provided
     if len(sys.argv) <= 1:
         parser.print_help()
         sys.exit(1)
+
+    # Create config ini
+    if options.createconfigini is True:
+        config_file_path = f"{config_path}ubtsl_config.ini"
+        print("Creating config ini file ...")
+        if os.path.isfile(config_file_path):
+            decision = input(f"The file `{config_file_path}` already exists. Do you want to overwrite it? [y/N]")
+            if decision.upper() != "Y":
+                return False
+        create_directory(config_path)
+        content = load_examples_ini_from_git_hub("config")
+        with open(config_file_path, "w+") as fh_config_file:
+            fh_config_file.write(content)
+        print(f"New config file `{config_file_path}` successfully created.")
+        print(f"Use `ubtsl --openconfigini` to open it in an editor.")
+        sys.exit(0)
+
+    # Create profiles ini
+    if options.createprofilesini is True:
+        profiles_file_path = f"{config_path}ubtsl_profiles.ini"
+        print("Creating config ini file ...")
+        if os.path.isfile(profiles_file_path):
+            decision = input(f"The file `{profiles_file_path}` already exists. Do you want to overwrite it? [y/N]")
+            if decision.upper() != "Y":
+                return False
+        create_directory(config_path)
+        content = load_examples_ini_from_git_hub("profiles")
+        with open(profiles_file_path, "w+") as fh_profiles_file:
+            fh_profiles_file.write(content)
+        print(f"New profiles file `{profiles_file_path}` successfully created.")
+        print(f"Use `ubtsl --openprofilesini` to open it in an editor.")
+        sys.exit(0)
 
     # Update available?
     if options.checkupdate is True:
@@ -245,61 +370,20 @@ def main():
     if options.createconfigini:
         config_ini_text = load_examples_ini_from_git_hub(example_name="config")
 
-    def callback_error(message):
-        print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {message}")
-        ubtsl.stop_manager()
-
-    def callback_finished(order):
-        if engine == "jump-in-and-trail":
-            fee = 0.2
-            print(f"======================================================\r\n"
-                  f"buy_price: {float(buy_price):g}\r\n"
-                  f"sell_price: {float(order['order_price']):g}\r\n"
-                  f"fee: ~{fee}%\r\n"
-                  f"------------------------------------------------------\r\n"
-                  f"profit: {fee*(float(order['order_price'])-float(buy_price))}")
-        ubtsl.stop_manager()
-
-    # Log file
-    if options.logfile is True:
-        logfile = options.logfile
-    else:
-        logfile = os.path.basename(__file__) + '.log'
-
-    # Log level
-    if options.loglevel == "DEBUG":
-        loglevel = logging.DEBUG
-    elif options.loglevel == "INFO":
-        loglevel = logging.INFO
-    elif options.loglevel == "WARN" or options.loglevel == "WARNING" :
-        loglevel = logging.WARNING
-    elif options.loglevel == "ERROR":
-        loglevel = logging.ERROR
-    elif options.loglevel == "CRITICAL":
-        loglevel = logging.CRITICAL
-    else:
-        loglevel = logging.INFO
-
-    # Config logger
-    logging.basicConfig(level=loglevel,
-                        filename=logfile,
-                        format=log_format,
-                        style="{")
-    logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
-
+    # Init test var
     test = None
     if options.test is not None:
         test = options.test
 
-    # Load config.ini file
+    # Choose config file
     if options.configfile is not None:
         # Load from cli arg if provided
         config_file = str(options.configfile)
     else:
-        # Load secrets from default filenames
-        config_file_lucit = f"{home_path}.lucit{path_separator}trading_tools.ini"
+        # Load config from default filenames
+        config_file_lucit = f"{config_path}trading_tools.ini"
         config_file_cwd = f"ubtsl_config.ini"
-        config_file_home = f"{home_path}.lucit{path_separator}ubtsl_config.ini"
+        config_file_home = f"{config_path}ubtsl_config.ini"
         if os.path.isfile(config_file_lucit):
             config_file = config_file_lucit
         elif os.path.isfile(config_file_cwd):
@@ -315,13 +399,13 @@ def main():
                 print(msg)
                 sys.exit(1)
 
-    # Load profiles.ini file
+    # Choose profiles file
     if options.profilesfile is not None:
         # Load from cli arg if provided
         profiles_file = str(options.profilesfile)
     else:
         profiles_file_cwd = "ubtsl_profiles.ini"
-        profiles_file_home = f"{home_path}.lucit{path_separator}ubtsl_profiles.ini"
+        profiles_file_home = f"{config_path}ubtsl_profiles.ini"
         if os.path.isfile(profiles_file_cwd):
             profiles_file = profiles_file_cwd
         elif os.path.isfile(profiles_file_home):
@@ -329,23 +413,24 @@ def main():
         else:
             profiles_file = None
 
+    # Open ini files
     if options.openconfigini:
-        print(f"This is a semi-automatic function, now please open the config file `{config_file}` in an editor "
-              f"of your choice :)")
+        print(f"Opening `{config_file}` ...")
+        webbrowser.open(config_file)
         sys.exit(0)
 
     if options.openprofilesini:
-        print(f"This is a semi-automatic function, now please open the profiles file `{profiles_file}` in an editor "
-              f"of your choice :)")
+        print(f"Opening `{profiles_file}` ...")
+        webbrowser.open(profiles_file)
         sys.exit(0)
 
     # Officially starting:
     logger.info(f"Started ubtsl_{version}")
     print(f"Started ubtsl_{version}")
 
+    # Loading config ini
     logger.info(f"Loading configuration file `{config_file}`")
     print(f"Loading configuration file `{config_file}`")
-
     config = ConfigParser(interpolation=ExtendedInterpolation())
     config.read(config_file)
     public_key = config['BINANCE']['api_key']
@@ -358,12 +443,13 @@ def main():
     telegram_bot_token = config['TELEGRAM']['bot_token']
     telegram_send_to = config['TELEGRAM']['send_to']
 
-
+    # Loading profiles ini
     logger.info(f"Loading profiles file `{profiles_file}`")
     print(f"Loading profiles file `{profiles_file}`")
     profiles = ConfigParser(interpolation=ExtendedInterpolation())
     profiles.read(profiles_file)
 
+    # Init trailing stop loss vars
     engine = "trail"
     exchange = ""
     keep_threshold = ""
@@ -444,6 +530,7 @@ def main():
     if options.orderside is not None:
         stop_loss_side = options.orderside
 
+    # Normalize `reset_stop_loss_price`
     if str(reset_stop_loss_price).upper() == "TRUE":
         reset_stop_loss_price = True
     else:
@@ -521,22 +608,6 @@ def main():
         except KeyboardInterrupt:
             print("\nStopping ... just wait a few seconds!")
             ubtsl.stop_manager()
-
-
-def load_examples_ini_from_git_hub(example_name: str = None) -> Optional[str]:
-    """
-    Load example_*.ini files from GitHub
-
-    :param example_name: `config` or `profiles`
-    :type example_name: str
-    :return: str or None
-    """
-    if example_name is None:
-        return None
-    example_ini = f"https://raw.githubusercontent.com/LUCIT-Systems-and-Development/" \
-                  f"unicorn-binance-trailing-stop-loss/master/cli/example_ubtsl_{example_name}.ini"
-    response = requests.get(example_ini)
-    return response.text
 
 
 if __name__ == "__main__":

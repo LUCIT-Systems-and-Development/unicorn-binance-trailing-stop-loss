@@ -21,12 +21,16 @@
 
 ## Description
 The CLI interface `ubtsl`/`ubtsl.exe` is installed during the 
-[installation of `unicorn-binance-trailing-stop-loss` with PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade)  
-and is used to interact with the 
+[installation of `unicorn-binance-trailing-stop-loss` with PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) and 
+is used to interact with the 
 [`unicorn-binance-trailing-stop-loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) Python library.
 
 If you are looking for a standalone version that runs without an installed Python environment, you can use
 [`UNICORN Binance Tailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html).
+
+Please read carefully all provided documentation before using this tool and use it at your own risk!
+
+If you put this engine on a market, you should stop trading manually on this market yourself!
 
 After startup `ubtsl` tries to load a 
 [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
