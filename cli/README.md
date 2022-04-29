@@ -109,11 +109,15 @@ Windows:
 $ py -m ubtsl --help
 ```
 
-If profiles are available, they can be activated with the `--profiles` parameter at startup. 
+### Load a profile
+
+If profiles are available, they can be activated with the `--profile` parameter at startup. 
 
 ```
 $ ubtsl --profile LUNAUSDT_SELL
 ```
+
+### Command line arguments
 
 Instead of loading the values from profiles, they can also be defined explicitly via command line parameters. 
 
@@ -180,9 +184,6 @@ options:
   -v, --version         show the program version and then stop. the version is `0.6.0` by the way :)
 ```
 
-By activating the `jump-in-and-trail` engine, the bot first buys the predefined amount of assests and then 
-trails them automatically. 
-
 ## Example commands
 ### Check if a new update is available
 ```
@@ -204,8 +205,11 @@ $ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
 ```
 
 ### Smart entry
-Start a smart entry by using `engine = "jump-in-and-trail"` like it is defined within the profile `LUNAUSDT_JUMP_IN` 
+Do a smart entry by using `engine = "jump-in-and-trail"` like it is defined within the profile `LUNAUSDT_JUMP_IN` 
 of the [example_ubtsl_profiles.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini).
+
+By activating the `jump-in-and-trail` engine, the bot first buys the predefined asset amount and then 
+trails them automatically. 
 
 ```
 $ ubtsl --profile LUNAUSDT_JUMP_IN
