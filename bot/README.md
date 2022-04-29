@@ -19,6 +19,9 @@
 
 # UNICORN Binance Trailing Stop Loss Bot
 
+After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
+notification can be sent via email and Telegram afterwards.
+
 The `UNICORN Binance Trailing Stop Loss Bot` uses the engine of the Python library [`unicorn-binance-trailing-stop-loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) 
 and has the exact same interface and configuration setup as the[`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html). 
 
@@ -27,7 +30,9 @@ and [Mac](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#mac
 setup file. If you already have an installed Python environment, we recommend [installing via PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
 and using the [`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html).
 
-Please read carefully all provided documentation before using this tool and use it at your own risk!
+Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/) and 
+look in the [issues](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues) about 
+known problems before using this tool - you use it at your own risk!
 
 If you put this bot on a market, you should stop trading manually on this market yourself!
 

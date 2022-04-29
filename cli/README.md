@@ -19,6 +19,9 @@
 
 # UNICORN Binance Trailing Stop Loss CLI
 
+After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
+notification can be sent via email and Telegram afterwards.
+
 The CLI interface `ubtsl`/`ubtsl.exe` is installed during the 
 [installation of `unicorn-binance-trailing-stop-loss` with PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) and 
 is used to interact with the 
@@ -27,7 +30,9 @@ is used to interact with the
 If you are looking for a standalone version that runs without an installed Python environment, you can use
 [`UNICORN Binance Tailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html).
 
-Please read carefully all provided documentation before using this tool and use it at your own risk!
+Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/) and 
+look in the [issues](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues) about 
+known problems before using this tool - you use it at your own risk!
 
 If you put this engine on a market, you should stop trading manually on this market yourself!
 

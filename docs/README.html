@@ -96,7 +96,9 @@
 Binance Exchange in a easy, fast, flexible, robust and fully-featured way.</p>
 <p>As <a class="reference external" href="https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html"><code class="docutils literal notranslate"><span class="pre">UNICORN</span> <span class="pre">Binance</span> <span class="pre">Trailing</span> <span class="pre">Stop</span> <span class="pre">Loss</span> <span class="pre">Bot</span></code></a>
 we also offer a standalone version that does not require an installed Python environment.</p>
-<p>Please read carefully all provided documentation before using this lib!</p>
+<p>Please read carefully all provided <a class="reference external" href="https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/">documentation</a> and
+look in the <a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues">issues</a> about
+known problems before using this tool - you use it at your own risk!</p>
 <p>If you put this engine on a market, you should stop trading manually on this market yourself!</p>
 <p>Part of <a class="reference external" href="https://www.lucit.tech/unicorn-binance-suite.html">‘UNICORN Binance Suite’</a>.</p>
 <div class="section" id="how-to-start-the-trailing-stop-loss-engine">
@@ -159,8 +161,9 @@ we also offer a standalone version that does not require an installed Python env
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>The Python package <a class="reference external" href="https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html">UNICORN Binance Trailing Stop Loss</a>
 provides a reuseable library and <a class="reference external" href="https://www.lucit.tech/ubtsl-cli.html">CLI interface</a>.</p>
-<p>Once the engine is started, it trails the stop/loss order until it is completely fulfilled and then calls the function
-passed with the <code class="docutils literal notranslate"><span class="pre">callback_finished</span></code> parameter. On error it calls the function passed to <code class="docutils literal notranslate"><span class="pre">callback_error</span></code>.</p>
+<p>After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a
+notification can be sent via email and Telegram afterwards. Then it calls the function
+passed with the <code class="docutils literal notranslate"><span class="pre">callback_finished</span></code> parameter or on error it calls the function passed to <code class="docutils literal notranslate"><span class="pre">callback_error</span></code>.</p>
 <div class="section" id="what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss">
 <h3>What are the benefits of the UNICORN Binance Trailing Stop Loss?<a class="headerlink" href="#what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -504,7 +507,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <div class="footer">
         <a href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues">Found a bug</a>?
         <br />
-        Last updated on Apr 29 2022 at 17:27 (CET).
+        Last updated on Apr 29 2022 at 18:17 (CET).
         <br />
         &copy; <a href="copyright.html">Copyright</a> 2022-2022, LUCIT Systems and Development and Oliver Zehentleitner.
         <br />

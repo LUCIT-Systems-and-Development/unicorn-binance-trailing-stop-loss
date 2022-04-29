@@ -30,7 +30,9 @@ Binance Exchange in a easy, fast, flexible, robust and fully-featured way.
 As [`UNICORN Binance Trailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html)
 we also offer a standalone version that does not require an installed Python environment.
 
-Please read carefully all provided documentation before using this lib!
+Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/) and 
+look in the [issues](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues) about 
+known problems before using this tool - you use it at your own risk!
 
 If you put this engine on a market, you should stop trading manually on this market yourself!
 
@@ -94,8 +96,9 @@ Read about the [CLI usage](https://www.lucit.tech/ubtsl-cli.html).
 The Python package [UNICORN Binance Trailing Stop Loss](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) 
 provides a reuseable library and [CLI interface](https://www.lucit.tech/ubtsl-cli.html).
 
-Once the engine is started, it trails the stop/loss order until it is completely fulfilled and then calls the function 
-passed with the `callback_finished` parameter. On error it calls the function passed to `callback_error`.
+After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
+notification can be sent via email and Telegram afterwards. Then it calls the function 
+passed with the `callback_finished` parameter or on error it calls the function passed to `callback_error`.
 
 ### What are the benefits of the UNICORN Binance Trailing Stop Loss?
 - Using websockets for push notifications about price updates and order updates. (Fast and low used API weight!)
