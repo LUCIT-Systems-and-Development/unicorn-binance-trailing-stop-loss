@@ -131,6 +131,7 @@ options:
   -t TEST, --test TEST  use this to test specific systems like "notification". if test is not None the engine will NOT start! it only tests!
   -v, --version         show the program version and then stop. the version is `0.6.0` by the way :)
 
+
 ```
 
 By activating the `jump-in-and-trail` engine, the bot first buys the predefined amount of assests and then 
