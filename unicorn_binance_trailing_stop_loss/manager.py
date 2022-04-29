@@ -36,6 +36,7 @@
 __version__ = "0.6.0.dev"
 
 # Todo:
+#   - Test API: --test binance-connectivity
 #   - PARTIALLY_FILLED how to handle? -> handle!
 #   - Not deleting and creating a new order with same price, just leave it
 #   - Make notifications customizable

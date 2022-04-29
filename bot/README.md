@@ -19,6 +19,8 @@
 
 # UNICORN Binance Trailing Stop Loss Bot
 
+[Description](#description) | [Installation](#installation) | [Disclaimer](#disclaimer)
+
 After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
 notification can be sent via email and Telegram afterwards.
 
@@ -46,7 +48,7 @@ The Bot and [CLI versions](https://www.lucit.tech/ubtsl-cli.html) are absolutely
 method and that the Bot version does not require a pre-installed Python environment. Please read the 
 [CLI manual](https://www.lucit.tech/ubtsl-cli.html#description) for more information. 
 
-## Download
+## Installation
 ### Windows
 Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest)
 from GitHub.
