@@ -36,6 +36,8 @@ known problems before using this tool - you use it at your own risk!
 
 If you put this engine on a market, you should stop trading manually on this market yourself!
 
+## Description
+
 After startup `ubtsl` tries to load a 
 [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
 and a 
