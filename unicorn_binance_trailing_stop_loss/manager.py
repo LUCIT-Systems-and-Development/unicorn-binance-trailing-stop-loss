@@ -61,6 +61,7 @@ import platform
 import smtplib
 import requests
 import ssl
+import sys
 import threading
 import time
 
@@ -241,7 +242,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             if test is None:
                 if self.print_notificatons:
                     print(f"Please use a valid exchange!")
-                exit()
+                sys.exit(1)
         if test is None and start_engine is True:
             msg = f"Starting thread  ..."
             self.logger.info(msg)
@@ -252,11 +253,14 @@ class BinanceTrailingStopLossManager(threading.Thread):
             self.logger.info(msg)
             print(msg)
             msg2 = f"Subject: unicorn-binance-trailing-stop-loss notificaton test\n\nTest notification"
-            self.send_email_notificaton(msg2)
-            self.send_telegram_notification(msg2)
-            msg3 = f"Messages sent, please check for incoming messages!"
-            self.logger.info(msg3)
-            print(msg3)
+            if self.send_email_notificaton(msg2):
+                msg3 = f"E-Mail sent, please check for incoming messages!"
+                self.logger.info(msg3)
+                print(msg3)
+            if self.send_telegram_notification(msg2):
+                msg4 = f"Telegram sent, please check for incoming messages!"
+                self.logger.info(msg4)
+                print(msg4)
 
     def calculate_stop_loss_amount(self,
                                    amount: float) -> Optional[float]:
@@ -608,7 +612,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         except BinanceAPIException as error_msg:
             self.logger.error(f"BinanceTrailingStopLossManager.get_symbol_info() - {error_msg}")
             if "APIError(code=-2008): Invalid Api-Key ID" in error_msg:
-                exit(1)
+                sys.exit(1)
             return None
 
     def get_user_agent(self):

@@ -125,6 +125,9 @@ options:
   -v, --version         show the program version, which is `0.4.2` by the way :)```
 ```
 
+By activating the `jump-in-and-trail` engine, the bot first buys the predefined amount of assests and then 
+trails them automatically. 
+
 ## Example usage
 Check if a new update is available:
 

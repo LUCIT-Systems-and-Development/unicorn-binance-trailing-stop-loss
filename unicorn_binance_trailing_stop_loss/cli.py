@@ -37,10 +37,12 @@
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
+from typing import Optional
 import argparse
 import logging
 import platform
 import os
+import requests
 import sys
 import textwrap
 import time
@@ -48,6 +50,8 @@ from pathlib import Path
 
 """
     UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
+    
+    More info: https://www.lucit.tech/ubtsl-cli.html
 """
 
 
@@ -108,6 +112,14 @@ def main():
                         type=str,
                         help="the API secret",
                         required=False)
+    parser.add_argument('-cci', '--createconfigini',
+                        help=f'create the config file and then stop',
+                        required=False,
+                        action='store_true')
+    parser.add_argument('-cpi', '--createprofilesini',
+                        help=f'create the profiles file and then stop',
+                        required=False,
+                        action='store_true')
     parser.add_argument('-cf', '--configfile',
                         type=str,
                         help='specify path including filename to the config file (ex: `~/my_config.ini`). if not '
@@ -115,9 +127,13 @@ def main():
                              'directory.',
                         required=False)
     parser.add_argument('-cu', '--checkupdate',
-                        help=f'check if update is available',
+                        help=f'check if update is available and then stop.',
                         required=False,
                         action='store_true')
+    parser.add_argument('-ex', '--example',
+                        type=str,
+                        help=f'show an example ini file from GitHub and then stop. options: `config` or `profiles`',
+                        required=False)
     parser.add_argument('-e', '--exchange',
                         type=str,
                         help="exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...",
@@ -139,6 +155,14 @@ def main():
                         help='default: INFO\r\n'
                              'available log levels: DEBUG, INFO, WARNING, ERROR and CRITICAL',
                         required=False)
+    parser.add_argument('-oci', '--openconfigini',
+                        help=f'open the used config file and then stop',
+                        required=False,
+                        action='store_true')
+    parser.add_argument('-opi', '--openprofilesini',
+                        help=f'open the used profiles file and then stop',
+                        required=False,
+                        action='store_true')
     parser.add_argument('-os', '--orderside',
                         type=str,
                         help="specify whether the trailing stop loss should be in buying or selling mode. (ex: 'buy' "
@@ -184,7 +208,7 @@ def main():
                              'will NOT start! it only tests!',
                         required=False)
     parser.add_argument('-v', '--version',
-                        help=f'show the program version, which is `{version}` by the way :)',
+                        help=f'show the program version and then stop. the version is `{version}` by the way :)',
                         required=False,
                         action='store_true')
     options = parser.parse_args()
@@ -200,7 +224,7 @@ def main():
             print("A new update is available: https://github.com/LUCIT-Systems-and-Development/"
                   "unicorn-binance-trailing-stop-loss/releases/latest")
         else:
-            print("No update found!")
+            print("No available updates found!")
         ubtsl.stop_manager()
         sys.exit(0)
 
@@ -208,6 +232,18 @@ def main():
     if options.version is True:
         print(f"UNICORN Binance Trailing Stop Loss {version}")
         sys.exit(0)
+
+    # Print examples ini files:
+    if options.example is not None:
+        if options.example == "config":
+            print(f"{options.example}.ini example:\r\n{load_examples_ini_from_git_hub(example_name=options.example)}")
+        if options.example == "profiles":
+            print(f"{options.example}.ini example:\r\n{load_examples_ini_from_git_hub(example_name=options.example)}")
+        sys.exit(0)
+
+    # Create config ini
+    if options.createconfigini:
+        config_ini_text = load_examples_ini_from_git_hub(example_name="config")
 
     def callback_error(message):
         print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {message}")
@@ -250,8 +286,6 @@ def main():
                         format=log_format,
                         style="{")
     logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
-    logger.info(f"Started ubtsl_{version}")
-    print(f"Started ubtsl_{version}")
 
     test = None
     if options.test is not None:
@@ -263,9 +297,9 @@ def main():
         config_file = str(options.configfile)
     else:
         # Load secrets from default filenames
-        config_file_lucit = f"{home_path}.lucit/trading_tools.ini"
+        config_file_lucit = f"{home_path}.lucit{path_separator}trading_tools.ini"
         config_file_cwd = f"ubtsl_config.ini"
-        config_file_home = f"{home_path}.lucit/ubtsl_config.ini"
+        config_file_home = f"{home_path}.lucit{path_separator}ubtsl_config.ini"
         if os.path.isfile(config_file_lucit):
             config_file = config_file_lucit
         elif os.path.isfile(config_file_cwd):
@@ -273,12 +307,41 @@ def main():
         elif os.path.isfile(config_file_home):
             config_file = config_file_home
         else:
-            logger.critical(f"If ´ubtsl_secrets.ini´ is not in the `{home_path}lucit` or current working directory or "
-                            f"is renamed, then the parameter --secretsfile is mandatory! Please use --help for "
-                            f"further information!")
-            print(f"If ´ubtsl_secrets.ini´ is not in the `{home_path}lucit` or current working directory or is renamed"
-                  f", then the parameter --secretsfile is mandatory! Please use --help for further information!")
-            sys.exit(1)
+            config_file = None
+            if options.apikey is None or options.apisecret is None:
+                msg = f"You must provide a valid Binance API key and secret, either as commandline parameter or as " \
+                      f"profile parameter.  Please use `ubtsl --help` for further information!"
+                logger.critical(msg)
+                print(msg)
+                sys.exit(1)
+
+    # Load profiles.ini file
+    if options.profilesfile is not None:
+        # Load from cli arg if provided
+        profiles_file = str(options.profilesfile)
+    else:
+        profiles_file_cwd = "ubtsl_profiles.ini"
+        profiles_file_home = f"{home_path}.lucit{path_separator}ubtsl_profiles.ini"
+        if os.path.isfile(profiles_file_cwd):
+            profiles_file = profiles_file_cwd
+        elif os.path.isfile(profiles_file_home):
+            profiles_file = profiles_file_home
+        else:
+            profiles_file = None
+
+    if options.openconfigini:
+        print(f"This is a semi-automatic function, now please open the config file `{config_file}` in an editor "
+              f"of your choice :)")
+        sys.exit(0)
+
+    if options.openprofilesini:
+        print(f"This is a semi-automatic function, now please open the profiles file `{profiles_file}` in an editor "
+              f"of your choice :)")
+        sys.exit(0)
+
+    # Officially starting:
+    logger.info(f"Started ubtsl_{version}")
+    print(f"Started ubtsl_{version}")
 
     logger.info(f"Loading configuration file `{config_file}`")
     print(f"Loading configuration file `{config_file}`")
@@ -295,25 +358,6 @@ def main():
     telegram_bot_token = config['TELEGRAM']['bot_token']
     telegram_send_to = config['TELEGRAM']['send_to']
 
-    # Load profiles.ini file
-    if options.profilesfile is not None:
-        # Load from cli arg if provided
-        profiles_file = str(options.profilesfile)
-    else:
-        profiles_file_cwd = "ubtsl_profiles.ini"
-        profiles_file_home = f"{home_path}.lucit/ubtsl_profiles.ini"
-        if os.path.isfile(profiles_file_cwd):
-            profiles_file = profiles_file_cwd
-        elif os.path.isfile(profiles_file_home):
-            profiles_file = profiles_file_home
-        else:
-            if test is None:
-                logger.critical("If ´ubtsl_profiles.ini´ is not in the home or current working directory or is renamed, "
-                                "then the parameter --profilesfile is mandatory! Please use --help for further "
-                                "information!")
-                print("If ´ubtsl_profiles.ini´ is not in the home or current working directory or is renamed, then "
-                      "the parameter --profilesfile is mandatory! Please use --help for further information!")
-                sys.exit(1)
 
     logger.info(f"Loading profiles file `{profiles_file}`")
     print(f"Loading profiles file `{profiles_file}`")
@@ -468,7 +512,8 @@ def main():
                                            stop_loss_side=stop_loss_side,
                                            telegram_bot_token=telegram_bot_token,
                                            telegram_send_to=telegram_send_to,
-                                           test=test)
+                                           test=test,
+                                           warn_on_update=False)
     if test is None:
         try:
             while ubtsl.stop_request is False:
@@ -476,6 +521,22 @@ def main():
         except KeyboardInterrupt:
             print("\nStopping ... just wait a few seconds!")
             ubtsl.stop_manager()
+
+
+def load_examples_ini_from_git_hub(example_name: str = None) -> Optional[str]:
+    """
+    Load example_*.ini files from GitHub
+
+    :param example_name: `config` or `profiles`
+    :type example_name: str
+    :return: str or None
+    """
+    if example_name is None:
+        return None
+    example_ini = f"https://raw.githubusercontent.com/LUCIT-Systems-and-Development/" \
+                  f"unicorn-binance-trailing-stop-loss/master/cli/example_ubtsl_{example_name}.ini"
+    response = requests.get(example_ini)
+    return response.text
 
 
 if __name__ == "__main__":

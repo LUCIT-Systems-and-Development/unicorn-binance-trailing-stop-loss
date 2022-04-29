@@ -47,7 +47,7 @@ Source: "Z:\unicorn-binance-trailing-stop-loss\dist\ubtsl\*"; DestDir: "{app}"; 
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 
 [Tasks]
-Name: envPath; Description: "Add to PATH variable"
+Name: envPath; Description: "Add to PATH variable (necessary to call ubtsl.exe globally)"
 
 [Code]
 procedure CurStepChanged(CurStep: TSetupStep);

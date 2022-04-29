@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [Semantic Versioning](http://semver.org/).
 
 ## 0.5.0.dev (development stage/unreleased/unstable)
+### Added
+- Parameter `-- createconfigini` to cli interface
+- Parameter `-- createprofilesini` to cli interface
+- Parameter `-- openconfigini` to cli interface
+- Parameter `-- openprofilesini` to cli interface 
+- Parameter `-- example` to cli interface
+- `cli.load_examples_ini_from_git_hub()`
+### Changed
+- ini files are no longer included into setup files of standalone versions
+- Messages of test notification are now specific not general
 
 ## 0.5.0
 ### Added
