@@ -22,6 +22,9 @@
 After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
 notification can be sent via email and Telegram afterwards.
 
+In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot, future 
+and margin assets with a limit or market order and then to trail a stop/loss order until sold.
+
 The CLI interface `ubtsl`/`ubtsl.exe` is installed during the 
 [installation of `unicorn-binance-trailing-stop-loss` with PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) and 
 is used to interact with the 
@@ -137,8 +140,8 @@ options:
   -t TEST, --test TEST  use this to test specific systems like "notification". if test is not None the engine will NOT start! it only tests!
   -v, --version         show the program version and then stop. the version is `0.6.0` by the way :)
 
-
 ```
+
 
 By activating the `jump-in-and-trail` engine, the bot first buys the predefined amount of assests and then 
 trails them automatically. 
