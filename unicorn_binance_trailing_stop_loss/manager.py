@@ -33,7 +33,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-__version__ = "0.5.0.dev"
+__version__ = "0.6.0"
 
 # Todo:
 #   - PARTIALLY_FILLED how to handle? -> handle!
