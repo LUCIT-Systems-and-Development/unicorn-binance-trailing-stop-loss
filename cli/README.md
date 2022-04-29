@@ -19,8 +19,8 @@
 
 # UNICORN Binance Trailing Stop Loss CLI
 
-[Description](#description) | [Installation](#installation) | [Usage](#usage) | [Example commands](##example-commands) |
-[Example files](#example-files) | [Disclaimer](#disclaimer)
+[Description](#description) | [Installation](#installation) | [Usage](#usage) | [Example commands](#example-commands) |
+[Example files](#example-files) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
 
 After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
 notification can be sent via email and Telegram afterwards.
