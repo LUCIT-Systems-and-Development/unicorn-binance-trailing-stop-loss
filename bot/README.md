@@ -19,7 +19,6 @@
 
 # UNICORN Binance Trailing Stop Loss Bot
 
-## Description
 The `UNICORN Binance Trailing Stop Loss Bot` uses the engine of the Python library [`unicorn-binance-trailing-stop-loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) 
 and has the exact same interface and configuration setup as the[`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html). 
 
