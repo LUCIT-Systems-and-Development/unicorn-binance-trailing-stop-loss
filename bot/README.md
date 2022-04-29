@@ -41,6 +41,11 @@ If you put this bot on a market, you should stop trading manually on this market
 
 For more information about the usage [read here](https://www.lucit.tech/ubtsl-cli.html).
 
+## Description
+The Bot and [CLI versions](https://www.lucit.tech/ubtsl-cli.html) are absolutely identical, except for the installation 
+method and that the Bot version does not require a pre-installed Python environment. Please read the 
+[CLI manual](https://www.lucit.tech/ubtsl-cli.html#description) for more information. 
+
 ## Download
 ### Windows
 Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest)
