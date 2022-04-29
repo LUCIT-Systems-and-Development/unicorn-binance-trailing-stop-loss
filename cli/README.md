@@ -52,22 +52,22 @@ file from the `{home}/.lucit/` and the current working directory. Alternatively,
 
 ## Installation
 No matter if you installed the [CLI version via PIP/conda](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
-or the [standalone bot version via setup file](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#installation). 
-The setup for both versions is always absolutely identical.
+or the [standalone Bot version via setup file](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#installation). 
+Both the configuration and the usage are always absolutely identical for both versions.
 
 Every parameter that can be configured via the [`ubtsl_profiles.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini) 
 or the [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
 file can also be defined as a command line argument. Therefore both files are not mandatory, but it increases the 
 usability immensely.
 
-### Create ubtsl_config.ini
+### Create `ubtsl_config.ini`
 A fresh `ubtsl_config.ini` file can be created with the following command
 
 ```
 $ ubtsl --createconfigini 
 ```
 
-### Create ubtsl_profiles.ini
+### Create `ubtsl_profiles.ini`
 The same command is available for the `ubtsl_profiles.ini` file:
 
 ```
