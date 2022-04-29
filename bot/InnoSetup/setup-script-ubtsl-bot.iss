@@ -67,7 +67,7 @@ end;
 [Run]
 Filename: "{cmd}"; Parameters: "/C mkdir ""{app}\bin"""
 Filename: "{cmd}"; Parameters: "/C mklink /D ""{app}\bin\ubtsl.exe"" ""{app}\ubtsl.exe"""
-Filename: "https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html"; Description: "Open the info web page to read about further information."; Flags: shellexec runasoriginaluser postinstall
+Filename: "https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html?source=ubtsl_setup.exe"; Description: "Open the info web page to read about further information."; Flags: shellexec runasoriginaluser postinstall
 Filename: "https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss"; Description: "If you like this project, we would be very happy about a star on GitHub."; Flags: shellexec runasoriginaluser postinstall unchecked 
 Filename: "https://twitter.com/LUCIT_SysDev"; Description: "Follow us on Twitter to be informed about new software releases."; Flags: shellexec runasoriginaluser postinstall unchecked
 
