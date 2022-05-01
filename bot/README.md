@@ -21,6 +21,8 @@
 
 [Description](#description) | [Installation](#installation) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
 
+***This repository will be ready for deployment in mid-May 2022***
+
 After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
 notification can be sent via email and Telegram afterwards.
 
