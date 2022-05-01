@@ -24,6 +24,8 @@
 [Notifications](#receive-notifications) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
 [Contributing](#contributing) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
 
+***This repository will be ready for deployment in mid-May 2022***
+
 A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss on 
 Binance Exchange in a easy, fast, flexible, robust and fully-featured way.
 
