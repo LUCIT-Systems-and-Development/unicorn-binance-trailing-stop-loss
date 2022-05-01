@@ -31,6 +31,8 @@ notification can be sent via email and Telegram afterwards.
 In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot, future 
 and margin assets with a limit or market order and then to trail a stop/loss order until sold.
 
+List of [supported exchanges](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss).
+
 The CLI interface `ubtsl`/`ubtsl.exe` is installed during the 
 [installation of `unicorn-binance-trailing-stop-loss` with PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) and 
 is used to interact with the 
