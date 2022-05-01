@@ -19,8 +19,19 @@
 
 # UNICORN Binance Trailing Stop Loss CLI
 
+[Description](#description) | [Installation](#installation) | [Usage](#usage) | [Example commands](#example-commands) |
+[Example files](#example-files) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
+
+
+***This repository will be ready for deployment in mid-May 2022***
+
 After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
 notification can be sent via email and Telegram afterwards.
+
+In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot, future 
+and margin assets with a limit or market order and then to trail a stop/loss order until sold.
+
+List of [supported exchanges](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss).
 
 The CLI interface `ubtsl`/`ubtsl.exe` is installed during the 
 [installation of `unicorn-binance-trailing-stop-loss` with PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) and 
@@ -36,6 +47,8 @@ known problems before using this tool - you use it at your own risk!
 
 If you put this engine on a market, you should stop trading manually on this market yourself!
 
+## Description
+
 After startup `ubtsl` tries to load a 
 [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
 and a 
@@ -43,10 +56,49 @@ and a
 file from the `{home}/.lucit/` and the current working directory. Alternatively, you can specify these files explicitly with the 
 `--configfile` and `--profilesfile` parameters.
 
-### Test the notification settings:
+## Installation
+No matter if you installed the [CLI version via PIP/conda](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
+or the [standalone Bot version via setup file](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#installation). 
+Both the configuration and the usage are always absolutely identical for both versions.
+
+Every parameter that can be configured via the [`ubtsl_profiles.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini) 
+or the [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
+file can also be defined as a command line argument. Therefore both files are not mandatory, but it increases the 
+usability immensely.
+
+### Create `ubtsl_config.ini`
+A fresh `ubtsl_config.ini` file can be created with the following command
+
+```
+$ ubtsl --createconfigini 
+```
+
+### Create `ubtsl_profiles.ini`
+The same command is available for the `ubtsl_profiles.ini` file:
+
+```
+$ ubtsl --createprofilesini 
+```
+
+### Test the notification settings
+If you entered valid email and/or Telegram settings you can test the notification system:
 
 ```
 $ ubtsl --test notification
+```
+
+### Test connectivity to Binance API
+
+If you entered valid API key and secret you can test the connectivity to the Binance API:
+
+```
+$ ubtsl --test binance-connectivity
+```
+
+## Usage
+
+```
+$ ubtsl --help
 ```
 
 Alternatively it is possible to start `ubtsl` like this:
@@ -54,28 +106,30 @@ Alternatively it is possible to start `ubtsl` like this:
 Linux/Mac:
 
 ```
-$ python3 -m ubtsl --test notification
+$ python3 -m ubtsl --help
 ```
 
 Windows:
 
 ```
-$ py -m ubtsl --test notification
+$ py -m ubtsl --help
 ```
 
-### Usage:
+### Load a profile
 
-If profiles are available, they can be activated with the `--profiles` parameter at startup. 
+If profiles are available, they can be activated with the `--profile` parameter at startup. 
 
 ```
 $ ubtsl --profile LUNAUSDT_SELL
 ```
 
+### Command line arguments
+
 Instead of loading the values from profiles, they can also be defined explicitly via command line parameters. 
 
 Any CLI parameters will overwrite predefined values from the profile.
 
-Once the tool is started, it trailes the stop/loss order until it is completely fulfilled, sends the notifications and
+Once the tool is started, it trails the stop/loss order until it is completely fulfilled, sends the notifications, and
 then it stops.
 
 ```
@@ -134,26 +188,20 @@ options:
                         the market symbol as used by binance
   -t TEST, --test TEST  use this to test specific systems like "notification". if test is not None the engine will NOT start! it only tests!
   -v, --version         show the program version and then stop. the version is `0.6.0` by the way :)
-
-
 ```
 
-By activating the `jump-in-and-trail` engine, the bot first buys the predefined amount of assests and then 
-trails them automatically. 
-
-## Example usage
-Check if a new update is available:
-
+## Example commands
+### Check if a new update is available
 ```
 $ ubtsl --checkupdate
 ```
 
-Show program version:
-
+### Show program version
 ```
 $ ubtsl --version
 ```
 
+### Overwrite values
 Arguments defined in the CLI overrule values from the loaded profile!
 
 Start with profile "LUNAUSDT_SELL" and overwrite the stoplosslimit:
@@ -162,7 +210,18 @@ Start with profile "LUNAUSDT_SELL" and overwrite the stoplosslimit:
 $ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
 ```
 
-## Examples
+### Smart entry
+Do a smart entry by using `engine = jump-in-and-trail` like it is defined within the profile `LUNAUSDT_JUMP_IN` 
+of the [example_ubtsl_profiles.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini).
+
+By activating the `jump-in-and-trail` engine, the bot first buys the predefined asset amount and then 
+trails them automatically. 
+
+```
+$ ubtsl --profile LUNAUSDT_JUMP_IN
+```
+
+## Example files
 - [example_ubtsl_config.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini)
 - [example_ubtsl_profiles.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini)
 

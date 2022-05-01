@@ -24,6 +24,8 @@
 [Notifications](#receive-notifications) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
 [Contributing](#contributing) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
 
+***This repository will be ready for deployment in mid-May 2022***
+
 A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss on 
 Binance Exchange in a easy, fast, flexible, robust and fully-featured way.
 
@@ -114,6 +116,7 @@ passed with the `callback_finished` parameter or on error it calls the function 
 - Integrated notification system (e-Mail and Telegram)
 - Powered by [UNICORN Binance REST API](https://www.lucit.tech/unicorn-binance-rest-api.html) and 
 [UNICORN Binance WebSocket API](https://www.lucit.tech/unicorn-binance-websocket-api.html).
+- Well tested on Linux, Mac and Windows
 
 If you like the project, please [![star](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/star.png)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/stargazers) it on 
 [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)!
@@ -225,7 +228,7 @@ contribute follow
 [this guide](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/CONTRIBUTING.md).
  
 ### Contributors
-[![Contributors](https://contributors-img.web.app/image?repo=oliver-zehentleitner/unicorn-binance-trailing-stop-loss)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/graphs/contributors)
+[![Contributors](https://contributors-img.web.app/image?repo=LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/graphs/contributors)
 
 We ![love](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/heart.png) open source!
 

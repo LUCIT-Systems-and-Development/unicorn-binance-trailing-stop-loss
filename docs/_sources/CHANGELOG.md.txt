@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [Semantic Versioning](http://semver.org/).
 
 ## 0.6.0.dev (development stage/unreleased/unstable)
+### Changed
+- `manager.py.calculate_stop_loss_price()` is a static method now
 ### Renamed
 - cli.py: `load_examples_ini_from_git_hub()` to `load_examples_ini_from_github()`
 

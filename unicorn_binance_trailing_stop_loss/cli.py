@@ -562,13 +562,7 @@ def main():
 
                     # Todo: Use this block as a static method within ubtsl.manager
                     # Todo: Calculate the average price instead of using the price of the first execution:
-                    buy_price = margin_order['fills'][0]['price']
-                    if "%" in stop_loss_start_limit:
-                        limit_percent = float(stop_loss_start_limit.rstrip("%"))
-                        sl_price = float(float(margin_order['fills'][0]['price']) / 100) * float(100.0 - limit_percent)
-                    else:
-                        sl_price = float(margin_order['fills'][0]['price']) - float(stop_loss_start_limit)
-                    stop_loss_price = float(BinanceTrailingStopLossManager.round_decimals_down(sl_price, 2))
+                    margin_order['fills'][0]['price']
             else:
                 logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange "
                                 f"'{exchange}'.")

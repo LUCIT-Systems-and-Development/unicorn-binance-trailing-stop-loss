@@ -33,10 +33,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-__version__ = "0.6.0.dev"
-
 # Todo:
 #   - Test API: --test binance-connectivity
+#   - calculate_stop_loss_amount() -> Fee calc?
 #   - PARTIALLY_FILLED how to handle? -> handle!
 #   - Not deleting and creating a new order with same price, just leave it
 #   - Make notifications customizable
@@ -65,6 +64,10 @@ import ssl
 import sys
 import threading
 import time
+
+__app_name__ = "unicorn_binance_trailing_stop_loss"
+__logger__ = logging.getLogger(__app_name__)
+__version__ = "0.6.0.dev"
 
 
 class BinanceTrailingStopLossManager(threading.Thread):
@@ -161,8 +164,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  trading_fee_use_bnb: bool = False,
                  warn_on_update=True):
         threading.Thread.__init__(self)
-        self.name = "unicorn_binance_trailing_stop_loss"
-        self.logger = logging.getLogger(self.name)
+        self.name = __app_name__
+        self.logger = __logger__
         self.version = __version__
         self.logger.info(f"New instance of {self.get_user_agent()} on "
                          f"{str(platform.system())} {str(platform.release())} for exchange {exchange} started ...")
@@ -288,30 +291,27 @@ class BinanceTrailingStopLossManager(threading.Thread):
         amount_without_fee = amount/100*(100-final_fee)
         return amount_without_fee
 
-    def calculate_stop_loss_price(self,
-                                  price: float,
-                                  limit: str = None) -> Optional[float]:
+    @staticmethod
+    def calculate_stop_loss_price(price: float = None,
+                                  limit: Optional[str, float] = None) -> Optional[float]:
         """
         Calculate the stop/loss price.
 
         :param price: Base price used for the calculation
         :type price: float
-        :param limit: Stop loss limit in percent or as fixed value
-        :type limit: str
+        :param limit: Stop loss limit in percent or as fixed float value
+        :type limit: float, str
 
         :return: float or None
         """
-        if limit is None:
-            limit = self.stop_loss_limit
-        self.logger.debug(f"BinanceTrailingStopLossManager.calculate_stop_loss_price() - Calculation stop/loss price "
-                          f"of base price: {price}, limit: {limit}")
-        if "%" in limit:
+        __logger__.debug(f"BinanceTrailingStopLossManager._calculate_stop_loss_price() - Calculation stop/loss price "
+                         f"of base price: {price}, limit: {limit}")
+        if "%" in str(limit):
             limit_percent = float(limit.rstrip("%"))
-            sl_price = float(price/100)*float(100.0-limit_percent)
+            sl_price = float(price / 100) * float(100.0 - limit_percent)
         else:
-            sl_price = price - float(self.stop_loss_limit)
-        sl_price = float(self.round_decimals_down(sl_price, self.precision_crypto))
-        return sl_price
+            sl_price = price - float(limit)
+        return BinanceTrailingStopLossManager.round_decimals_down(sl_price, 2)
 
     def cancel_open_stop_loss_order(self) -> bool:
         """
@@ -706,7 +706,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                           f"stream_buffer_name={stream_buffer_name}) started ...")
         if stream_data.get('price'):
             self.current_price = stream_data.get('price')
-            sl_price = self.calculate_stop_loss_price(float(stream_data.get('price')))
+            sl_price = self.calculate_stop_loss_price(float(stream_data.get('price')), float(self.stop_loss_limit))
             if self.stop_loss_price is None:
                 self.logger.info(f"BinanceTrailingStopLossManager.process_price_feed_stream() - Setting "
                                  f"stop_loss_price from None to {sl_price}!")
