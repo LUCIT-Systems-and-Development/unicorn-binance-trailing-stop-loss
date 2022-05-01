@@ -366,10 +366,6 @@ def main():
             print(f"{options.example}.ini example:\r\n{load_examples_ini_from_github(example_name=options.example)}")
         sys.exit(0)
 
-    # Create config ini
-    if options.createconfigini:
-        config_ini_text = load_examples_ini_from_github(example_name="config")
-
     # Init test var
     test = None
     if options.test is not None:
