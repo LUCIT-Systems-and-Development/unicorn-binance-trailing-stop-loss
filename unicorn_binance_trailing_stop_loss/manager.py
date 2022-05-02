@@ -53,7 +53,7 @@ from unicorn_binance_rest_api.manager import BinanceRestApiManager
 from unicorn_binance_rest_api.exceptions import BinanceAPIException
 from unicorn_binance_websocket_api.manager import BinanceWebSocketApiManager
 from unicorn_binance_websocket_api.exceptions import UnknownExchange
-from typing import Optional
+from typing import Optional, Union
 import datetime
 import logging
 import math
@@ -293,7 +293,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
     @staticmethod
     def calculate_stop_loss_price(price: float = None,
-                                  limit: Optional[str, float] = None) -> Optional[float]:
+                                  limit: Union[str, float] = None) -> Optional[float]:
         """
         Calculate the stop/loss price.
 
@@ -304,7 +304,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: float or None
         """
-        __logger__.debug(f"BinanceTrailingStopLossManager._calculate_stop_loss_price() - Calculation stop/loss price "
+        __logger__.debug(f"BinanceTrailingStopLossManager.calculate_stop_loss_price() - Calculation stop/loss price "
                          f"of base price: {price}, limit: {limit}")
         if "%" in str(limit):
             limit_percent = float(limit.rstrip("%"))
