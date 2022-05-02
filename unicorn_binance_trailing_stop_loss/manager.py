@@ -267,7 +267,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 print(msg4)
 
     def calculate_stop_loss_amount(self,
-                                   amount: float) -> Optional[float]:
+                                   amount: float
+                                   ) -> Optional[float]:
         """
         Calculate the tradable stop/loss asset amount (= owning and free - trading fee)
 
@@ -293,7 +294,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
     @staticmethod
     def calculate_stop_loss_price(price: float = None,
-                                  limit: Union[str, float] = None) -> Optional[float]:
+                                  limit: Union[str, float] = None
+                                  ) -> Optional[float]:
         """
         Calculate the stop/loss price.
 
