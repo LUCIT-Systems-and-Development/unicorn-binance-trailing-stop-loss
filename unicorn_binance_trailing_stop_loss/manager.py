@@ -34,19 +34,14 @@
 # IN THE SOFTWARE.
 
 # Todo:
-#   - Test API: --test binance-connectivity
-#   - calculate_stop_loss_amount() -> Fee calc?
-#   - PARTIALLY_FILLED how to handle? -> handle!
+#   - Exchanges
 #   - Not deleting and creating a new order with same price, just leave it
+#   - SELL/BUY
+#   - PARTIALLY_FILLED how to handle? -> handle! Notification if partially filled? Callback partial filled?
 #   - Make notifications customizable
 #   - Precision dynamic
-#   - SELL/BUY
-#   - Notification if partially filled
-#   - Callback partial filled
-#   - Fees: how to handle? / VIP Fees
-#   - Exchanges
+#   - calculate_stop_loss_amount() -> Fee calc? how to handle? / VIP Fees
 #   - Notifications with missing parameters (exception handling)
-#   - use different callback functions for each stream within one ubwam instance
 
 
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
@@ -122,8 +117,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type stop_loss_side: str
     :param stop_loss_trigger_gap: Gap between stopPrice and limit order price, use integer or percent values.
     :type stop_loss_trigger_gap: str
-    :param test: Use this to test specific systems like "notification". If test is not None the engine will NOT start!
-                 It only tests!
+    :param test: Use this to test specific systems like "notification" or "binance-connectivity". If test is not None
+                 the engine will NOT start! It only tests!
     :type test: str
     :param telegram_bot_token: Token to connect with Telegram API.
     :type telegram_bot_token: str
@@ -227,7 +222,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                                  warn_on_update=warn_on_update)
         if warn_on_update and self.is_update_available():
             update_msg = f"Release {self.name}_" + self.get_latest_version() + " is available, " \
-                                                                               "please consider updating! (Changelog: https://github.com/LUCIT-Systems-and-Development/" \
+                                                                               "please consider updating! (Changelog: " \
+                                                                               "https://github.com/LUCIT-Systems-and-Development/" \
                                                                                "unicorn-binance-trailing-stop-loss/blob/master/CHANGELOG.md)"
             print(update_msg)
             self.logger.warning(update_msg)
@@ -236,11 +232,10 @@ class BinanceTrailingStopLossManager(threading.Thread):
         else:
             exchange = self.exchange
         try:
-            self.ubwa: BinanceWebSocketApiManager = ubwa_manager or \
-                BinanceWebSocketApiManager(exchange=exchange,
-                                           output_default="UnicornFy",
-                                           high_performance=True,
-                                           warn_on_update=warn_on_update)
+            self.ubwa: BinanceWebSocketApiManager = ubwa_manager or BinanceWebSocketApiManager(exchange=exchange,
+                                                                                               output_default="UnicornFy",
+                                                                                               high_performance=True,
+                                                                                               warn_on_update=warn_on_update)
         except UnknownExchange:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
             if test is None:
@@ -265,6 +260,21 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 msg4 = f"Telegram sent, please check for incoming messages!"
                 self.logger.info(msg4)
                 print(msg4)
+        elif test == "binance-connectivity":
+            msg = f"Starting connectivity test to Binance API ..."
+            self.logger.info(msg)
+            print(msg)
+            try:
+                response = self.ubra.get_account()
+                if response['makerCommission']:
+                    print(f"Connection to Binance API successfully established!")
+            except BinanceAPIException as error_msg:
+                self.logger.error(error_msg)
+                print(error_msg)
+        else:
+            msg = f"Stopping, test `{test}` is an invalid option!"
+            self.logger.error(msg)
+            print(msg)
 
     def calculate_stop_loss_amount(self,
                                    amount: float

@@ -34,7 +34,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
+from manager import BinanceTrailingStopLossManager
+#from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 from pathlib import Path
@@ -206,8 +207,8 @@ def main():
                         required=False)
     parser.add_argument('-t', '--test',
                         type=str,
-                        help='use this to test specific systems like "notification". if test is not None the engine '
-                             'will NOT start! it only tests!',
+                        help='use this to test specific systems like "notification" or "binance-connectivity". if test '
+                             'is not None the engine will NOT start! It only tests!',
                         required=False)
     parser.add_argument('-v', '--version',
                         help=f'show the program version and then stop. the version is `{version}` by the way :)',
@@ -562,7 +563,7 @@ def main():
 
                     # Todo: Use this block as a static method within ubtsl.manager
                     # Todo: Calculate the average price instead of using the price of the first execution:
-                    margin_order['fills'][0]['price']
+                    # margin_order['fills'][0]['price']
             else:
                 logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange "
                                 f"'{exchange}'.")
@@ -573,6 +574,7 @@ def main():
                                            callback_finished=callback_finished,
                                            binance_public_key=public_key,
                                            binance_private_key=private_key,
+                                           engine=engine,
                                            exchange=exchange,
                                            keep_threshold=keep_threshold,
                                            print_notificatons=True,
