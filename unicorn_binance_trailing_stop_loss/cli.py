@@ -267,7 +267,9 @@ def main():
         """
         logger.debug(f"callback_finished() started ...")
         if engine == "jump-in-and-trail":
-            #ubra.get_trade_fee(symbol)
+            # Todo:
+            # https://unicorn-binance-rest-api.docs.lucit.tech/unicorn_binance_rest_api.html?highlight=fee#unicorn_binance_rest_api.manager.BinanceRestApiManager.get_trade_fee
+            # ubra.get_trade_fee(symbol)
             fee = 0.2
             print(f"======================================================\r\n"
                   f"buy_price: {float(buy_order['order_price']):g}\r\n"
