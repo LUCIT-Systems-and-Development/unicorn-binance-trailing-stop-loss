@@ -255,22 +255,26 @@ def main():
         print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {message}")
         ubtsl.stop_manager()
 
-    def callback_finished(order):
+    def callback_finished(sell_order, buy_order=None):
         """
         Callback function for finished event provided to the unicorn-binance-trailing-stop-loss engine
 
-        :param order: Details of the fullfilled stop/loss order
+        :param sell_order: Details of the fullfilled stop/loss order
+        :type sell_order: dict
+        :param buy_order: Details of the smart entry (jump-in-and-trail) buy order
+        :type buy_order: dict
         :return: None
         """
         logger.debug(f"callback_finished() started ...")
         if engine == "jump-in-and-trail":
+            #ubra.get_trade_fee(symbol)
             fee = 0.2
             print(f"======================================================\r\n"
-                  f"buy_price: {float(buy_price):g}\r\n"
-                  f"sell_price: {float(order['order_price']):g}\r\n"
+                  f"buy_price: {float(buy_order['order_price']):g}\r\n"
+                  f"sell_price: {float(sell_order['order_price']):g}\r\n"
                   f"fee: ~{fee}%\r\n"
                   f"------------------------------------------------------\r\n"
-                  f"profit: {fee*(float(order['order_price'])-float(buy_price))}")
+                  f"profit: {fee*(float(sell_order['order_price'])-float(buy_order['order_price']))}")
         ubtsl.stop_manager()
 
     def load_examples_ini_from_github(example_name: str = None) -> Optional[str]:
@@ -533,43 +537,7 @@ def main():
     else:
         reset_stop_loss_price = False
 
-    if test is None:
-        if engine == "jump-in-and-trail":
-            logger.info(f"Starting jump-in-and-trail engine")
-            print(f"Starting jump-in-and-trail engine")
-            ubra = BinanceRestApiManager(api_key=public_key, api_secret=private_key, exchange=exchange)
-            if exchange == "binance.com-isolated_margin":
-                stop_loss_side = "SELL"
-                isolated_margin_account = ubra.get_isolated_margin_account()
-                if isolated_margin_account['assets'][0]['symbol'] == stop_loss_market:
-                    # Todo: Calc borrow_threshold
-                    # Todo: Take full loan
-                    # ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
-                    free_quote_asset = isolated_margin_account['assets'][0]['quoteAsset']['free']
-                    try:
-                        margin_order = ubra.create_margin_order(symbol=stop_loss_market,
-                                                                isIsolated="TRUE",
-                                                                side="BUY",
-                                                                type="MARKET",
-                                                                quoteOrderQty=free_quote_asset,
-                                                                sideEffectType="MARGIN_BUY")
-                    except BinanceAPIException as error_msg:
-                        msg = f"Stopping because of Binance API exception: {error_msg}"
-                        logging.critical(msg)
-                        print(msg)
-                        sys.exit(1)
-                    logger.info(f"Jumped in with buy order: {margin_order}")
-                    print(f"Jumped in with buy price: {margin_order['fills'][0]['price']}")
-
-                    # Todo: Use this block as a static method within ubtsl.manager
-                    # Todo: Calculate the average price instead of using the price of the first execution:
-                    # margin_order['fills'][0]['price']
-            else:
-                logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange "
-                                f"'{exchange}'.")
-                print(f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange '{exchange}'.")
-                sys.exit(1)
-
+    # Starting the Trailing Stop/Loss Engine
     ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
                                            callback_finished=callback_finished,
                                            binance_public_key=public_key,
@@ -593,6 +561,8 @@ def main():
                                            telegram_send_to=telegram_send_to,
                                            test=test,
                                            warn_on_update=False)
+
+    # Catch Keyboard Interrupt only if there is no test running
     if test is None:
         try:
             while ubtsl.stop_request is False:

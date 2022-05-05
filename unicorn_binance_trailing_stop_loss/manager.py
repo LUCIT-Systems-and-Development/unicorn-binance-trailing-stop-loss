@@ -37,11 +37,10 @@
 #   - Exchanges
 #   - Not deleting and creating a new order with same price, just leave it
 #   - SELL/BUY
-#   - PARTIALLY_FILLED how to handle? -> handle! Notification if partially filled? Callback partial filled?
 #   - Make notifications customizable
-#   - Precision dynamic
 #   - calculate_stop_loss_amount() -> Fee calc? how to handle? / VIP Fees
-#   - Notifications with missing parameters (exception handling)
+#   - Precision dynamic
+#   - PARTIALLY_FILLED how to handle? -> handle! Notification if partially filled? Callback partial filled?
 
 
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
@@ -176,23 +175,24 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.binance_private_key = binance_private_key
         self.callback_error = callback_error
         self.callback_finished = callback_finished
+        self.current_price: float = 0.0
+        self.engine = engine
+        self.exchange = exchange
+        self.exchange_info: dict = {}
+        self.keep_threshold = keep_threshold
         self.last_update_check_github = {'timestamp': time.time(),
                                          'status': None}
         self.last_update_check_github['status']: dict = None
-        self.current_price: float = 0.0
+        self.lock_create_stop_loss_order = threading.Lock()
+        self.precision_crypto: int = 2  # Todo: make dynamic
+        self.precision_fiat: int = 2  # Todo: make dynamic
+        self.print_notificatons = print_notificatons
+        self.reset_stop_loss_price = True if reset_stop_loss_price is True else False
         self.send_to_email_address = send_to_email_address
         self.send_from_email_address = send_from_email_address
         self.send_from_email_password = send_from_email_password
         self.send_from_email_server = send_from_email_server
         self.send_from_email_port = send_from_email_port
-        self.engine = engine
-        self.exchange = exchange
-        self.exchange_info: dict = {}
-        self.keep_threshold = keep_threshold
-        self.precision_crypto: int = 2  # Todo: make dynamic
-        self.precision_fiat: int = 2  # Todo: make dynamic
-        self.print_notificatons = print_notificatons
-        self.reset_stop_loss_price = True if reset_stop_loss_price is True else False
         self.start_engine = start_engine
         self.stop_loss_asset_name: str = ""
         self.stop_loss_asset_amount: float = 0.0
@@ -210,12 +210,12 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.symbol_info: dict = {}
         self.telegram_bot_token = telegram_bot_token
         self.telegram_send_to = telegram_send_to
+        self.test = test
         self.trading_fee_discount_futures_percent = trading_fee_discount_futures_percent
         self.trading_fee_discount_margin_percent = trading_fee_discount_margin_percent
         self.trading_fee_discount_spot_percent = trading_fee_discount_spot_percent
         self.trading_fee_percent = trading_fee_percent
         self.trading_fee_use_bnb = trading_fee_use_bnb
-        self.lock_create_stop_loss_order = threading.Lock()
         self.ubra: BinanceRestApiManager = ubra_manager or BinanceRestApiManager(self.binance_public_key,
                                                                                  self.binance_private_key,
                                                                                  exchange=self.exchange,
@@ -813,6 +813,43 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: None
         """
+        if self.test is None:
+            if self.engine == "jump-in-and-trail":
+                self.logger.info(f"Starting jump-in-and-trail engine")
+                print(f"Starting jump-in-and-trail engine")
+                if self.exchange == "binance.com-isolated_margin":
+
+                    isolated_margin_account = self.ubra.get_isolated_margin_account()
+                    if isolated_margin_account['assets'][0]['symbol'] == self.stop_loss_market:
+                        # Todo: Calc borrow_threshold
+                        # Todo: Take full loan
+                        # ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
+                        free_quote_asset = isolated_margin_account['assets'][0]['quoteAsset']['free']
+                        try:
+                            margin_order = self.ubra.create_margin_order(symbol=self.stop_loss_market,
+                                                                         isIsolated="TRUE",
+                                                                         side="BUY",
+                                                                         type="MARKET",
+                                                                         quoteOrderQty=free_quote_asset,
+                                                                         sideEffectType="MARGIN_BUY")
+                        except BinanceAPIException as error_msg:
+                            msg = f"Stopping because of Binance API exception: {error_msg}"
+                            logging.critical(msg)
+                            print(msg)
+                            sys.exit(1)
+                        self.logger.info(f"Jumped in with buy order: {margin_order}")
+                        print(f"Jumped in with buy price: {margin_order['fills'][0]['price']}")
+
+                        # Todo: Use this block as a static method within ubtsl.manager
+                        # Todo: Calculate the average price instead of using the price of the first execution:
+                        # margin_order['fills'][0]['price']
+                else:
+                    self.logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for "
+                                         f"exchange '{self.exchange}'.")
+                    print(
+                        f"Option `jump-in-and-trail` in parameter `engine` is not supported for "
+                        f"exchange '{self.exchange}'.")
+                    sys.exit(1)
         self.logger.info(f"BinanceTrailingStopLossManager.start() - Starting trailing stop/loss on {self.exchange} "
                          f"for the market {self.stop_loss_market} ...")
         print(f"Starting trailing stop/loss on {self.exchange} for the market {self.stop_loss_market} ...")
@@ -834,15 +871,16 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                  process_stream_data=self.process_userdata_stream,
                                                  symbols=symbol,
                                                  stream_label="UserData")
-        self.ubwa.create_stream(channels="aggTrade",
-                                markets=self.stop_loss_market,
-                                process_stream_data=self.process_price_feed_stream,
-                                stream_label="PriceFeed")
+        trade_stream_id = self.ubwa.create_stream(channels="aggTrade",
+                                                  markets=self.stop_loss_market,
+                                                  process_stream_data=self.process_price_feed_stream,
+                                                  stream_label="PriceFeed")
 
-        self.logger.info(f"BinanceTrailingStopLossManager.start() - Waiting till userData stream is running ...")
-        if self.ubwa.wait_till_stream_has_started(user_stream_id):
+        self.logger.info(f"BinanceTrailingStopLossManager.start() - Waiting till streams are running ...")
+        if self.ubwa.wait_till_stream_has_started(user_stream_id) and \
+                self.ubwa.wait_till_stream_has_started(trade_stream_id):
             time.sleep(5)
-            self.logger.info(f"BinanceTrailingStopLossManager.start() - User stream is running!")
+            self.logger.info(f"BinanceTrailingStopLossManager.start() - UserData and Trade streams are running!")
 
         if self.stop_loss_price is None or self.stop_loss_price == 0.0:
             if self.reset_stop_loss_price is not True:

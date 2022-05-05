@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 0.6.0.dev (development stage/unreleased/unstable)
 ### Adding
-- `engine` parameter to manager class and integrate `jump-in-and-trail` mode to `manager.py` 
+!- `engine` parameter to manager class and integrate `jump-in-and-trail` mode to `manager.py` 
 - Parameter `ubra_manager` and `ubwa_manager` to `manager.py`
 ### Changed
 - `manager.py.calculate_stop_loss_price()` is a static method now
