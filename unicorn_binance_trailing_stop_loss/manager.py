@@ -856,7 +856,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.logger.debug(f"BinanceTrailingStopLossManager.start() - reset_stop_loss_price={self.reset_stop_loss_price}")
         self.symbol_info = self.get_symbol_info(symbol=self.stop_loss_market)
         self.logger.info(f"BinanceTrailingStopLossManager.start() -  used_weight: {self.ubra.get_used_weight()}")
-        self.stop_loss_asset_name = self.symbol_info['base']
+        self.stop_loss_asset_name = self.symbol_info['base']  # Todo: makes problems during unittests
         self.exchange_info = self.get_exchange_info()
         self.update_stop_loss_asset_amount()
 
