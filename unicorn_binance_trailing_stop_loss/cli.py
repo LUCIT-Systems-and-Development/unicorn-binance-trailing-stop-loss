@@ -34,9 +34,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-#from manager import BinanceTrailingStopLossManager
-from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
-#from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
+from manager import BinanceTrailingStopLossManager
+# from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
+# from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 from pathlib import Path
 from typing import Optional
@@ -50,14 +50,13 @@ import textwrap
 import time
 import webbrowser
 
-"""
-    UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
-    
-    More info: https://www.lucit.tech/ubtsl-cli.html
-"""
-
 
 def main():
+    """
+        UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
+
+        More info: https://www.lucit.tech/ubtsl-cli.html
+    """
     version = BinanceTrailingStopLossManager.get_version()
     os_type = platform.system()
     if os_type == "Windows":
@@ -255,28 +254,26 @@ def main():
         print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {message}")
         ubtsl.stop_manager()
 
-    def callback_finished(sell_order, buy_order=None):
+    def callback_finished(feedback):
         """
         Callback function for finished event provided to the unicorn-binance-trailing-stop-loss engine
 
-        :param sell_order: Details of the fullfilled stop/loss order
-        :type sell_order: dict
-        :param buy_order: Details of the smart entry (jump-in-and-trail) buy order
-        :type buy_order: dict
+        :param feedback: Contains stop loss order detail as well as smart entry buy order details
+        :type feedback: dict
         :return: None
         """
         logger.debug(f"callback_finished() started ...")
         if engine == "jump-in-and-trail":
-            # Todo:
-            # https://unicorn-binance-rest-api.docs.lucit.tech/unicorn_binance_rest_api.html?highlight=fee#unicorn_binance_rest_api.manager.BinanceRestApiManager.get_trade_fee
-            # ubra.get_trade_fee(symbol)
+            trade_fee = ubtsl.ubra.get_trade_fee(symbol=stop_loss_market)
+            print(f"trade_fee: {trade_fee}")
             fee = 0.2
+            profit = fee*(float(feedback['sell_order']['order_price'])-float(feedback['buy_order']['order_price']))
             print(f"======================================================\r\n"
-                  f"buy_price: {float(buy_order['order_price']):g}\r\n"
-                  f"sell_price: {float(sell_order['order_price']):g}\r\n"
+                  f"buy_price: {float(feedback['buy_order']['order_price']):g}\r\n"
+                  f"sell_price: {float(feedback['sell_order']['order_price']):g}\r\n"
                   f"fee: ~{fee}%\r\n"
                   f"------------------------------------------------------\r\n"
-                  f"profit: {fee*(float(sell_order['order_price'])-float(buy_order['order_price']))}")
+                  f"profit: {profit}")
         ubtsl.stop_manager()
 
     def load_examples_ini_from_github(example_name: str = None) -> Optional[str]:
@@ -373,11 +370,6 @@ def main():
             print(f"{options.example}.ini example:\r\n{load_examples_ini_from_github(example_name=options.example)}")
         sys.exit(0)
 
-    # Init test var
-    test = None
-    if options.test is not None:
-        test = options.test
-
     # Choose config file
     if options.configfile is not None:
         # Load from cli arg if provided
@@ -463,6 +455,7 @@ def main():
     stop_loss_price: float = 0.0
     stop_loss_side = ""
     reset_stop_loss_price = False
+    test = None
 
     # Load a profile is provided via argparse
     if options.profile is not None:
@@ -532,6 +525,8 @@ def main():
         stop_loss_price = options.stoplossprice
     if options.orderside is not None:
         stop_loss_side = options.orderside
+    if options.test is not None:
+        test = options.test
 
     # Normalize `reset_stop_loss_price`
     if str(reset_stop_loss_price).upper() == "TRUE":
@@ -547,7 +542,7 @@ def main():
                                            engine=engine,
                                            exchange=exchange,
                                            keep_threshold=keep_threshold,
-                                           print_notificatons=True,
+                                           print_notifications=True,
                                            reset_stop_loss_price=reset_stop_loss_price,
                                            send_to_email_address=send_to_email_address,
                                            send_from_email_address=send_from_email_address,
@@ -559,6 +554,7 @@ def main():
                                            stop_loss_order_type=stop_loss_order_type,
                                            stop_loss_price=stop_loss_price,
                                            stop_loss_side=stop_loss_side,
+                                           stop_loss_start_limit=stop_loss_start_limit,
                                            telegram_bot_token=telegram_bot_token,
                                            telegram_send_to=telegram_send_to,
                                            test=test,

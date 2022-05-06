@@ -86,14 +86,11 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type exchange: str
     :param keep_threshold: If empty we sell the full balance, use integer or percent values.
     :type keep_threshold: str
-    :param print_notificatons: If True the lib is printing user friendly information to terminal.
-    :pyte print_notificatons: bool
+    :param print_notifications: If True the lib is printing user friendly information to terminal.
+    :type print_notifications: bool
     :param reset_stop_loss_price: Reset an existing stop_loss_price and calculate a new one. Only True is True, anything
                                   else is False!
     :type reset_stop_loss_price: bool
-    :param stop_loss_limit: The limit is used to calculate the `stop_loss_price` of the highest given price, use integer
-                            or percent values.
-    :type stop_loss_limit: str
     :param send_to_email_address: Email address of receiver
     :type send_to_email_address: str
     :param send_from_email_address: Email address of sender
@@ -106,6 +103,9 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type send_from_email_port: int
     :param start_engine: Start the trailing stop loss engine. Default is True
     :type start_engine: bool
+    :param stop_loss_limit: The limit is used to calculate the `stop_loss_price` of the highest given price, use integer
+                            or percent values.
+    :type stop_loss_limit: str
     :param stop_loss_market: The market to enforce stop/loss.
     :type stop_loss_market: str
     :param stop_loss_order_type: Can be `limit` or `market` - default is None which leads to a stop of the algorithm.
@@ -114,6 +114,11 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type stop_loss_price: float
     :param stop_loss_side: Can be `buy` or `sell` - default is None which leads to a stop of the algorithm.
     :type stop_loss_side: str
+    :param stop_loss_start_limit: The trailing stop/loss order is trailed with the distance defined in
+                                  `stop_loss_limit`. If you want to use a different value at the start, you can specify
+                                  it with `stop_loss_start_limit`. This value will be used instead of the
+                                  `stop_loss_limit` value until this value is caught up and then trailed.
+    :type stop_loss_start_limit: str
     :param stop_loss_trigger_gap: Gap between stopPrice and limit order price, use integer or percent values.
     :type stop_loss_trigger_gap: str
     :param test: Use this to test specific systems like "notification" or "binance-connectivity". If test is not None
@@ -138,7 +143,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  engine: str = "trail",
                  exchange: str = "binance.com",
                  keep_threshold: str = None,
-                 print_notificatons: bool = False,
+                 print_notifications: bool = False,
                  reset_stop_loss_price: bool = False,
                  send_to_email_address: str = None,
                  send_from_email_address: str = None,
@@ -151,6 +156,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  stop_loss_order_type: str = None,
                  stop_loss_price: float = None,
                  stop_loss_side: str = None,
+                 stop_loss_start_limit: str = None,
                  stop_loss_trigger_gap: str = "0.01",
                  telegram_bot_token: str = None,
                  telegram_send_to: str = None,
@@ -169,7 +175,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.version = __version__
         self.logger.info(f"New instance of {self.get_user_agent()} on "
                          f"{str(platform.system())} {str(platform.release())} for exchange {exchange} started ...")
-        if print_notificatons:
+        if print_notifications:
             print("Starting stop/loss engine ...")
         self.binance_public_key = binance_public_key
         self.binance_private_key = binance_private_key
@@ -180,13 +186,14 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.exchange = exchange
         self.exchange_info: dict = {}
         self.keep_threshold = keep_threshold
-        self.last_update_check_github = {'timestamp': time.time(),
-                                         'status': None}
-        self.last_update_check_github['status']: dict = None
+        self.last_update_check_github = {'timestamp': time.time(), 'status': {'tag_name': None}}
+        # self.last_update_check_github = {'timestamp': time.time(),
+        #                                 'status': None}
+        # self.last_update_check_github['status']: dict = {'tag_name': None}
         self.lock_create_stop_loss_order = threading.Lock()
         self.precision_crypto: int = 2  # Todo: make dynamic
         self.precision_fiat: int = 2  # Todo: make dynamic
-        self.print_notificatons = print_notificatons
+        self.print_notifications = print_notifications
         self.reset_stop_loss_price = True if reset_stop_loss_price is True else False
         self.send_to_email_address = send_to_email_address
         self.send_from_email_address = send_from_email_address
@@ -203,6 +210,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.stop_loss_order_type = stop_loss_order_type
         self.stop_loss_price: float = None if stop_loss_price is None else float(stop_loss_price)
         self.stop_loss_side = stop_loss_side
+        self.stop_loss_start_limit = stop_loss_start_limit
         self.stop_loss_quantity: float = 0.0
         self.stop_loss_trigger_gap = stop_loss_trigger_gap
         self.stop_loss_request: bool = False
@@ -222,9 +230,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                                  warn_on_update=warn_on_update)
         if warn_on_update and self.is_update_available():
             update_msg = f"Release {self.name}_" + self.get_latest_version() + " is available, " \
-                                                                               "please consider updating! (Changelog: " \
-                                                                               "https://github.com/LUCIT-Systems-and-Development/" \
-                                                                               "unicorn-binance-trailing-stop-loss/blob/master/CHANGELOG.md)"
+                         "please consider updating! (Changelog: https://github.com/LUCIT-Systems-and-Development/" \
+                         "unicorn-binance-trailing-stop-loss/blob/master/CHANGELOG.md)"
             print(update_msg)
             self.logger.warning(update_msg)
         if self.exchange == "binance.com-isolated_margin":
@@ -232,14 +239,15 @@ class BinanceTrailingStopLossManager(threading.Thread):
         else:
             exchange = self.exchange
         try:
-            self.ubwa: BinanceWebSocketApiManager = ubwa_manager or BinanceWebSocketApiManager(exchange=exchange,
-                                                                                               output_default="UnicornFy",
-                                                                                               high_performance=True,
-                                                                                               warn_on_update=warn_on_update)
+            self.ubwa: BinanceWebSocketApiManager = ubwa_manager or \
+                                                        BinanceWebSocketApiManager(exchange=exchange,
+                                                                                   output_default="UnicornFy",
+                                                                                   high_performance=True,
+                                                                                   warn_on_update=warn_on_update)
         except UnknownExchange:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
             if test is None:
-                if self.print_notificatons:
+                if self.print_notifications:
                     print(f"Please use a valid exchange!")
                 sys.exit(1)
         if test is None and start_engine is True:
@@ -404,7 +412,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             if stop_loss_quantity == 0:
                 msg = f"Empty stop_loss_quantity in create_stop_loss_order()"
                 self.logger.error(f"BinanceTrailingStopLossManager.create_stop_loss_order() - {msg}")
-                if self.print_notificatons:
+                if self.print_notifications:
                     print(f"Stopping because stop_loss_quantity is zero!")
                 self.send_email_notificaton(msg)
                 self.send_telegram_notification(msg)
@@ -425,13 +433,13 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 self.logger.info(f"BinanceTrailingStopLossManager.create_stop_loss_order() - Created stop/loss order "
                                  f"for market {new_order['symbol']} with orderId="
                                  f"{new_order['orderId']} and side={new_order['side']}.")
-                if self.print_notificatons:
+                if self.print_notifications:
                     print(f"Created stop/loss order for market {new_order['symbol']}: "
                           f"stop_loss_price={self.stop_loss_price} and "
                           f"stop_loss_quantity={self.stop_loss_quantity}")
             except BinanceAPIException as error_msg:
                 self.logger.error(f"BinanceTrailingStopLossManager.create_stop_loss_order() - {error_msg}")
-                if self.print_notificatons:
+                if self.print_notifications:
                     print(f"Can not create stop/loss order! error: {error_msg}")
                 return False
             return True
@@ -447,7 +455,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                    '-stop-loss/releases/latest')
             latest_release_info = respond.json()
             return latest_release_info
-        except Exception:
+        except KeyError as error_msg:
+            __logger__.error(f"BinanceTrailingStopLossManager.get_latest_release_info() - {error_msg}")
             return False
 
     def get_latest_version(self):
@@ -461,7 +470,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             self.last_update_check_github['status'] = self.get_latest_release_info()
         if self.last_update_check_github['status']:
             try:
-                return self.last_update_check_github['status']["tag_name"]
+                return self.last_update_check_github['status']['tag_name']
             except KeyError:
                 return "unknown"
         else:
@@ -483,7 +492,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         else:
             return True
 
-    def get_exchange_info(self) -> Optional[dict]:
+    def get_exchange_info(self) -> Optional[dict, bool]:
         """
         Get the exchange info.
 
@@ -663,7 +672,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                 f"(order_id={stream_data['order_id']})"
                     log_msg_short = " ".join(msg_short.strip())
                     self.logger.info(f"BinanceTrailingStopLossManager.process_userdata_stream() - {log_msg_short}")
-                    if self.print_notificatons:
+                    if self.print_notifications:
                         print(msg_short)
                     self.send_telegram_notification(msg)
                     self.send_email_notificaton(msg)
@@ -722,13 +731,13 @@ class BinanceTrailingStopLossManager(threading.Thread):
             if self.stop_loss_price is None:
                 self.logger.info(f"BinanceTrailingStopLossManager.process_price_feed_stream() - Setting "
                                  f"stop_loss_price from None to {sl_price}!")
-                if self.print_notificatons:
+                if self.print_notifications:
                     print(f"Setting stop_loss_price from None to {sl_price}!")
                 self.create_stop_loss_order(sl_price, current_price=stream_data.get('price'))
             elif self.stop_loss_price < sl_price:
                 self.logger.info(f"BinanceTrailingStopLossManager.process_price_feed_stream() - Setting "
                                  f"stop_loss_price from {self.stop_loss_price} to {sl_price}!")
-                if self.print_notificatons:
+                if self.print_notifications:
                     print(f"Setting stop_loss_price from {self.stop_loss_price} to {sl_price}!")
                 self.create_stop_loss_order(sl_price, current_price=stream_data.get('price'))
         return True
@@ -939,7 +948,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: bool
         """
-        self.logger.debug(f"BinanceTrailingStopLossManager.set_stop_loss_price() - Setting new stop_loss_price={stop_loss_price} ...")
+        self.logger.debug(f"BinanceTrailingStopLossManager.set_stop_loss_price() - "
+                          f"Setting new stop_loss_price={stop_loss_price} ...")
         self.stop_loss_price = stop_loss_price
         return True
 
