@@ -81,14 +81,18 @@ UBTSL = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        telegram_bot_token="telegram_bot_token",
                                        telegram_send_to="telegram_send_to")
 
+print("Testing: ")
+
 
 class TestBinanceComManager(unittest.TestCase):
     def test_stop(self):
         self.assertTrue(UBTSL.stop_manager())
 
     def test_cli(self):
-        # main()
-        pass
+        try:
+            main()
+        except SystemExit:
+            pass
 
 
 if __name__ == '__main__':

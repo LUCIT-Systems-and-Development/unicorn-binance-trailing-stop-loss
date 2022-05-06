@@ -229,7 +229,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                                  exchange=self.exchange,
                                                                                  warn_on_update=warn_on_update)
         if warn_on_update and self.is_update_available():
-            update_msg = f"Release {self.name}_" + {self.get_latest_version()} + " is available, " \
+            update_msg = f"Release {self.name}_" + f"{self.get_latest_version()}" + " is available, " \
                          "please consider updating! (Changelog: https://github.com/LUCIT-Systems-and-Development/" \
                          "unicorn-binance-trailing-stop-loss/blob/master/CHANGELOG.md)"
             print(update_msg)
@@ -251,7 +251,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                     print(f"Please use a valid exchange!")
                 sys.exit(1)
         if test is None and start_engine is True:
-            msg = f"Starting thread  ..."
+            msg = f"Starting the ubtsl engine ..."
             self.logger.info(msg)
             print(msg)
             self.start()
@@ -459,7 +459,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             __logger__.error(f"BinanceTrailingStopLossManager.get_latest_release_info() - {error_msg}")
             return False
 
-    def get_latest_version(self) -> Union[str, None]:
+    def get_latest_version(self) -> Optional[str]:
         """
         Get the version of the latest available release (cache time 1 hour)
         :return: str or None
@@ -860,10 +860,12 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.logger.info(f"BinanceTrailingStopLossManager.start() - Starting trailing stop/loss on {self.exchange} "
                          f"for the market {self.stop_loss_market} ...")
         print(f"Starting trailing stop/loss on {self.exchange} for the market {self.stop_loss_market} ...")
-        self.logger.debug(f"BinanceTrailingStopLossManager.start() - reset_stop_loss_price={self.reset_stop_loss_price}")
+        self.logger.debug(f"BinanceTrailingStopLossManager.start() - reset_stop_loss_price="
+                          f"{self.reset_stop_loss_price}")
         self.symbol_info = self.get_symbol_info(symbol=self.stop_loss_market)
         self.logger.info(f"BinanceTrailingStopLossManager.start() -  used_weight: {self.ubra.get_used_weight()}")
         if self.symbol_info is None:
+            # Todo now!
             print(f"Exit!!!!!!!!!!!!!!!!111")
             sys.exit(1)
         print(str(self.symbol_info['base']))
