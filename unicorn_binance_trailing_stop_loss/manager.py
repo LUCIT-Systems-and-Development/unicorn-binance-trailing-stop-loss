@@ -229,7 +229,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                                  exchange=self.exchange,
                                                                                  warn_on_update=warn_on_update)
         if warn_on_update and self.is_update_available():
-            update_msg = f"Release {self.name}_" + self.get_latest_version() + " is available, " \
+            update_msg = f"Release {self.name}_" + {self.get_latest_version()} + " is available, " \
                          "please consider updating! (Changelog: https://github.com/LUCIT-Systems-and-Development/" \
                          "unicorn-binance-trailing-stop-loss/blob/master/CHANGELOG.md)"
             print(update_msg)
@@ -459,22 +459,17 @@ class BinanceTrailingStopLossManager(threading.Thread):
             __logger__.error(f"BinanceTrailingStopLossManager.get_latest_release_info() - {error_msg}")
             return False
 
-    def get_latest_version(self):
+    def get_latest_version(self) -> Union[str, None]:
         """
         Get the version of the latest available release (cache time 1 hour)
-        :return: str or False
+        :return: str or None
         """
         # Do a fresh request if status is None or last timestamp is older 1 hour
-        if self.last_update_check_github['status'] is None or \
+        if self.last_update_check_github['status']['tag_name'] is None or \
                 (self.last_update_check_github['timestamp']+(60*60) < time.time()):
-            self.last_update_check_github['status'] = self.get_latest_release_info()
-        if self.last_update_check_github['status']:
-            try:
-                return self.last_update_check_github['status']['tag_name']
-            except KeyError:
-                return "unknown"
-        else:
-            return "unknown"
+            latest_release = self.get_latest_release_info()
+            self.last_update_check_github['status']['tag_name'] = latest_release['tag_name']
+        return self.last_update_check_github['status']['tag_name']
 
     def is_update_available(self) -> bool:
         """
@@ -492,7 +487,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         else:
             return True
 
-    def get_exchange_info(self) -> Optional[dict, bool]:
+    def get_exchange_info(self) -> Union[dict, bool]:
         """
         Get the exchange info.
 
@@ -822,49 +817,56 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: None
         """
-        if self.test is None:
-            if self.engine == "jump-in-and-trail":
-                self.logger.info(f"Starting jump-in-and-trail engine")
-                print(f"Starting jump-in-and-trail engine")
-                if self.exchange == "binance.com-isolated_margin":
+        if self.engine == "jump-in-and-trail":
+            self.logger.info(f"Starting jump-in-and-trail engine")
+            print(f"Starting jump-in-and-trail engine")
+            if self.exchange == "binance.com-isolated_margin":
 
-                    isolated_margin_account = self.ubra.get_isolated_margin_account()
-                    if isolated_margin_account['assets'][0]['symbol'] == self.stop_loss_market:
-                        # Todo: Calc borrow_threshold
-                        # Todo: Take full loan
-                        # ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
-                        free_quote_asset = isolated_margin_account['assets'][0]['quoteAsset']['free']
-                        try:
-                            margin_order = self.ubra.create_margin_order(symbol=self.stop_loss_market,
-                                                                         isIsolated="TRUE",
-                                                                         side="BUY",
-                                                                         type="MARKET",
-                                                                         quoteOrderQty=free_quote_asset,
-                                                                         sideEffectType="MARGIN_BUY")
-                        except BinanceAPIException as error_msg:
-                            msg = f"Stopping because of Binance API exception: {error_msg}"
-                            logging.critical(msg)
-                            print(msg)
-                            sys.exit(1)
-                        self.logger.info(f"Jumped in with buy order: {margin_order}")
-                        print(f"Jumped in with buy price: {margin_order['fills'][0]['price']}")
+                isolated_margin_account = self.ubra.get_isolated_margin_account()
+                if isolated_margin_account['assets'][0]['symbol'] == self.stop_loss_market:
+                    # Todo: Take full loan option
 
-                        # Todo: Use this block as a static method within ubtsl.manager
-                        # Todo: Calculate the average price instead of using the price of the first execution:
-                        # margin_order['fills'][0]['price']
-                else:
-                    self.logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for "
-                                         f"exchange '{self.exchange}'.")
-                    print(
-                        f"Option `jump-in-and-trail` in parameter `engine` is not supported for "
-                        f"exchange '{self.exchange}'.")
-                    sys.exit(1)
+                    # Todo: Add LIMIT buy order option
+                    #   ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
+
+                    # Todo: Calc borrow_threshold:
+                    #   `free_quote_asset` takes all!
+
+                    free_quote_asset = isolated_margin_account['assets'][0]['quoteAsset']['free']
+                    try:
+                        margin_order = self.ubra.create_margin_order(symbol=self.stop_loss_market,
+                                                                     isIsolated="TRUE",
+                                                                     side="BUY",
+                                                                     type="MARKET",
+                                                                     quoteOrderQty=free_quote_asset,
+                                                                     sideEffectType="MARGIN_BUY")
+                    except BinanceAPIException as error_msg:
+                        msg = f"Stopping because of Binance API exception: {error_msg}"
+                        logging.critical(msg)
+                        print(msg)
+                        sys.exit(1)
+                    self.logger.info(f"Jumped in with buy order: {margin_order}")
+                    print(f"Jumped in with buy price: {margin_order['fills'][0]['price']}")
+
+                    # Todo: Calculate the average price instead of using the price of the first execution:
+                    # margin_order['fills'][0]['price']
+            else:
+                self.logger.critical(f"Option `jump-in-and-trail` in parameter `engine` is not supported for "
+                                     f"exchange '{self.exchange}'.")
+                print(
+                    f"Option `jump-in-and-trail` in parameter `engine` is not supported for "
+                    f"exchange '{self.exchange}'.")
+                sys.exit(1)
         self.logger.info(f"BinanceTrailingStopLossManager.start() - Starting trailing stop/loss on {self.exchange} "
                          f"for the market {self.stop_loss_market} ...")
         print(f"Starting trailing stop/loss on {self.exchange} for the market {self.stop_loss_market} ...")
         self.logger.debug(f"BinanceTrailingStopLossManager.start() - reset_stop_loss_price={self.reset_stop_loss_price}")
         self.symbol_info = self.get_symbol_info(symbol=self.stop_loss_market)
         self.logger.info(f"BinanceTrailingStopLossManager.start() -  used_weight: {self.ubra.get_used_weight()}")
+        if self.symbol_info is None:
+            print(f"Exit!!!!!!!!!!!!!!!!111")
+            sys.exit(1)
+        print(str(self.symbol_info['base']))
         self.stop_loss_asset_name = self.symbol_info['base']  # Todo: makes problems during unittests
         self.exchange_info = self.get_exchange_info()
         self.update_stop_loss_asset_amount()
