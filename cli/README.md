@@ -215,8 +215,8 @@ $ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
 Do a smart entry by using `engine = jump-in-and-trail` like it is defined within the profile `LUNAUSDT_JUMP_IN` 
 of the [example_ubtsl_profiles.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini).
 
-By activating the `jump-in-and-trail` engine, the bot first buys the predefined asset amount and then 
-trails them automatically. 
+By activating the `jump-in-and-trail` engine, the bot first buys the predefined asset amount and then trails them 
+automatically. 
 
 ```
 $ ubtsl --profile LUNAUSDT_JUMP_IN

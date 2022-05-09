@@ -105,12 +105,17 @@ provides a reuseable library and [CLI interface](https://www.lucit.tech/ubtsl-cl
 
 After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
 notification can be sent via email and Telegram afterwards. Then it calls the function 
-passed with the `callback_finished` parameter or on error it calls the function passed to `callback_error`.
+passed with the `callback_finished` parameter or on error it calls the function passed to `callback_error`. 
 
-In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot, future 
-and margin assets with a limit or market order and then to trail a stop/loss order until sold.
+Partially filled orders are currently not handled by the engine. If you want to react individually to this event, you 
+can use the function provided to `callback_partially_filled`.
+
+In addition, there is a [smart entry](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#smart-entry) option 
+called `jump-in-and-trail`. This offers the possibility to buy spot, future and margin assets with a limit or market 
+order and then to trail a stop/loss order until sold.
 
 ### What are the benefits of the UNICORN Binance Trailing Stop Loss?
+- [Smart entry](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#smart-entry)
 - Using websockets for push notifications about price updates and order updates. (Fast and low used API weight!)
 - Supported exchanges: 
 
@@ -128,6 +133,12 @@ and margin assets with a limit or market order and then to trail a stop/loss ord
 
 If you like the project, please [![star](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/star.png)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/stargazers) it on 
 [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)!
+
+### Smart entry
+Do a smart entry by using `engine = 'jump-in-and-trail'`.  
+
+By activating the `jump-in-and-trail` engine, the engine first buys the predefined asset amount and then trails them 
+automatically. 
 
 ## Installation and Upgrade
 The module requires Python 3.7 or above.
