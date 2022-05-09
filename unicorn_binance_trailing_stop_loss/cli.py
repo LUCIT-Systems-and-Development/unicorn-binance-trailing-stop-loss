@@ -34,7 +34,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-# from manager import BinanceTrailingStopLossManager
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 from configparser import ConfigParser, ExtendedInterpolation
 from pathlib import Path
@@ -78,6 +77,9 @@ def main():
                  Show program version:
                  $ ubtsl --version
                  
+                 Test the connectivity to the Binance API:
+                 $ ubtsl --test binance-connectivity
+
                  Test notifications:
                  $ ubtsl --test notification
                  
@@ -536,6 +538,7 @@ def main():
     # Starting the Trailing Stop/Loss Engine
     ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
                                            callback_finished=callback_finished,
+                                           callback_partially_filled=None,
                                            binance_public_key=public_key,
                                            binance_private_key=private_key,
                                            engine=engine,

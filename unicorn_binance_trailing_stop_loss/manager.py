@@ -36,11 +36,11 @@
 # Todo:
 #   - Exchanges
 #   - Not deleting and creating a new order with same price, just leave it
-#   - SELL/BUY
 #   - Make notifications customizable
 #   - calculate_stop_loss_amount() -> Fee calc? how to handle? / VIP Fees
 #   - Precision dynamic
-#   - PARTIALLY_FILLED how to handle? -> handle! Notification if partially filled? Callback partial filled?
+#   - borrow_threshold
+#   - reset_stop_loss_price is working?
 
 
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
@@ -75,9 +75,11 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :param binance_private_key: Provide the private Binance key.
     :type binance_private_key: str
     :param callback_error: Callback function used if an error occurs.
-    :type callback_error: function
+    :type callback_error: function or None
     :param callback_finished: Callback function used if stop_loss gets filled.
-    :type callback_finished: function
+    :type callback_finished: function or None
+    :param callback_partially_filled: Callback function used if stop_loss gets partially filled filled.
+    :type callback_partially_filled: function or None
     :param engine: Option `trail` (default) for standard trailing stop/loss or `jump-in-and-trail` to activate smart
                    entry function.
     :type engine: str
@@ -138,8 +140,9 @@ class BinanceTrailingStopLossManager(threading.Thread):
     def __init__(self,
                  binance_public_key: str = None,
                  binance_private_key: str = None,
-                 callback_error: type(abs) = None,
-                 callback_finished: type(abs) = None,
+                 callback_error: Optional[type(abs)] = None,
+                 callback_finished: Optional[type(abs)] = None,
+                 callback_partially_filled: Optional[type(abs)] = None,
                  engine: str = "trail",
                  exchange: str = "binance.com",
                  keep_threshold: str = None,
@@ -181,6 +184,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.binance_private_key = binance_private_key
         self.callback_error = callback_error
         self.callback_finished = callback_finished
+        self.callback_partially_filled = callback_partially_filled
         self.current_price: float = 0.0
         self.engine = engine
         self.exchange = exchange
@@ -188,8 +192,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.keep_threshold = keep_threshold
         self.last_update_check_github = {'timestamp': time.time(), 'status': {'tag_name': None}}
         self.lock_create_stop_loss_order = threading.Lock()
-        self.precision_crypto: int = 2  # Todo: make dynamic
-        self.precision_fiat: int = 2  # Todo: make dynamic
+        self.precision_crypto: int = 2
+        self.precision_fiat: int = 2
         self.print_notifications = print_notifications
         self.reset_stop_loss_price = True if reset_stop_loss_price is True else False
         self.send_to_email_address = send_to_email_address
@@ -459,7 +463,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
     def get_latest_version(self) -> Optional[str]:
         """
         Get the version of the latest available release (cache time 1 hour)
-        :return: str or None
+        :return: str or None12
         """
         # Do a fresh request if status is None or last timestamp is older 1 hour
         if self.last_update_check_github['status']['tag_name'] is None or \
@@ -675,20 +679,26 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 elif stream_data['current_order_status'] == "CANCELED":
                     self.logger.info(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
                                      f"Received CANCELED event, trigger creation of new order")
-                    print("Received CANCELED event, creating a new order")
+                    if self.print_notifications:
+                        print("Received CANCELED event, creating a new order")
                     self.create_stop_loss_order(self.stop_loss_price, current_price=self.current_price)
                     return False
                 elif stream_data['current_order_status'] == "PARTIALLY_FILLED":
-                    # Todo: Cerate new order? Wait? Send message? Let User choose?
                     self.logger.warning(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
-                                        f"Received PARTIALLY_FILLED event, this is currently unhandled!!!")
-                    print("Received PARTIALLY_FILLED event, this is currently unhandled!!!")
+                                        f"Received PARTIALLY_FILLED event")
+                    if self.print_notifications:
+                        print("Received PARTIALLY_FILLED event")
+                    if self.callback_partially_filled is not None:
+                        self.callback_partially_filled(stream_data)
                     return False
                 elif stream_data['current_order_status'] == "NEW":
                     self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received event: "
                                       f"{str(stream_data)}")
                 else:
-                    print("Unknown, please report:", str(stream_data))
+                    self.logger.critical(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received unknown"
+                                         f" event: {str(stream_data)}")
+                    if self.print_notifications:
+                        print("Unknown, please report:", str(stream_data))
             elif stream_data['current_order_status'] == "NEW":
                 self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received event: "
                                   f"{str(stream_data)}")
@@ -698,13 +708,15 @@ class BinanceTrailingStopLossManager(threading.Thread):
             else:
                 self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
                                   f"Received stream_data: {stream_data}")
-                print("Unknown, please report:", str(stream_data))
+                if self.print_notifications:
+                    print("Unknown, please report:", str(stream_data))
         elif stream_data['event_type'] == "outboundAccountPosition":
             self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received: {stream_data}")
         else:
             self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
-                              f"Received stream_data: {stream_data}")
-            print("Unknown, please report:", str(stream_data))
+                              f"Received unkown stream_data: {stream_data}")
+            if self.print_notifications:
+                print("Unknown, please report:", str(stream_data))
 
     def process_price_feed_stream(self,
                                   stream_data: dict = None,
@@ -764,7 +776,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
         """
         if self.engine == "jump-in-and-trail":
             self.logger.info(f"Starting jump-in-and-trail engine")
-            print(f"Starting `jump-in-and-trail` engine")
+            if self.print_notifications:
+                print(f"Starting `jump-in-and-trail` engine")
 
             buy_order = None
             buy_price = None
@@ -797,7 +810,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
                     except BinanceAPIException as error_msg:
                         msg = f"Stopping because of Binance API exception: {error_msg}"
                         logging.critical(msg)
-                        print(msg)
+                        if self.print_notifications:
+                            print(msg)
                         # Todo: Better handling then just stopping. Callback? Exception?
                         sys.exit(1)
 
@@ -805,22 +819,27 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 msg = f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange " \
                       f"'{self.exchange}'!"
                 self.logger.critical(msg)
-                print(msg)
+                if self.print_notifications:
+                    print(msg)
                 sys.exit(1)
             self.logger.info(f"Jumped in with buy order: {buy_order}")
-            print(f"Jumped in with buy price: {buy_price}")
+            if self.print_notifications:
+                print(f"Jumped in with buy price: {buy_price}")
         elif self.engine == "trail":
             msg = f"Starting `trail` engine"
             self.logger.critical(msg)
-            print(msg)
+            if self.print_notifications:
+                print(msg)
         else:
             msg = f"Engine `{self.engine}` is not supported!"
             self.logger.critical(msg)
-            print(msg)
+            if self.print_notifications:
+                print(msg)
             sys.exit(1)
         self.logger.info(f"BinanceTrailingStopLossManager.start() - Starting trailing stop/loss on {self.exchange} "
                          f"for the market {self.stop_loss_market}")
-        print(f"Starting trailing stop/loss on {self.exchange} for the market {self.stop_loss_market}")
+        if self.print_notifications:
+            print(f"Starting trailing stop/loss on {self.exchange} for the market {self.stop_loss_market}")
         self.logger.debug(f"BinanceTrailingStopLossManager.start() - reset_stop_loss_price="
                           f"{self.reset_stop_loss_price}")
         self.symbol_info = self.get_symbol_info(symbol=self.stop_loss_market)
@@ -875,7 +894,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             self.create_stop_loss_order(self.stop_loss_price)
 
     def send_email_notification(self,
-                               message: str = None) -> bool:
+                                message: str = None) -> bool:
         """
         Send a notification via email!
 
