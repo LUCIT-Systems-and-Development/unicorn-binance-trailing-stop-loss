@@ -20,7 +20,8 @@
 # UNICORN Binance Trailing Stop Loss CLI
 
 [Description](#description) | [Installation](#installation) | [Usage](#usage) | [Example commands](#example-commands) |
-[Example files](#example-files) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
+[Smart Entry](#smart-entry) | [Example files](#example-files) | [Disclaimer](#disclaimer) | 
+[Commercial Support](#commercial-support)
 
 
 ***This repository will be ready for deployment in mid-May 2022***

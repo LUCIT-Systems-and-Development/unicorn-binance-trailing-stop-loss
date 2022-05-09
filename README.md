@@ -19,7 +19,7 @@
 
 # UNICORN Binance Trailing Stop Loss
 
-[Description](#description) | [Installation](#installation-and-upgrade) | 
+[Description](#description) | [Smart Entry](#smart-entry) | [Installation](#installation-and-upgrade) | 
 [Documentation](#documentation) | [Examples](#examples) | [Change Log](#change-log) | [Wiki](#wiki) | [Social](#social) |
 [Notifications](#receive-notifications) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
 [Contributing](#contributing) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
