@@ -26,8 +26,8 @@
 
 ***This repository will be ready for deployment in mid-May 2022***
 
-A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss on 
-Binance Exchange in a easy, fast, flexible, robust and fully-featured way.
+A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss and 
+smart entry on the Binance exchange.
 
 As [`UNICORN Binance Trailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html)
 we also offer a standalone version that does not require an installed Python environment.
@@ -42,7 +42,7 @@ Part of ['UNICORN Binance Suite'](https://www.lucit.tech/unicorn-binance-suite.h
 
 ## How to start the trailing stop loss engine:
 ```
-import unicorn_binance_trailing_stop_loss
+from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 
 
 def callback_error(msg):
@@ -53,26 +53,29 @@ def callback_finished(msg):
     print(f"STOP LOSS FINISHED - ENGINE IS SHUTTING DOWN! - {msg}")
     ubtsl.stop_manager()
     
+def callback_partially_filled(msg):
+    print(f"STOP LOSS PARTIALLY_FILLED - ENGINE IS STILL RUNNING! - {msg}")
     
-ubtsl = unicorn_binance_trailing_stop_loss.BinanceTrailingStopLossManager(callback_error=callback_error,
-                                                                          callback_finished=callback_finished,
-                                                                          binance_public_key="aaa",
-                                                                          binance_private_key="bbb",
-                                                                          exchange="binance.com-testnet",
-                                                                          keep_threshold="20%",
-                                                                          reset_stop_loss_price=True,
-                                                                          send_to_email_address="blah@example.com",
-                                                                          send_from_email_address="blub@example.com",
-                                                                          send_from_email_password="pass",
-                                                                          send_from_email_server="mail.example.com",
-                                                                          send_from_email_port=25,
-                                                                          stop_loss_limit="1.5%",
-                                                                          stop_loss_market="LUNAUSDT",
-                                                                          stop_loss_order_type="LIMIT",
-                                                                          stop_loss_price=88,
-                                                                          stop_loss_side="SELL",
-                                                                          telegram_bot_token="telegram_bot_token",
-                                                                          telegram_send_to="telegram_send_to")
+ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
+                                       callback_finished=callback_finished,
+                                       callback_partially_filled=callback_partially_filled,
+                                       binance_public_key="aaa",
+                                       binance_private_key="bbb",
+                                       exchange="binance.com-testnet",
+                                       keep_threshold="20%",
+                                       reset_stop_loss_price=True,
+                                       send_to_email_address="blah@example.com",
+                                       send_from_email_address="blub@example.com",
+                                       send_from_email_password="pass",
+                                       send_from_email_server="mail.example.com",
+                                       send_from_email_port=25,
+                                       stop_loss_limit="1.5%",
+                                       stop_loss_market="LUNAUSDT",
+                                       stop_loss_order_type="LIMIT",
+                                       stop_loss_price=88,
+                                       stop_loss_side="SELL",
+                                       telegram_bot_token="telegram_bot_token",
+                                       telegram_send_to="telegram_send_to")
 ```
 
 ### Stop the engine:
@@ -102,15 +105,18 @@ After starting the engine, a stop/loss order is placed and trailed until it is c
 notification can be sent via email and Telegram afterwards. Then it calls the function 
 passed with the `callback_finished` parameter or on error it calls the function passed to `callback_error`.
 
+In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot, future 
+and margin assets with a limit or market order and then to trail a stop/loss order until sold.
+
 ### What are the benefits of the UNICORN Binance Trailing Stop Loss?
 - Using websockets for push notifications about price updates and order updates. (Fast and low used API weight!)
 - Supported exchanges: 
 
-| Exchange | Exchange string | 
-| -------- | --------------- | 
-| [Binance](https://www.binance.com) | `BinanceTrailingStopLossManager(exchange="binance.com")` |
-| [Binance Testnet](https://testnet.binance.vision/) | `BinanceTrailingStopLossManager(exchange="binance.com-testnet")` |
-| [Binance Isolated Margin](https://www.binance.com) | `BinanceTrailingStopLossManager(exchange="binance.com-isolated_margin")` |
+| Exchange | Exchange string | trail | jump-in-and-trail | 
+| -------- | --------------- | ----- |-------------------| 
+| [Binance](https://www.binance.com) | `BinanceTrailingStopLossManager(exchange="binance.com")` | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+| [Binance Testnet](https://testnet.binance.vision/) | `BinanceTrailingStopLossManager(exchange="binance.com-testnet")` | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+| [Binance Isolated Margin](https://www.binance.com) | `BinanceTrailingStopLossManager(exchange="binance.com-isolated_margin")` | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png)
 | More are coming soon | - |
 
 - Integrated notification system (e-Mail and Telegram)
