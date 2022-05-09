@@ -28,8 +28,9 @@
 After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
 notification can be sent via email and Telegram afterwards.
 
-In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot, future 
-and margin assets with a limit or market order and then to trail a stop/loss order until sold.
+In addition, there is a [smart entry](https://www.lucit.tech/ubtsl-cli.html#smart-entry) option called 
+`jump-in-and-trail`. This offers the possibility to buy spot, future and margin assets with a limit or market order and 
+then to trail a stop/loss order until sold.
 
 List of [supported exchanges](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss).
 
