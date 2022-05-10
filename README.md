@@ -27,7 +27,7 @@
 ***This repository will be ready for deployment in mid-May 2022***
 
 A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss and 
-smart entry on the Binance exchange.
+[smart entry](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#smart-entry) on the Binance exchange.
 
 As [`UNICORN Binance Trailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html)
 we also offer a standalone version that does not require an installed Python environment.
