@@ -34,13 +34,13 @@
 # IN THE SOFTWARE.
 
 # Todo:
-#   - Exchanges
+#   - stop_loss_start_limit not used!!!
+#   - reset_stop_loss_price is working?
 #   - Not deleting and creating a new order with same price, just leave it
+#   - Exchanges
 #   - Make notifications customizable
 #   - calculate_stop_loss_amount() -> Fee calc? how to handle? / VIP Fees
 #   - Precision dynamic
-#   - borrow_threshold
-#   - reset_stop_loss_price is working?
 
 
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
@@ -785,7 +785,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             if self.exchange == "binance.com-isolated_margin":
                 isolated_margin_account = self.ubra.get_isolated_margin_account()
 
-                # Todo: `isolated_margin_account['assets'][0]['symbol']` only works with one asset :)
+                # Todo: `isolated_margin_account['assets'][0]['symbol']` only works with one asset :/
                 if isolated_margin_account['assets'][0]['symbol'] == self.stop_loss_market:
                     # Todo: Take full loan option
 
@@ -812,9 +812,9 @@ class BinanceTrailingStopLossManager(threading.Thread):
                         logging.critical(msg)
                         if self.print_notifications:
                             print(msg)
-                        # Todo: Better handling then just stopping. Callback? Exception?
-                        sys.exit(1)
-
+                        if self.callback_error is not None:
+                            self.callback_error(msg)
+                        return None
             else:
                 msg = f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange " \
                       f"'{self.exchange}'!"
@@ -836,20 +836,20 @@ class BinanceTrailingStopLossManager(threading.Thread):
             if self.print_notifications:
                 print(msg)
             sys.exit(1)
-        self.logger.info(f"BinanceTrailingStopLossManager.start() - Starting trailing stop/loss on {self.exchange} "
+        self.logger.info(f"BinanceTrailingStopLossManager.run() - Starting trailing stop/loss on {self.exchange} "
                          f"for the market {self.stop_loss_market}")
         if self.print_notifications:
             print(f"Starting trailing stop/loss on {self.exchange} for the market {self.stop_loss_market}")
-        self.logger.debug(f"BinanceTrailingStopLossManager.start() - reset_stop_loss_price="
+        self.logger.debug(f"BinanceTrailingStopLossManager.run() - reset_stop_loss_price="
                           f"{self.reset_stop_loss_price}")
         self.symbol_info = self.get_symbol_info(symbol=self.stop_loss_market)
-        self.logger.info(f"BinanceTrailingStopLossManager.start() -  used_weight: {self.ubra.get_used_weight()}")
+        self.logger.info(f"BinanceTrailingStopLossManager.run() -  used_weight: {self.ubra.get_used_weight()}")
         if self.symbol_info is None:
-            # Todo now!
-            print(f"Exit!!!!!!!!!!!!!!!!111")
+            self.logger.critical(f"BinanceTrailingStopLossManager.run() - `symbol_info` is None")
+            if self.print_notifications:
+                print(f"ERROR: `symbol_info` is None -> Stopping!")
             sys.exit(1)
-        print(str(self.symbol_info['base']))
-        self.stop_loss_asset_name = self.symbol_info['base']  # Todo: makes problems during unittests
+        self.stop_loss_asset_name = self.symbol_info['base']
         self.exchange_info = self.get_exchange_info()
         self.update_stop_loss_asset_amount()
 

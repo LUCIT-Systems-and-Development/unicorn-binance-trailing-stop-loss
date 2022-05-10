@@ -135,7 +135,7 @@ If you like the project, please [![star](https://raw.githubusercontent.com/lucit
 [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)!
 
 ### Smart entry
-Do a smart entry by using `engine = 'jump-in-and-trail'`.  
+Do a smart entry by using `engine = 'jump-in-and-trail'` and providing `borrow_threshold`.
 
 By activating the `jump-in-and-trail` engine, the engine first buys the predefined asset amount and then trails them 
 automatically. 
