@@ -65,9 +65,17 @@ __version__ = "0.6.0.dev"
 
 class BinanceTrailingStopLossManager(threading.Thread):
     """
-    unicorn-binance-trailing-stop-loss for managing Stop/Loss orders and sending notifications.
+    After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a
+    notification can be sent via email and Telegram afterwards. Then it calls the function passed with the
+    `callback_finished` parameter or on error it calls the function passed to `callback_error`.
 
-    Supported exchanges: binance.com-isolated_margin
+    Partially filled orders are currently not handled by the engine. If you want to react individually to this event,
+    you can use the function provided to `callback_partially_filled`.
+
+    In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot,
+    future and margin assets with a limit or market order and then to trail a stop/loss order until sold.
+
+    Supported exchanges: binance.com, binance.com-testnet, binance.com-isolated_margin
 
     :param binance_public_key: Provide the public Binance key.
     :type binance_public_key: str
