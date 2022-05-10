@@ -42,7 +42,6 @@
 #   - calculate_stop_loss_amount() -> Fee calc? how to handle? / VIP Fees
 #   - Precision dynamic
 
-
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
 from unicorn_binance_rest_api.exceptions import BinanceAPIException
 from unicorn_binance_websocket_api.manager import BinanceWebSocketApiManager
