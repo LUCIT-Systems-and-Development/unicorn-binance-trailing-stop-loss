@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "unicorn-binance-trailing-stop-loss"
+version = "0.6.0"
+description = "A Python library with a command line interface for a trailing stop loss and smart entry on the Binance exchange."
+authors = ["LUCIT Systems and Development <info@lucit.tech>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+requests = "^2.27.1"
+ubtsl = "^0.1.0"
+unicorn-binance-rest-api = "^1.4.3"
+unicorn-binance-websocket-api = "^1.41.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
