@@ -44,6 +44,7 @@ import math
 import platform
 import smtplib
 import requests
+import socket
 import ssl
 import sys
 import threading
@@ -554,13 +555,17 @@ class BinanceTrailingStopLossManager(threading.Thread):
     def get_latest_version(self) -> Optional[str]:
         """
         Get the version of the latest available release (cache time 1 hour)
-        :return: str or None12
+        :return: str or None
         """
         # Do a fresh request if status is None or last timestamp is older 1 hour
         if self.last_update_check_github['status']['tag_name'] is None or \
                 (self.last_update_check_github['timestamp']+(60*60) < time.time()):
             latest_release = self.get_latest_release_info()
-            self.last_update_check_github['status']['tag_name'] = latest_release['tag_name']
+            try:
+                self.last_update_check_github['status']['tag_name'] = latest_release['tag_name']
+            except KeyError as error_msg:
+                self.logger.error(f"BinanceTrailingStopLossManager.get_latest_version() - KeyError: {error_msg}")
+                return None
         return self.last_update_check_github['status']['tag_name']
 
     def get_exchange_info(self) -> Union[dict, bool]:
@@ -755,7 +760,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             installed_version = installed_version[:-4]
         if self.get_latest_version() == installed_version:
             return False
-        elif self.get_latest_version() == "unknown":
+        elif self.get_latest_version() is None:
             return False
         else:
             return True
@@ -838,7 +843,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: bool
         """
-        if "streams" in self.test:
+        if "streams" in str(self.test):
             self.logger.debug(f"BinanceTrailingStopLossManager.process_price_feed_stream() - Not processing in test "
                               f"mode")
             return True
@@ -1043,11 +1048,18 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 and self.send_from_email_server \
                 and self.send_from_email_port:
             context = ssl.create_default_context()
-            with smtplib.SMTP_SSL(self.send_from_email_server, self.send_from_email_port, context=context) as server:
-                server.login(self.send_from_email_address, self.send_from_email_password)
-                server.sendmail(self.send_from_email_address, self.send_to_email_address, message)
-                self.logger.info(f"BinanceTrailingStopLossManager.send_email_notification() - Email sent!")
-                return True
+            try:
+                with smtplib.SMTP_SSL(self.send_from_email_server, self.send_from_email_port, context=context) as server:
+                    server.login(self.send_from_email_address, self.send_from_email_password)
+                    server.sendmail(self.send_from_email_address, self.send_to_email_address, message)
+                    self.logger.info(f"BinanceTrailingStopLossManager.send_email_notification() - Email sent!")
+                    if self.print_notifications:
+                        print("Email sent!")
+                    return True
+            except socket.gaierror as error_msg:
+                self.logger.info(f"BinanceTrailingStopLossManager.send_email_notification() - {error_msg}")
+                if self.print_notifications:
+                    print(f"ERROR: Email not sent! {error_msg}")
         else:
             self.logger.debug(f"BinanceTrailingStopLossManager.send_email_notification() - Data for email dispatch not "
                               f"available")
