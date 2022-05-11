@@ -248,7 +248,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                                    warn_on_update=warn_on_update)
         except UnknownExchange:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
-            if test is None or "streams" in test:
+            if test is None or "streams" in str(test):
                 if self.print_notifications:
                     print(f"Please use a valid exchange!")
                 sys.exit(1)
@@ -291,7 +291,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 self.logger.error(error_msg)
                 if self.print_notifications:
                     print(error_msg)
-        elif "streams" in test:
+        elif "streams" in str(test):
             msg = f"Starting streams test"
             test_time_in_seconds = str(test).replace("streams", "")
             if test_time_in_seconds != "":
