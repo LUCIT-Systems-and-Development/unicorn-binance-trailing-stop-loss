@@ -58,6 +58,9 @@ and a
 file from the `{home}/.lucit/` and the current working directory. Alternatively, you can specify these files explicitly with the 
 `--configfile` and `--profilesfile` parameters.
 
+Once the tool is started, it trails the stop/loss order until it is completely fulfilled, sends the notifications, and
+then it stops.
+
 ## Installation
 No matter if you installed the [CLI version via PIP/conda](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
 or the [standalone Bot version via setup file](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#installation). 
@@ -131,8 +134,7 @@ Instead of loading the values from profiles, they can also be defined explicitly
 
 Any CLI parameters will overwrite predefined values from the profile.
 
-Once the tool is started, it trails the stop/loss order until it is completely fulfilled, sends the notifications, and
-then it stops.
+All parameters that expect numbers can be configured with fixed numerical values as well as with percentage values.
 
 ```
 $ ubtsl --help
