@@ -104,7 +104,6 @@ body:
         - concerns all
         - binance.com
         - binance.com-futures
-        - binance.com-futures-testnet
         - binance.com-isolated_margin
         - binance.com-margin
         - binance.com-testnet
