@@ -77,7 +77,6 @@ UBTSL = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        market="LUNAUSDT",
                                        stop_loss_order_type="LIMIT",
                                        stop_loss_price=88,
-                                       stop_loss_side="SELL",
                                        telegram_bot_token="telegram_bot_token",
                                        telegram_send_to="telegram_send_to")
 
@@ -93,6 +92,69 @@ class TestBinanceComManager(unittest.TestCase):
             main()
         except SystemExit:
             pass
+
+    def test_notification(self):
+        BinanceTrailingStopLossManager(callback_error=callback_error,
+                                       callback_finished=callback_finished,
+                                       binance_public_key="aaa",
+                                       binance_private_key="bbb",
+                                       exchange="binance.com-testnet",
+                                       keep_threshold="20%",
+                                       reset_stop_loss_price=True,
+                                       send_to_email_address="blah@example.com",
+                                       send_from_email_address="blub@example.com",
+                                       send_from_email_password="pass",
+                                       send_from_email_server="mail.example.com",
+                                       send_from_email_port=25,
+                                       stop_loss_limit="1.5%",
+                                       market="LUNAUSDT",
+                                       stop_loss_order_type="LIMIT",
+                                       stop_loss_price=88,
+                                       telegram_bot_token="telegram_bot_token",
+                                       telegram_send_to="telegram_send_to",
+                                       test="notification")
+
+    def test_binance_connectivity(self):
+        BinanceTrailingStopLossManager(callback_error=callback_error,
+                                       callback_finished=callback_finished,
+                                       binance_public_key="aaa",
+                                       binance_private_key="bbb",
+                                       exchange="binance.com-testnet",
+                                       keep_threshold="20%",
+                                       reset_stop_loss_price=True,
+                                       send_to_email_address="blah@example.com",
+                                       send_from_email_address="blub@example.com",
+                                       send_from_email_password="pass",
+                                       send_from_email_server="mail.example.com",
+                                       send_from_email_port=25,
+                                       stop_loss_limit="1.5%",
+                                       market="LUNAUSDT",
+                                       stop_loss_order_type="LIMIT",
+                                       stop_loss_price=88,
+                                       telegram_bot_token="telegram_bot_token",
+                                       telegram_send_to="telegram_send_to",
+                                       test="binance-connectivity")
+
+    def test_streams(self):
+        BinanceTrailingStopLossManager(callback_error=callback_error,
+                                       callback_finished=callback_finished,
+                                       binance_public_key="aaa",
+                                       binance_private_key="bbb",
+                                       exchange="binance.com-testnet",
+                                       keep_threshold="20%",
+                                       reset_stop_loss_price=True,
+                                       send_to_email_address="blah@example.com",
+                                       send_from_email_address="blub@example.com",
+                                       send_from_email_password="pass",
+                                       send_from_email_server="mail.example.com",
+                                       send_from_email_port=25,
+                                       stop_loss_limit="1.5%",
+                                       market="LUNAUSDT",
+                                       stop_loss_order_type="LIMIT",
+                                       stop_loss_price=88,
+                                       telegram_bot_token="telegram_bot_token",
+                                       telegram_send_to="telegram_send_to",
+                                       test="streams")
 
 
 if __name__ == '__main__':
