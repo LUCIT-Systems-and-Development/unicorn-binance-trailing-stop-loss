@@ -54,7 +54,7 @@ method and that the Bot version does not require a pre-installed Python environm
 
 ## Installation
 ### Windows
-Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest)
+Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest/download/ubtsl_setup.exe)
 from GitHub.
 
 ### Mac
