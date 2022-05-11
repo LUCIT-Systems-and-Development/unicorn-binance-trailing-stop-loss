@@ -247,7 +247,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                                    warn_on_update=warn_on_update)
         except UnknownExchange:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
-            if test is None or test == "streams":
+            if test is None or "streams" in test:
                 if self.print_notifications:
                     print(f"Please use a valid exchange!")
                 sys.exit(1)
@@ -290,18 +290,26 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 self.logger.error(error_msg)
                 if self.print_notifications:
                     print(error_msg)
-        elif test == "streams":
+        elif "streams" in test:
             msg = f"Starting streams test"
+            test_time_in_seconds = str(test).replace("streams", "")
+            if test_time_in_seconds != "":
+                test_time_in_seconds = int(test_time_in_seconds)
             self.logger.info(msg)
             if self.print_notifications:
                 print(msg)
             self.start_streams()
             try:
+                i = 0
                 while self.stop_request is False:
+                    i += 1
                     self.ubwa.print_summary(title=f"UNICORN Binance Trailing Stop Loss {self.version} - "
                                                   f"Testing streams")
                     print(f"Press CTRL+C to leave this test!\r\n")
-                    time.sleep(1)
+                    if test_time_in_seconds > i:
+                        time.sleep(1)
+                    else:
+                        break
             except KeyboardInterrupt:
                 print("\nStopping ... just wait a few seconds!")
                 self.stop_manager()
@@ -830,7 +838,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: bool
         """
-        if self.test == "streams":
+        if "streams" in self.test:
             self.logger.debug(f"BinanceTrailingStopLossManager.process_price_feed_stream() - Not processing in test "
                               f"mode")
             return True

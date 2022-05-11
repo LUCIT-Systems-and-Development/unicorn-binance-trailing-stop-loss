@@ -154,7 +154,7 @@ class TestBinanceComManager(unittest.TestCase):
                                        stop_loss_price=88,
                                        telegram_bot_token="telegram_bot_token",
                                        telegram_send_to="telegram_send_to",
-                                       test="streams")
+                                       test="streams20")
 
 
 if __name__ == '__main__':
