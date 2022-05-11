@@ -68,7 +68,7 @@ def main():
     log_format = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
     parser = argparse.ArgumentParser(
-          description=f"UNICORN Binance Trailing Stop Loss {version} (MIT License)",
+          description=f"UNICORN Binance Trailing Stop Loss {version} by LUCIT Systems and Development (MIT License)",
           prog=f"ubtsl",
           formatter_class=argparse.RawDescriptionHelpFormatter,
           epilog=textwrap.dedent('''\
@@ -179,6 +179,10 @@ def main():
                              f'`exchange` and `market`.',
                         required=False,
                         action='store_true')
+    parser.add_argument('-m', '--market',
+                        type=str,
+                        help='The market on which is traded.',
+                        required=False)
     parser.add_argument('-oci', '--openconfigini',
                         help=f'Open the used config file and then stop.',
                         required=False,
@@ -209,17 +213,13 @@ def main():
                         type=str,
                         help='Stop/loss limit in float or percent.',
                         required=False)
-    parser.add_argument('-m', '--market',
+    parser.add_argument('-sl', '--stoplossstartlimit',
                         type=str,
-                        help='The market on which is traded.',
+                        help='Set the start stop/loss limit in float or percent. (only used in `jump-in-and-trail`.',
                         required=False)
     parser.add_argument('-p', '--stoplossprice',
                         type=float,
                         help='Set the start stop/loss price as float value.',
-                        required=False)
-    parser.add_argument('-sl', '--stoplossstartlimit',
-                        type=str,
-                        help='Set the start stop/loss limit in float or percent. (only used in `jump-in-and-trail`.',
                         required=False)
     parser.add_argument('-t', '--test',
                         type=str,
@@ -246,7 +246,7 @@ def main():
     if options.logfile is True:
         logfile = options.logfile
     else:
-        logfile = os.path.basename(__file__) + '.log'
+        logfile = config_path + os.path.basename(__file__) + '.log'
 
     # Log level
     if options.loglevel == "DEBUG":
@@ -277,7 +277,7 @@ def main():
         :param message: Text message provided by ubtsl lib
         :return: None
         """
-        logger.debug(f"callback_error() started ")
+        logger.debug(f"callback_error() started, got message: {message}")
         ubtsl.stop_manager()
 
     def callback_finished(feedback):
@@ -489,45 +489,50 @@ def main():
 
         # Mapping parameters
         try:
-            borrow_threshold = profiles[options.profile]['borrow_threshold']
-        except KeyError:
-            pass
-        try:
-            exchange = profiles[options.profile]['exchange']
-        except KeyError:
-            pass
-        try:
-            keep_threshold = profiles[options.profile]['keep_threshold']
-        except KeyError:
-            pass
-        try:
-            reset_stop_loss_price = profiles[options.profile]['reset_stop_loss_price']
-        except KeyError:
-            pass
-        try:
-            engine = profiles[options.profile]['engine']
-        except KeyError:
-            pass
-        try:
-            market = profiles[options.profile]['market']
-        except KeyError:
-            pass
-        try:
-            stop_loss_limit = profiles[options.profile]['stop_loss_limit']
-        except KeyError:
-            pass
-        try:
-            stop_loss_start_limit = profiles[options.profile]['stop_loss_start_limit']
-        except KeyError:
-            pass
-        try:
-            stop_loss_order_type = profiles[options.profile]['stop_loss_order_type']
-        except KeyError:
-            pass
-        try:
-            stop_loss_price = float(profiles[options.profile]['stop_loss_price'])
-        except KeyError:
-            pass
+            if profiles[options.profile]:
+                try:
+                    borrow_threshold = profiles[options.profile]['borrow_threshold']
+                except KeyError:
+                    pass
+                try:
+                    exchange = profiles[options.profile]['exchange']
+                except KeyError:
+                    pass
+                try:
+                    keep_threshold = profiles[options.profile]['keep_threshold']
+                except KeyError:
+                    pass
+                try:
+                    reset_stop_loss_price = profiles[options.profile]['reset_stop_loss_price']
+                except KeyError:
+                    pass
+                try:
+                    engine = profiles[options.profile]['engine']
+                except KeyError:
+                    pass
+                try:
+                    market = profiles[options.profile]['market']
+                except KeyError:
+                    pass
+                try:
+                    stop_loss_limit = profiles[options.profile]['stop_loss_limit']
+                except KeyError:
+                    pass
+                try:
+                    stop_loss_start_limit = profiles[options.profile]['stop_loss_start_limit']
+                except KeyError:
+                    pass
+                try:
+                    stop_loss_order_type = profiles[options.profile]['stop_loss_order_type']
+                except KeyError:
+                    pass
+                try:
+                    stop_loss_price = float(profiles[options.profile]['stop_loss_price'])
+                except KeyError:
+                    pass
+        except KeyError as error_msg:
+            print(f"ERROR: Profile {error_msg} not found!")
+            sys.exit(1)
 
     # cli args overwrite profile settings
     if options.apikey is not None:
@@ -574,7 +579,7 @@ def main():
             elif exchange == "binance.com-margin":
                 canceled_orders = ubra.cancel_all_open_margin_orders(symbol=market)
             elif exchange == "binance.com-isolated_margin":
-                canceled_orders = ubra.cancel_all_open_margin_orders(symbol=market, isIsolated=True)
+                canceled_orders = ubra.cancel_all_open_margin_orders(symbol=market, isIsolated="TRUE")
             elif exchange == "binance.com-futures":
                 canceled_orders = ubra.futures_cancel_all_open_orders(symbol=market)
             else:
@@ -597,7 +602,7 @@ def main():
             elif exchange == "binance.com-margin":
                 open_orders = ubra.get_open_margin_orders(symbol=market)
             elif exchange == "binance.com-isolated_margin":
-                open_orders = ubra.get_open_margin_orders(symbol=market, isIsolated=True)
+                open_orders = ubra.get_open_margin_orders(symbol=market, isIsolated="TRUE")
             elif exchange == "binance.com-futures":
                 open_orders = ubra.futures_get_open_orders(symbol=market)
             else:
@@ -642,7 +647,7 @@ def main():
     if test is None:
         try:
             while ubtsl.stop_request is False:
-                time.sleep(1)
+                time.sleep(5)
         except KeyboardInterrupt:
             print("\nStopping ... just wait a few seconds!")
             ubtsl.stop_manager()
