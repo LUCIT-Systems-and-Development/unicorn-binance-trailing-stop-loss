@@ -35,7 +35,7 @@
 
 
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
-from manager import BinanceTrailingStopLossManager  # need for testing the the cli interface during development
+# from manager import BinanceTrailingStopLossManager  # need for testing the the cli interface during development
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 from pathlib import Path
