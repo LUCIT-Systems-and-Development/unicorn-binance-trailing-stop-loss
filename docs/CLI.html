@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UNICORN Binance Trailing Stop Loss CLI &#8212; unicorn-binance-trailing-stop-loss 0.7.0 documentation</title>
+    <title>UNICORN Binance Trailing Stop Loss CLI &#8212; unicorn-binance-trailing-stop-loss 0.7.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css" />
     
@@ -51,7 +51,7 @@
         
     
     
-    <a href="index.html">unicorn-binance-trailing-stop-loss 0.7.0 documentation</a> &#187;
+    <a href="index.html">unicorn-binance-trailing-stop-loss 0.7.1 documentation</a> &#187;
     
 
         <li class="nav-item nav-item-this"><a href="">UNICORN Binance Trailing Stop Loss CLI</a></li>
@@ -108,6 +108,14 @@ known problems before using this tool - you use it at your own risk!</p>
 <p>If you put this engine on a market, you should stop trading manually on this market yourself!</p>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>After startup <code class="docutils literal notranslate"><span class="pre">ubtsl</span></code> tries to load a
+<a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini"><code class="docutils literal notranslate"><span class="pre">ubtsl_config.ini</span></code></a>
+and a
+<a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini"><code class="docutils literal notranslate"><span class="pre">ubtsl_profiles.ini</span></code></a>
+file from the <code class="docutils literal notranslate"><span class="pre">{home}/.lucit/</span></code> and the current working directory. Alternatively, you can specify these files explicitly with the
+<code class="docutils literal notranslate"><span class="pre">--configfile</span></code> and <code class="docutils literal notranslate"><span class="pre">--profilesfile</span></code> parameters.</p>
+<p>Once the tool is started, it trails the stop/loss order until it is completely fulfilled, sends the notifications, and
+then it stops.</p>
 <p><em><strong>Supported exchanges:</strong></em></p>
 <table border="1" class="docutils">
 <thead>
@@ -150,15 +158,7 @@ known problems before using this tool - you use it at your own risk!</p>
 <td><img alt="yes" src="https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png" /></td>
 </tr>
 </tbody>
-</table><p>After startup <code class="docutils literal notranslate"><span class="pre">ubtsl</span></code> tries to load a
-<a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini"><code class="docutils literal notranslate"><span class="pre">ubtsl_config.ini</span></code></a>
-and a
-<a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini"><code class="docutils literal notranslate"><span class="pre">ubtsl_profiles.ini</span></code></a>
-file from the <code class="docutils literal notranslate"><span class="pre">{home}/.lucit/</span></code> and the current working directory. Alternatively, you can specify these files explicitly with the
-<code class="docutils literal notranslate"><span class="pre">--configfile</span></code> and <code class="docutils literal notranslate"><span class="pre">--profilesfile</span></code> parameters.</p>
-<p>Once the tool is started, it trails the stop/loss order until it is completely fulfilled, sends the notifications, and
-then it stops.</p>
-</div>
+</table></div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>No matter if you installed the <a class="reference external" href="https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade">CLI version via PIP/conda</a>
@@ -507,7 +507,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
         
     
     
-    <a href="index.html">unicorn-binance-trailing-stop-loss 0.7.0 documentation</a> &#187;
+    <a href="index.html">unicorn-binance-trailing-stop-loss 0.7.1 documentation</a> &#187;
     
 
         <li class="nav-item nav-item-this"><a href="">UNICORN Binance Trailing Stop Loss CLI</a></li>
@@ -521,7 +521,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <div class="footer">
         <a href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues">Found a bug</a>?
         <br />
-        Last updated on May 12 2022 at 00:09 (CET).
+        Last updated on May 12 2022 at 01:53 (CET).
         <br />
         &copy; <a href="copyright.html">Copyright</a> 2022-2022, LUCIT Systems and Development and Oliver Zehentleitner.
         <br />

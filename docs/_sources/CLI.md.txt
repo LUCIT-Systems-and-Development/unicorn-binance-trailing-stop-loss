@@ -45,6 +45,16 @@ known problems before using this tool - you use it at your own risk!
 If you put this engine on a market, you should stop trading manually on this market yourself!
 
 ## Description
+After startup `ubtsl` tries to load a 
+[`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
+and a 
+[`ubtsl_profiles.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini) 
+file from the `{home}/.lucit/` and the current working directory. Alternatively, you can specify these files explicitly with the 
+`--configfile` and `--profilesfile` parameters.
+
+Once the tool is started, it trails the stop/loss order until it is completely fulfilled, sends the notifications, and
+then it stops.
+
 ***Supported exchanges:***
 
 | Exchange                                           | Exchange string                  | trail | jump-in-and-trail | 
@@ -56,15 +66,6 @@ If you put this engine on a market, you should stop trading manually on this mar
 | [Binance Margin](https://www.binance.com)          | `binance.com-margin`             | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
 
 
-After startup `ubtsl` tries to load a 
-[`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
-and a 
-[`ubtsl_profiles.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini) 
-file from the `{home}/.lucit/` and the current working directory. Alternatively, you can specify these files explicitly with the 
-`--configfile` and `--profilesfile` parameters.
-
-Once the tool is started, it trails the stop/loss order until it is completely fulfilled, sends the notifications, and
-then it stops.
 
 ## Installation
 No matter if you installed the [CLI version via PIP/conda](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 

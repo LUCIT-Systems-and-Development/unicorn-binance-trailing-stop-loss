@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to 
 [Semantic Versioning](http://semver.org/).
 
-## 0.7.0.dev (development stage/unreleased/unstable)
+## 0.7.1.dev (development stage/unreleased/unstable)
+
+## 0.7.1
+### Fixed
+- self.test not iterable as None type
 
 ## 0.7.0
 ### Added
@@ -13,7 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Parameter `stop_loss_start_limit`, `callback_partially_filled`, `ubra_manager` and `ubwa_manager` to `manager.py`
 - Support for `binance.com`, `binance.com-testnet`, `binance.com-futures`, `binance.com-isolated_margin`, `binance.com-margin`   
 - `listopenorders` and `cancelopenorders` to cli interface
-- Test ``
+- Test `streams`
 ### Changed
 - `manager.py.calculate_stop_loss_price()` is a static method now
 - Instead of creating two ubwa instances we use the new stream specific `process_stream_data` parameter within one instance
