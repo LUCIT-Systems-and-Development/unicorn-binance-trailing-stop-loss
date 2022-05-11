@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - `manager.py.calculate_stop_loss_price()` is a static method now
 - Instead of creating two ubwa instances we use the new stream specific `process_stream_data` parameter within one instance
+- `stoplossmarket` and `stop_loss_market` to `market`
 ### Renamed
 - cli.py: `load_examples_ini_from_git_hub()` to `load_examples_ini_from_github()`
 

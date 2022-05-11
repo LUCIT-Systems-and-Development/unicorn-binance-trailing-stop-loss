@@ -37,7 +37,9 @@
 # Todo:
 #  - Help text arg parse
 
-from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
+# from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
+from manager import BinanceTrailingStopLossManager
+from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 from pathlib import Path
 from typing import Optional
@@ -88,7 +90,11 @@ def main():
                  
                  Start with profile "LUNAUSDT_SELL" and overwrite the stoplosslimit:
                  $ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
-                 
+ 
+                 List all open orders:
+                 $ ubtsl --exchange "binance.com" --market "LUNAUSDT" --listopenorders 
+                 $ ubtsl --profile LUNAUSDT_SELL --listopenorders 
+             
              additional information:
                  Author: https://www.lucit.tech
                  Changes: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech//CHANGELOG.html
@@ -167,6 +173,11 @@ def main():
                         help='Choose a loglevel. Default: INFO\r\n'
                              'Options: DEBUG, INFO, WARNING, ERROR and CRITICAL',
                         required=False)
+    parser.add_argument('-loo', '--listopenorders',
+                        help=f'List all open orders and then stop. Only valid in combination with parameter '
+                             f'`exchange` and `market`.',
+                        required=False,
+                        action='store_true')
     parser.add_argument('-oci', '--openconfigini',
                         help=f'Open the used config file and then stop.',
                         required=False,
@@ -202,22 +213,17 @@ def main():
                         type=str,
                         help='Stop/loss limit in float or percent.',
                         required=False)
+    parser.add_argument('-m', '--market',
+                        type=str,
+                        help='The market on which is traded.',
+                        required=False)
     parser.add_argument('-p', '--stoplossprice',
                         type=float,
                         help='Set the start stop/loss price as float value.',
                         required=False)
-    parser.add_argument('-soo', '--showopenorders',
-                        help=f'Show all open orders and then stop. Only valid in combination with parameter '
-                             f'`exchange`.',
-                        required=False,
-                        action='store_true')
     parser.add_argument('-sl', '--stoplossstartlimit',
                         type=str,
                         help='Set the start stop/loss limit in float or percent. (only used in `jump-in-and-trail`.',
-                        required=False)
-    parser.add_argument('-s', '--symbol',
-                        type=str,
-                        help='The market symbol as used by binance.',
                         required=False)
     parser.add_argument('-t', '--test',
                         type=str,
@@ -229,6 +235,16 @@ def main():
                         required=False,
                         action='store_true')
     options = parser.parse_args()
+
+    public_key = None
+    private_key = None
+    send_to_email_address = None
+    send_from_email_address = None
+    send_from_email_password = None
+    send_from_email_server = None
+    send_from_email_port = None
+    telegram_bot_token = None
+    telegram_send_to = None
 
     # Log file
     if options.logfile is True:
@@ -279,7 +295,7 @@ def main():
         """
         logger.debug(f"callback_finished() started ")
         if engine == "jump-in-and-trail":
-            trade_fee = ubtsl.ubra.get_trade_fee(symbol=stop_loss_market)
+            trade_fee = ubra.get_trade_fee(symbol=market)
             print(f"trade_fee: {trade_fee}")
             fee = 0.2
             profit = fee*(float(feedback['sell_order']['order_price'])-float(feedback['buy_order']['order_price']))
@@ -434,36 +450,31 @@ def main():
         webbrowser.open(profiles_file)
         sys.exit(0)
 
-    # Officially starting:
+    # Officially starting :)
     logger.info(f"Started ubtsl_{version}")
     print(f"Started ubtsl_{version}")
 
     # Loading config ini
-    logger.info(f"Loading configuration file `{config_file}`")
-    print(f"Loading configuration file `{config_file}`")
-    config = ConfigParser(interpolation=ExtendedInterpolation())
-    config.read(config_file)
-    public_key = config['BINANCE']['api_key']
-    private_key = config['BINANCE']['api_secret']
-    send_to_email_address = config['EMAIL']['send_to_email']
-    send_from_email_address = config['EMAIL']['send_from_email']
-    send_from_email_password = config['EMAIL']['send_from_password']
-    send_from_email_server = config['EMAIL']['send_from_server']
-    send_from_email_port = config['EMAIL']['send_from_port']
-    telegram_bot_token = config['TELEGRAM']['bot_token']
-    telegram_send_to = config['TELEGRAM']['send_to']
-
-    # Loading profiles ini
-    logger.info(f"Loading profiles file `{profiles_file}`")
-    print(f"Loading profiles file `{profiles_file}`")
-    profiles = ConfigParser(interpolation=ExtendedInterpolation())
-    profiles.read(profiles_file)
+    if config_file:
+        logger.info(f"Loading configuration file `{config_file}`")
+        print(f"Loading configuration file `{config_file}`")
+        config = ConfigParser(interpolation=ExtendedInterpolation())
+        config.read(config_file)
+        public_key = config['BINANCE']['api_key']
+        private_key = config['BINANCE']['api_secret']
+        send_to_email_address = config['EMAIL']['send_to_email']
+        send_from_email_address = config['EMAIL']['send_from_email']
+        send_from_email_password = config['EMAIL']['send_from_password']
+        send_from_email_server = config['EMAIL']['send_from_server']
+        send_from_email_port = config['EMAIL']['send_from_port']
+        telegram_bot_token = config['TELEGRAM']['bot_token']
+        telegram_send_to = config['TELEGRAM']['send_to']
 
     # Init trailing stop loss vars
     engine = "trail"
     exchange = ""
     keep_threshold = ""
-    stop_loss_market = ""
+    market = ""
     stop_loss_limit = ""
     stop_loss_start_limit = ""
     stop_loss_order_type = ""
@@ -471,9 +482,17 @@ def main():
     stop_loss_side = ""
     reset_stop_loss_price = False
     test = None
+    ubra = False
 
     # Load a profile is provided via argparse
     if options.profile is not None:
+        # Loading profiles ini
+        logger.info(f"Loading profiles file `{profiles_file}`")
+        print(f"Loading profiles file `{profiles_file}`")
+        profiles = ConfigParser(interpolation=ExtendedInterpolation())
+        profiles.read(profiles_file)
+
+        # Mapping parameters
         try:
             exchange = profiles[options.profile]['exchange']
         except KeyError:
@@ -491,7 +510,7 @@ def main():
         except KeyError:
             pass
         try:
-            stop_loss_market = profiles[options.profile]['stop_loss_market']
+            market = profiles[options.profile]['market']
         except KeyError:
             pass
         try:
@@ -526,8 +545,8 @@ def main():
         exchange = options.exchange
     if options.keepthreshold is not None:
         keep_threshold = options.keepthreshold
-    if options.symbol is not None:
-        stop_loss_market = options.symbol
+    if options.market is not None:
+        market = options.market
     if options.stoplosslimit is not None:
         stop_loss_limit = options.stoplosslimit
     if options.stoplossstartlimit is not None:
@@ -549,11 +568,50 @@ def main():
     else:
         reset_stop_loss_price = False
 
+    # Creating UBRA
+    ubra = BinanceRestApiManager(api_key=public_key, api_secret=private_key)
+
     if options.cancelopenorders is True:
-        print(f"Cancel orders of exchange `{exchange}`")
+        print(f"Canceling all orders of `{market}` on `{exchange}`")
+        try:
+            if exchange == "binance.com" or exchange == "binance.com-testnet":
+                canceled_orders = ubra.cancel_all_open_orders(symbol=market)
+            elif exchange == "binance.com-margin":
+                canceled_orders = ubra.cancel_all_open_margin_orders(symbol=market)
+            elif exchange == "binance.com-isolated_margin":
+                canceled_orders = ubra.cancel_all_open_margin_orders(symbol=market, isIsolated=True)
+            elif exchange == "binance.com-futures":
+                canceled_orders = ubra.futures_cancel_all_open_orders(symbol=market)
+            else:
+                print(f"Invalid exchange `{exchange}")
+                sys.exit(1)
+        except BinanceAPIException as error_msg:
+            if "code=-2011" in str(error_msg):
+                print(f"No order was found to cancel!")
+            else:
+                print(f"ERROR: Not able to cancel all open orders. {error_msg}")
+            sys.exit(1)
+        print(f"Canceled orders: {canceled_orders}")
         sys.exit(0)
-    if options.showopenorders is True:
-        print(f"Open orders of exchange `{exchange}`")
+
+    if options.listopenorders is True:
+        print(f"Getting open orders of `{market}` on `{exchange}`")
+        try:
+            if exchange == "binance.com" or exchange == "binance.com-testnet":
+                open_orders = ubra.get_open_orders(symbol=market)
+            elif exchange == "binance.com-margin":
+                open_orders = ubra.get_open_margin_orders(symbol=market)
+            elif exchange == "binance.com-isolated_margin":
+                open_orders = ubra.get_open_margin_orders(symbol=market, isIsolated=True)
+            elif exchange == "binance.com-futures":
+                open_orders = ubra.futures_get_open_orders(symbol=market)
+            else:
+                print(f"Invalid exchange `{exchange}")
+                sys.exit(1)
+        except BinanceAPIException as error_msg:
+            print(f"ERROR: Not able to fetch all open orders. {error_msg}")
+            sys.exit(1)
+        print(f"Open orders: {open_orders}")
         sys.exit(0)
 
     # Starting the Trailing Stop/Loss Engine
@@ -573,7 +631,7 @@ def main():
                                            send_from_email_server=send_from_email_server,
                                            send_from_email_port=int(send_from_email_port),
                                            stop_loss_limit=stop_loss_limit,
-                                           stop_loss_market=stop_loss_market,
+                                           market=market,
                                            stop_loss_order_type=stop_loss_order_type,
                                            stop_loss_price=stop_loss_price,
                                            stop_loss_side=stop_loss_side,
@@ -581,6 +639,8 @@ def main():
                                            telegram_bot_token=telegram_bot_token,
                                            telegram_send_to=telegram_send_to,
                                            test=test,
+                                           ubra_manager=ubra,
+                                           ubwa_manager=False,
                                            warn_on_update=False)
 
     # Catch Keyboard Interrupt only if there is no test running

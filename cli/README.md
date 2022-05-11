@@ -225,6 +225,31 @@ automatically.
 $ ubtsl --profile LUNAUSDT_JUMP_IN
 ```
 
+### List all open orders
+Get a list of all open orders.
+
+```
+$ ubtsl --exchange "binance.com" --market "LUNAUSDT" --listopenorders 
+```
+
+Its possible to use `exchange` and `market` values of a profile. 
+
+```
+$ ubtsl --profile "LUNAUSDT_SELL" --listopenorders
+```
+
+### Cancel all open orders
+
+```
+$ ubtsl --exchange "binance.com" --market "LUNAUSDT" --cancelopenorders 
+```
+
+It's possible to use `exchange` and `market` values of a profile.
+
+```
+$ ubtsl --profile "LUNAUSDT_SELL" --listopenorders
+```
+
 ## Example files
 - [example_ubtsl_config.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini)
 - [example_ubtsl_profiles.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini)

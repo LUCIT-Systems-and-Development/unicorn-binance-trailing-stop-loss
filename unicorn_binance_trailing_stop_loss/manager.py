@@ -40,6 +40,7 @@
 #   - Exchanges
 #   - Make notifications customizable
 #   - calculate_stop_loss_amount() -> Fee calc? how to handle? / VIP Fees
+#   - Use BNB for trading fee
 #   - Precision dynamic
 
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
@@ -95,6 +96,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type exchange: str
     :param keep_threshold: If empty we sell the full balance, use integer or percent values.
     :type keep_threshold: str
+    :param market: The market to enforce stop/loss.
+    :type market: str
     :param print_notifications: If True the lib is printing user friendly information to terminal.
     :type print_notifications: bool
     :param reset_stop_loss_price: Reset an existing stop_loss_price and calculate a new one. Only True is True, anything
@@ -115,8 +118,6 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :param stop_loss_limit: The limit is used to calculate the `stop_loss_price` of the highest given price, use integer
                             or percent values.
     :type stop_loss_limit: str
-    :param stop_loss_market: The market to enforce stop/loss.
-    :type stop_loss_market: str
     :param stop_loss_order_type: Can be `limit` or `market` - default is None which leads to a stop of the algorithm.
     :type stop_loss_order_type: str
     :param stop_loss_price: Set a price to use for stop/loss, this is valid till it get overwritten with a higher price.
@@ -142,6 +143,10 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type trading_fee_use_bnb: bool
     :param warn_on_update: set to `False` to disable the update warning
     :type warn_on_update: bool
+    :param ubra_manager: Provide a shared unicorn_binance_rest_api.manager instance
+    :type ubra_manager: BinanceRestApiManager
+    :param ubwa_manager: Provide a shared unicorn_binance_websocket_api.manager instance.
+    :type ubwa_manager: BinanceWebSocketApiManager
     """
 
     def __init__(self,
@@ -153,6 +158,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  engine: str = "trail",
                  exchange: str = "binance.com",
                  keep_threshold: str = None,
+                 market: str = None,
                  print_notifications: bool = False,
                  reset_stop_loss_price: bool = False,
                  send_to_email_address: str = None,
@@ -162,7 +168,6 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  send_from_email_port: int = None,
                  start_engine: bool = True,
                  stop_loss_limit: str = None,
-                 stop_loss_market: str = None,
                  stop_loss_order_type: str = None,
                  stop_loss_price: float = None,
                  stop_loss_side: str = None,
@@ -213,7 +218,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.stop_loss_asset_amount: float = 0.0
         self.stop_loss_asset_amount_free: float = 0.0
         self.stop_loss_limit = stop_loss_limit
-        self.stop_loss_market = stop_loss_market
+        self.market = market
         self.stop_loss_order_id: int = 0
         self.stop_loss_order_type = stop_loss_order_type
         self.stop_loss_price: float = None if stop_loss_price is None else float(stop_loss_price)
@@ -288,9 +293,10 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 self.logger.error(error_msg)
                 print(error_msg)
         else:
-            msg = f"Stopping, test `{test}` is an invalid option!"
-            self.logger.error(msg)
-            print(msg)
+            if test is not None:
+                msg = f"Stopping, test `{test}` is an invalid option!"
+                self.logger.error(msg)
+                print(msg)
 
     def calculate_stop_loss_amount(self,
                                    amount: float
@@ -348,7 +354,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         :return: bool
         """
         if self.exchange == "binance.com-isolated_margin":
-            open_orders = self.get_open_orders(stop_loss_market=self.stop_loss_market)
+            open_orders = self.get_open_orders(market=self.market)
             if open_orders:
                 for open_order in open_orders:
                     if open_order['type'] == "STOP_LOSS_LIMIT":
@@ -356,7 +362,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                          f"open STOP_LOSS_LIMIT order (orderID={open_order['orderId']}) "
                                          f"with stop_loss_price={open_order['price']}.")
                         try:
-                            canceled_order = self.ubra.cancel_margin_order(symbol=self.stop_loss_market,
+                            canceled_order = self.ubra.cancel_margin_order(symbol=self.market,
                                                                            isIsolated="TRUE",
                                                                            orderId=open_order['orderId'])
                         except BinanceAPIException as error_msg:
@@ -429,7 +435,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                     self.callback_error(msg)
                 return False
             try:
-                new_order = self.ubra.create_margin_order(symbol=self.stop_loss_market,
+                new_order = self.ubra.create_margin_order(symbol=self.market,
                                                           isIsolated="TRUE",
                                                           side="SELL",
                                                           type="STOP_LOSS_LIMIT",
@@ -487,12 +493,12 @@ class BinanceTrailingStopLossManager(threading.Thread):
         """
         self.exchange_info = self.ubra.get_exchange_info()
         for item in self.exchange_info['symbols']:
-            if item['symbol'] == self.stop_loss_market:
+            if item['symbol'] == self.market:
                 return item
         return False
 
     def get_open_orders(self,
-                        stop_loss_market: str = None) -> Optional[dict]:
+                        market: str = None) -> Optional[dict]:
         """
         Get the owning amount of the stop/loss asset.
 
@@ -500,13 +506,13 @@ class BinanceTrailingStopLossManager(threading.Thread):
         """
         try:
             if self.exchange == "binance.com":
-                open_orders = self.ubra.get_open_orders(symbol=stop_loss_market)
+                open_orders = self.ubra.get_open_orders(symbol=market)
             elif self.exchange == "binance.com-futures":
-                open_orders = self.ubra.get_open_margin_orders(symbol=stop_loss_market)
+                open_orders = self.ubra.get_open_margin_orders(symbol=market)
             elif self.exchange == "binance.com-margin":
-                open_orders = self.ubra.get_open_margin_orders(symbol=stop_loss_market)
+                open_orders = self.ubra.get_open_margin_orders(symbol=market)
             elif self.exchange == "binance.com-isolated_margin":
-                open_orders = self.ubra.get_open_margin_orders(symbol=stop_loss_market, isIsolated="True")
+                open_orders = self.ubra.get_open_margin_orders(symbol=market, isIsolated="True")
             else:
                 return None
             return open_orders
@@ -669,7 +675,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         if stream_data['event_type'] == "executionReport":
             if stream_data['order_id'] == self.stop_loss_order_id:
                 if stream_data['current_order_status'] == "FILLED":
-                    msg = f"Subject: unicorn-binance-trailing-stop-loss '{self.stop_loss_market}'\n\n" \
+                    msg = f"Subject: unicorn-binance-trailing-stop-loss '{self.market}'\n\n" \
                           f"STOP LOSS FILLED at price {stream_data['order_price']} (order_id={stream_data['order_id']})"
                     msg_short = f"STOP LOSS FILLED at price {stream_data['order_price']} " \
                                 f"(order_id={stream_data['order_id']})"
@@ -793,18 +799,18 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 isolated_margin_account = self.ubra.get_isolated_margin_account()
 
                 # Todo: `isolated_margin_account['assets'][0]['symbol']` only works with one asset :/
-                if isolated_margin_account['assets'][0]['symbol'] == self.stop_loss_market:
+                if isolated_margin_account['assets'][0]['symbol'] == self.market:
                     # Todo: Take full loan option
 
                     # Todo: Add LIMIT buy order option
-                    #   ask_price = ubra.get_ticker(symbol=stop_loss_market)['askPrice']
+                    #   ask_price = ubra.get_ticker(symbol=market)['askPrice']
 
                     # Todo: Calc borrow_threshold:
                     #   `free_quote_asset` takes all!
                     amount_to_buy = isolated_margin_account['assets'][0]['quoteAsset']['free']
 
                     try:
-                        buy_order = self.ubra.create_margin_order(symbol=self.stop_loss_market,
+                        buy_order = self.ubra.create_margin_order(symbol=self.market,
                                                                   isIsolated="TRUE",
                                                                   side="BUY",
                                                                   type="MARKET",
@@ -844,12 +850,12 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 print(msg)
             sys.exit(1)
         self.logger.info(f"BinanceTrailingStopLossManager.run() - Starting trailing stop/loss on {self.exchange} "
-                         f"for the market {self.stop_loss_market}")
+                         f"for the market {self.market}")
         if self.print_notifications:
-            print(f"Starting trailing stop/loss on {self.exchange} for the market {self.stop_loss_market}")
+            print(f"Starting trailing stop/loss on {self.exchange} for the market {self.market}")
         self.logger.debug(f"BinanceTrailingStopLossManager.run() - reset_stop_loss_price="
                           f"{self.reset_stop_loss_price}")
-        self.symbol_info = self.get_symbol_info(symbol=self.stop_loss_market)
+        self.symbol_info = self.get_symbol_info(symbol=self.market)
         self.logger.info(f"BinanceTrailingStopLossManager.run() -  used_weight: {self.ubra.get_used_weight()}")
         if self.symbol_info is None:
             self.logger.critical(f"BinanceTrailingStopLossManager.run() - `symbol_info` is None")
@@ -861,7 +867,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.update_stop_loss_asset_amount()
 
         if self.exchange == "binance.com-isolated_margin":
-            symbol = self.stop_loss_market
+            symbol = self.market
         else:
             symbol = False
 
@@ -872,7 +878,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                  symbols=symbol,
                                                  stream_label="UserData")
         trade_stream_id = self.ubwa.create_stream(channels="aggTrade",
-                                                  markets=self.stop_loss_market,
+                                                  markets=self.market,
                                                   process_stream_data=self.process_price_feed_stream,
                                                   stream_label="PriceFeed")
 
@@ -884,7 +890,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         if self.stop_loss_price is None or self.stop_loss_price == 0.0:
             if self.reset_stop_loss_price is not True:
-                open_orders = self.get_open_orders(stop_loss_market=self.stop_loss_market)
+                open_orders = self.get_open_orders(market=self.market)
                 if open_orders:
                     for open_order in open_orders:
                         if open_order['type'] == "STOP_LOSS_LIMIT":
