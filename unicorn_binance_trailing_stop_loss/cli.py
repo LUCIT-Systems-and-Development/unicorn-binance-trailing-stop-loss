@@ -9,7 +9,6 @@
 # Documentation: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech
 # PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss
 #
-#
 # Author: LUCIT Systems and Development
 #
 # Copyright (c) 2022-2022, LUCIT Systems and Development (https://www.lucit.tech) and Oliver Zehentleitner
@@ -34,8 +33,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-# Todo:
-#  - Help text arg parse
 
 # from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 from manager import BinanceTrailingStopLossManager
@@ -124,6 +121,10 @@ def main():
                         type=str,
                         help="The Binance API secret.",
                         required=False)
+    parser.add_argument('-bt', '--borrowthreshold',
+                        type=str,
+                        help="How much of the possible credit line to exhaust. (Only available in Margin)",
+                        required=False)
     parser.add_argument('-coo', '--cancelopenorders',
                         help=f'Cancel all open orders and then stop. Only valid in combination with parameter '
                              f'`exchange`.',
@@ -186,11 +187,6 @@ def main():
                         help=f'Open the used profiles file and then stop.',
                         required=False,
                         action='store_true')
-    parser.add_argument('-os', '--orderside',
-                        type=str,
-                        help="Specify whether the trailing stop loss should be in buying or selling mode. (ex: 'buy' "
-                             "or 'sell')",
-                        required=False)
     parser.add_argument('-ot', '--ordertype',
                         type=str,
                         help="Use `limit` or `market`.",
@@ -471,6 +467,7 @@ def main():
         telegram_send_to = config['TELEGRAM']['send_to']
 
     # Init trailing stop loss vars
+    borrow_threshold = ""
     engine = "trail"
     exchange = ""
     keep_threshold = ""
@@ -493,6 +490,10 @@ def main():
         profiles.read(profiles_file)
 
         # Mapping parameters
+        try:
+            borrow_threshold = profiles[options.profile]['borrow_threshold']
+        except KeyError:
+            pass
         try:
             exchange = profiles[options.profile]['exchange']
         except KeyError:
@@ -539,6 +540,8 @@ def main():
         public_key = options.apikey
     if options.apisecret is not None:
         private_key = options.apisecret
+    if options.borrowthreshold is not None:
+        borrow_threshold = options.borrowthreshold
     if options.engine is not None:
         engine = options.engine
     if options.exchange is not None:
@@ -557,8 +560,6 @@ def main():
         reset_stop_loss_price = options.resetstoplossprice
     if options.stoplossprice is not None:
         stop_loss_price = options.stoplossprice
-    if options.orderside is not None:
-        stop_loss_side = options.orderside
     if options.test is not None:
         test = options.test
 
@@ -620,6 +621,7 @@ def main():
                                            callback_partially_filled=None,
                                            binance_public_key=public_key,
                                            binance_private_key=private_key,
+                                           borrow_threshold=borrow_threshold,
                                            engine=engine,
                                            exchange=exchange,
                                            keep_threshold=keep_threshold,

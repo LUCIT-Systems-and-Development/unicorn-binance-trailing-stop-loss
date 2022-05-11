@@ -34,10 +34,6 @@
 # IN THE SOFTWARE.
 
 # Todo:
-#   - stop_loss_start_limit not used!!!
-#   - reset_stop_loss_price is working?
-#   - Not deleting and creating a new order with same price, just leave it
-#   - Exchanges
 #   - Make notifications customizable
 #   - calculate_stop_loss_amount() -> Fee calc? how to handle? / VIP Fees
 #   - Use BNB for trading fee
@@ -82,6 +78,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type binance_public_key: str
     :param binance_private_key: Provide the private Binance key.
     :type binance_private_key: str
+    :param borrow_threshold: Provide the private Binance key.
+    :type borrow_threshold: str
     :param callback_error: Callback function used if an error occurs.
     :type callback_error: function or None
     :param callback_finished: Callback function used if stop_loss gets filled.
@@ -122,8 +120,6 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type stop_loss_order_type: str
     :param stop_loss_price: Set a price to use for stop/loss, this is valid till it get overwritten with a higher price.
     :type stop_loss_price: float
-    :param stop_loss_side: Can be `buy` or `sell` - default is None which leads to a stop of the algorithm.
-    :type stop_loss_side: str
     :param stop_loss_start_limit: The trailing stop/loss order is trailed with the distance defined in
                                   `stop_loss_limit`. If you want to use a different value at the start, you can specify
                                   it with `stop_loss_start_limit`. This value will be used instead of the
@@ -152,6 +148,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
     def __init__(self,
                  binance_public_key: str = None,
                  binance_private_key: str = None,
+                 borrow_threshold: str = None,
                  callback_error: Optional[type(abs)] = None,
                  callback_finished: Optional[type(abs)] = None,
                  callback_partially_filled: Optional[type(abs)] = None,
@@ -170,7 +167,6 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  stop_loss_limit: str = None,
                  stop_loss_order_type: str = None,
                  stop_loss_price: float = None,
-                 stop_loss_side: str = None,
                  stop_loss_start_limit: str = None,
                  stop_loss_trigger_gap: str = "0.01",
                  telegram_bot_token: str = None,
@@ -194,6 +190,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             print("Starting stop/loss engine")
         self.binance_public_key = binance_public_key
         self.binance_private_key = binance_private_key
+        self.borrow_threshold = borrow_threshold
         self.callback_error = callback_error
         self.callback_finished = callback_finished
         self.callback_partially_filled = callback_partially_filled
@@ -222,7 +219,6 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.stop_loss_order_id: int = 0
         self.stop_loss_order_type = stop_loss_order_type
         self.stop_loss_price: float = None if stop_loss_price is None else float(stop_loss_price)
-        self.stop_loss_side = stop_loss_side
         self.stop_loss_start_limit = stop_loss_start_limit
         self.stop_loss_quantity: float = 0.0
         self.stop_loss_trigger_gap = stop_loss_trigger_gap
@@ -325,14 +321,14 @@ class BinanceTrailingStopLossManager(threading.Thread):
         return amount_without_fee
 
     @staticmethod
-    def calculate_stop_loss_price(price: float = None,
+    def calculate_stop_loss_price(price: Union[str, float] = None,
                                   limit: Union[str, float] = None
                                   ) -> Optional[float]:
         """
         Calculate the stop/loss price.
 
         :param price: Base price used for the calculation
-        :type price: float
+        :type price: float, str
         :param limit: Stop loss limit in percent or as fixed float value
         :type limit: float, str
 
@@ -340,6 +336,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         """
         __logger__.debug(f"BinanceTrailingStopLossManager.calculate_stop_loss_price() - Calculation stop/loss price "
                          f"of base price: {price}, limit: {limit}")
+        price = float(price)
         if "%" in str(limit):
             limit_percent = float(limit.rstrip("%"))
             sl_price = float(price / 100) * float(100.0 - limit_percent)
@@ -744,7 +741,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                           f"stream_buffer_name={stream_buffer_name}) started")
         if stream_data.get('price'):
             self.current_price = stream_data.get('price')
-            sl_price = self.calculate_stop_loss_price(float(stream_data.get('price')), float(self.stop_loss_limit))
+            sl_price = self.calculate_stop_loss_price(stream_data.get('price'), self.stop_loss_limit)
             if self.stop_loss_price is None:
                 self.logger.info(f"BinanceTrailingStopLossManager.process_price_feed_stream() - Setting "
                                  f"stop_loss_price from None to {sl_price}!")
@@ -787,6 +784,11 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: None
         """
+        if self.stop_loss_start_limit:
+            limit = self.stop_loss_start_limit
+        else:
+            limit = self.stop_loss_limit
+
         if self.engine == "jump-in-and-trail":
             self.logger.info(f"Starting jump-in-and-trail engine")
             if self.print_notifications:
@@ -798,36 +800,45 @@ class BinanceTrailingStopLossManager(threading.Thread):
             if self.exchange == "binance.com-isolated_margin":
                 isolated_margin_account = self.ubra.get_isolated_margin_account()
 
-                # Todo: `isolated_margin_account['assets'][0]['symbol']` only works with one asset :/
-                if isolated_margin_account['assets'][0]['symbol'] == self.market:
-                    # Todo: Take full loan option
+                for item in isolated_margin_account['assets']:
+                    if item['symbol'] == self.market:
+                        # Todo: Take full loan option
+                            if self.borrow_threshold:
+                                pass
 
-                    # Todo: Add LIMIT buy order option
-                    #   ask_price = ubra.get_ticker(symbol=market)['askPrice']
+                        # Todo: Add LIMIT buy order option
+                        #   ask_price = ubra.get_ticker(symbol=market)['askPrice']
 
-                    # Todo: Calc borrow_threshold:
-                    #   `free_quote_asset` takes all!
-                    amount_to_buy = isolated_margin_account['assets'][0]['quoteAsset']['free']
+                        # Todo: Calc borrow_threshold:
+                        #   `free_quote_asset` takes all!
+                        amount_to_buy = isolated_margin_account['assets'][0]['quoteAsset']['free']
 
-                    try:
-                        buy_order = self.ubra.create_margin_order(symbol=self.market,
-                                                                  isIsolated="TRUE",
-                                                                  side="BUY",
-                                                                  type="MARKET",
-                                                                  quoteOrderQty=amount_to_buy,
-                                                                  sideEffectType="MARGIN_BUY")
-                        # Todo:
-                        #  - Calculate the average price instead of using the price of the first execution
-                        #  - set price
-                        buy_price = buy_order['fills'][0]['price']
-                    except BinanceAPIException as error_msg:
-                        msg = f"Stopping because of Binance API exception: {error_msg}"
-                        logging.critical(msg)
-                        if self.print_notifications:
-                            print(msg)
-                        if self.callback_error is not None:
-                            self.callback_error(msg)
-                        return None
+                        try:
+                            buy_order = self.ubra.create_margin_order(symbol=self.market,
+                                                                      isIsolated="TRUE",
+                                                                      side="BUY",
+                                                                      type="MARKET",
+                                                                      quoteOrderQty=amount_to_buy,
+                                                                      sideEffectType="MARGIN_BUY")
+                            # Todo:
+                            #  - Calculate the average price instead of using the price of the first execution
+                            #  - set price
+                            buy_price = buy_order['fills'][0]['price']
+
+                            self.stop_loss_price = self.calculate_stop_loss_price(price=buy_price,
+                                                                                  limit=limit)
+
+                        except BinanceAPIException as error_msg:
+                            msg = f"Stopping because of Binance API exception: {error_msg}"
+                            logging.critical(msg)
+                            if self.print_notifications:
+                                print(msg)
+                            if self.callback_error is not None:
+                                self.callback_error(msg)
+                            return None
+
+                        # We expect only one match, so we leave after we found it
+                        break
             else:
                 msg = f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange " \
                       f"'{self.exchange}'!"
