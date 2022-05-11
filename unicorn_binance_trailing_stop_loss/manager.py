@@ -33,13 +33,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-# Todo:
-#   - Make notifications customizable
-#   - Smart Entry Limit Order
-#   - calculate_stop_loss_amount() -> Fee calc? how to handle? / VIP Fees
-#   - Use BNB for trading fee
-#   - Precision dynamic
-
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
 from unicorn_binance_rest_api.exceptions import BinanceAPIException
 from unicorn_binance_websocket_api.manager import BinanceWebSocketApiManager
@@ -305,7 +298,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
             self.start_streams()
             try:
                 while self.stop_request is False:
-                    self.ubwa.print_summary(title=f"UNICORN Binance Trailing Stop Loss {self.version} - Testing streams")
+                    self.ubwa.print_summary(title=f"UNICORN Binance Trailing Stop Loss {self.version} - "
+                                                  f"Testing streams")
                     print(f"Press CTRL+C to leave this test!\r\n")
                     time.sleep(1)
             except KeyboardInterrupt:
@@ -882,6 +876,11 @@ class BinanceTrailingStopLossManager(threading.Thread):
             return math.floor(number * factor) / factor
 
     def start_streams(self) -> bool:
+        """
+        Procedure to start the web streams
+
+        :return: bool
+        """
         if self.exchange == "binance.com-isolated_margin":
             symbol = self.market
         else:
@@ -956,7 +955,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                 self.callback_error(msg)
                             return None
 
-                        # We expect only one match, so we leave after we found it
+                        # We expect only one match, so we leave if we found one
                         break
             else:
                 msg = f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange " \

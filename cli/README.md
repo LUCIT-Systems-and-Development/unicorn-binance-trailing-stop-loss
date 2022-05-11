@@ -30,8 +30,6 @@ In addition, there is a [smart entry](https://www.lucit.tech/ubtsl-cli.html#smar
 `jump-in-and-trail`. This offers the possibility to buy spot, future and margin assets with a limit or market order and 
 then to trail a stop/loss order until sold.
 
-List of [supported exchanges](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss).
-
 The CLI interface `ubtsl`/`ubtsl.exe` is installed during the 
 [installation of `unicorn-binance-trailing-stop-loss` with PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) and 
 is used to interact with the 
@@ -47,6 +45,15 @@ known problems before using this tool - you use it at your own risk!
 If you put this engine on a market, you should stop trading manually on this market yourself!
 
 ## Description
+
+| Exchange                                           | Exchange string                  | trail | jump-in-and-trail | 
+|----------------------------------------------------|----------------------------------| ----- |-------------------| 
+| [Binance](https://www.binance.com)                 | `binance.com`                    | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+| [Binance Testnet](https://testnet.binance.vision/) | `binance.com-testnet`            | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+| [Binance Futures](https://www.binance.com)         | `binance.com-futures`            | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+| [Binance Isolated Margin](https://www.binance.com) | `binance.com-isolated_margin`    | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) (experimental)
+| [Binance Margin](https://www.binance.com)          | `binance.com-margin`             | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+
 
 After startup `ubtsl` tries to load a 
 [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 

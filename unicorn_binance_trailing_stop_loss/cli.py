@@ -34,8 +34,8 @@
 # IN THE SOFTWARE.
 
 
-# from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
-from manager import BinanceTrailingStopLossManager
+from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
+# from manager import BinanceTrailingStopLossManager  # need for testing the the cli interface during development
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 from pathlib import Path
@@ -127,7 +127,7 @@ def main():
                         required=False)
     parser.add_argument('-coo', '--cancelopenorders',
                         help=f'Cancel all open orders and then stop. Only valid in combination with parameter '
-                             f'`exchange`.',
+                             f'`exchange` and `market`.',
                         required=False,
                         action='store_true')
     parser.add_argument('-cci', '--createconfigini',
@@ -150,16 +150,17 @@ def main():
                         action='store_true')
     parser.add_argument('-ex', '--example',
                         type=str,
-                        help=f'Show an example ini file from GitHub and then stop. options: `config` or `profiles`.',
+                        help=f'Show an example ini file from GitHub and then stop.\r\nOptions: `config` or `profiles`.',
                         required=False)
     parser.add_argument('-e', '--exchange',
                         type=str,
-                        help="Exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...",
+                        help="Exchange: binance.com, binance.com-testnet, binance.com-futures, "
+                             "binance.com-isolated_margin, binance.com-margin",
                         required=False)
     parser.add_argument('-n', '--engine',
                         type=str,
                         help='Choose the engine. Default: `trail`\r\n'
-                             'Options: `jump-in-and-trail` to place a market buy order and trail',
+                             'Options: `jump-in-and-trail` to place a buy order and trail',
                         required=False)
     parser.add_argument('-k', '--keepthreshold',
                         type=str,
@@ -203,7 +204,7 @@ def main():
                         type=str,
                         help=f"Specify path including filename to the profiles file (ex: `~/my_profiles.ini`). If not "
                              f"available ubtsl tries to load a ubtsl_profile.ini from the `{config_path}` and the "
-                             f"current working directory",
+                             f"current working directory.",
                         required=False)
     parser.add_argument('-r', '--resetstoplossprice',
                         type=str,
@@ -215,7 +216,7 @@ def main():
                         required=False)
     parser.add_argument('-sl', '--stoplossstartlimit',
                         type=str,
-                        help='Set the start stop/loss limit in float or percent. (only used in `jump-in-and-trail`.',
+                        help='Set the start stop/loss limit in float or percent.',
                         required=False)
     parser.add_argument('-p', '--stoplossprice',
                         type=float,
@@ -223,8 +224,9 @@ def main():
                         required=False)
     parser.add_argument('-t', '--test',
                         type=str,
-                        help='Use this to test specific systems like "notification" or "binance-connectivity". If test '
-                             'is not None the engine will NOT start! It only tests!',
+                        help='Use this to test specific systems like "notification", "binance-connectivity" and '
+                             '"streams". The streams test needs a valid exchange and market. If test is not None the '
+                             'engine will NOT start! It only tests!',
                         required=False)
     parser.add_argument('-v', '--version',
                         help=f'Show the program version and then stop. the version is `{version}` by the way :)',

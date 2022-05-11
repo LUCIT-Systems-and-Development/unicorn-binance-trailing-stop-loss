@@ -4,7 +4,7 @@
 #include "environment.iss"
 
 #define MyAppName "UNICORN Binance Trailing Stop Loss Bot"
-#define MyAppVersion "0.6.0"
+#define MyAppVersion "0.7.0"
 #define MyAppPublisher "LUCIT Systems and Development"
 #define MyAppURL "https://www.lucit.tech"
 #define MyAppExeName "ubtsl.exe"
