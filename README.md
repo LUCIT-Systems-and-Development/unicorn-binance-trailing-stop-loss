@@ -127,6 +127,7 @@ order and then to trail a stop/loss order until sold.
 
 - All parameters that expect numbers can be configured with fixed numerical values as well as with percentage values.
 - Integrated notification system (e-Mail and Telegram)
+- Test "notification", "binance-connectifity" and "streams" without starting the engine
 - Powered by [UNICORN Binance REST API](https://www.lucit.tech/unicorn-binance-rest-api.html) and 
 [UNICORN Binance WebSocket API](https://www.lucit.tech/unicorn-binance-websocket-api.html).
 - Well tested on Linux, Mac and Windows

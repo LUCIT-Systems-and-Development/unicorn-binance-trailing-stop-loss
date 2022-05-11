@@ -45,6 +45,7 @@ known problems before using this tool - you use it at your own risk!
 If you put this engine on a market, you should stop trading manually on this market yourself!
 
 ## Description
+***Supported exchanges:***
 
 | Exchange                                           | Exchange string                  | trail | jump-in-and-trail | 
 |----------------------------------------------------|----------------------------------| ----- |-------------------| 
