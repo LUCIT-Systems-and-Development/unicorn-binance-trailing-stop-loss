@@ -4,9 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>unicorn-binance-trailing-stop-loss Change Log &#8212; unicorn-binance-trailing-stop-loss 0.6.0 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>unicorn-binance-trailing-stop-loss Change Log &#8212; unicorn-binance-trailing-stop-loss 0.7.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css" />
     
@@ -35,6 +34,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="copyright.html" title="MIT License"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -49,7 +51,7 @@
         
     
     
-    <a href="index.html">unicorn-binance-trailing-stop-loss 0.6.0 documentation</a> &#187;
+    <a href="index.html">unicorn-binance-trailing-stop-loss 0.7.0 documentation</a> &#187;
     
 
         <li class="nav-item nav-item-this"><a href="">unicorn-binance-trailing-stop-loss Change Log</a></li>
@@ -66,30 +68,45 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="unicorn-binance-trailing-stop-loss-change-log">
+  <div class="section" id="unicorn-binance-trailing-stop-loss-change-log">
 <h1>unicorn-binance-trailing-stop-loss Change Log<a class="headerlink" href="#unicorn-binance-trailing-stop-loss-change-log" title="Permalink to this headline">¶</a></h1>
 <p>All notable changes to this project will be documented in this file.</p>
 <p>The format is based on <a class="reference external" href="http://keepachangelog.com/">Keep a Changelog</a> and this project adheres to
 <a class="reference external" href="http://semver.org/">Semantic Versioning</a>.</p>
-<section id="dev-development-stage-unreleased-unstable">
-<h2>0.6.0.dev (development stage/unreleased/unstable)<a class="headerlink" href="#dev-development-stage-unreleased-unstable" title="Permalink to this headline">¶</a></h2>
-<section id="changed">
+<div class="section" id="dev-development-stage-unreleased-unstable">
+<h2>0.7.0.dev (development stage/unreleased/unstable)<a class="headerlink" href="#dev-development-stage-unreleased-unstable" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id1">
+<h2>0.7.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="added">
+<h3>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">engine</span></code> parameter to manager class and integrate <code class="docutils literal notranslate"><span class="pre">jump-in-and-trail</span></code> mode to <code class="docutils literal notranslate"><span class="pre">manager.py</span></code></p></li>
+<li><p>Parameter <code class="docutils literal notranslate"><span class="pre">stop_loss_start_limit</span></code>, <code class="docutils literal notranslate"><span class="pre">callback_partially_filled</span></code>, <code class="docutils literal notranslate"><span class="pre">ubra_manager</span></code> and <code class="docutils literal notranslate"><span class="pre">ubwa_manager</span></code> to <code class="docutils literal notranslate"><span class="pre">manager.py</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">binance.com</span></code>, <code class="docutils literal notranslate"><span class="pre">binance.com-testnet</span></code>, <code class="docutils literal notranslate"><span class="pre">binance.com-futures</span></code>, <code class="docutils literal notranslate"><span class="pre">binance.com-isolated_margin</span></code>, <code class="docutils literal notranslate"><span class="pre">binance.com-margin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">listopenorders</span></code> and <code class="docutils literal notranslate"><span class="pre">cancelopenorders</span></code> to cli interface</p></li>
+<li><p>Test ``</p></li>
+</ul>
+</div>
+<div class="section" id="changed">
 <h3>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">manager.py.calculate_stop_loss_price()</span></code> is a static method now</p></li>
+<li><p>Instead of creating two ubwa instances we use the new stream specific <code class="docutils literal notranslate"><span class="pre">process_stream_data</span></code> parameter within one instance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stoplossmarket</span></code> and <code class="docutils literal notranslate"><span class="pre">stop_loss_market</span></code> to <code class="docutils literal notranslate"><span class="pre">market</span></code></p></li>
 </ul>
-</section>
-<section id="renamed">
+</div>
+<div class="section" id="renamed">
 <h3>Renamed<a class="headerlink" href="#renamed" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>cli.py: <code class="docutils literal notranslate"><span class="pre">load_examples_ini_from_git_hub()</span></code> to <code class="docutils literal notranslate"><span class="pre">load_examples_ini_from_github()</span></code></p></li>
 </ul>
-</section>
-</section>
-<section id="id1">
-<h2>0.6.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<section id="added">
-<h3>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>0.6.0<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>Added<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Parameter <code class="docutils literal notranslate"><span class="pre">--</span> <span class="pre">createconfigini</span></code> to cli interface</p></li>
 <li><p>Parameter <code class="docutils literal notranslate"><span class="pre">--</span> <span class="pre">createprofilesini</span></code> to cli interface</p></li>
@@ -98,108 +115,108 @@
 <li><p>Parameter <code class="docutils literal notranslate"><span class="pre">--</span> <span class="pre">example</span></code> to cli interface</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cli.load_examples_ini_from_git_hub()</span></code></p></li>
 </ul>
-</section>
-<section id="id2">
-<h3>Changed<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id4">
+<h3>Changed<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>ini files are no longer included into setup files of standalone versions</p></li>
 <li><p>Messages of test notification are now specific not general</p></li>
 </ul>
-</section>
-</section>
-<section id="id3">
-<h2>0.5.0<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<section id="id4">
-<h3>Added<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>0.5.0<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3>Added<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Warn on updates parameter</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">config</span></code> and <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to dependencies</p></li>
 </ul>
-</section>
-<section id="id5">
-<h3>Changed<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id7">
+<h3>Changed<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>CLI help msg</p></li>
 <li><p>Config file path to {home}/.lucit/ubtsl_*.ini</p></li>
 </ul>
-</section>
-<section id="fixed">
+</div>
+<div class="section" id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Ignore missing ubtsl_profile.ini if test is not None</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Optional</span></code> bracket in <code class="docutils literal notranslate"><span class="pre">manager.get_exchange_info()</span></code></p></li>
 <li><p>Using <code class="docutils literal notranslate"><span class="pre">\</span></code> as path separator in windows</p></li>
 </ul>
-</section>
-</section>
-<section id="id6">
-<h2>0.4.2<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<section id="id7">
-<h3>Fixed<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>0.4.2<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>Fixed<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Module name for console_scripts in setup.py</p></li>
 </ul>
-</section>
-</section>
-<section id="id8">
-<h2>0.4.1<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<section id="id9">
-<h3>Fixed<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>0.4.1<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id11">
+<h3>Fixed<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Installation via PIP on Windows</p></li>
 </ul>
-</section>
-</section>
-<section id="id10">
-<h2>0.4.0<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<section id="id11">
-<h3>Changed<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id12">
+<h2>0.4.0<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h3>Changed<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Many updates in the command line interface <code class="docutils literal notranslate"><span class="pre">ubtsl</span></code></p></li>
 </ul>
-</section>
-</section>
-<section id="id12">
-<h2>0.3.0<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<section id="id13">
-<h3>Added<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>0.3.0<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id15">
+<h3>Added<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Parameter <code class="docutils literal notranslate"><span class="pre">test</span></code> to lib and cli. Supported mode is “notification” to test email and telegram notifications.</p></li>
 <li><p>Parameter <code class="docutils literal notranslate"><span class="pre">print_notificatons</span></code>. If True the lib is printing user friendly information to terminal.</p></li>
 <li><p>Count profit to CLI interface</p></li>
 <li><p>General output to CLI interface</p></li>
 </ul>
-</section>
-<section id="id14">
-<h3>Changed<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id16">
+<h3>Changed<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Returning order details instead of text msg to callback_finished function</p></li>
 </ul>
-</section>
-<section id="id15">
-<h3>Fixed<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id17">
+<h3>Fixed<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Control notification settings to avoid exceptions</p></li>
 </ul>
-</section>
-</section>
-<section id="id16">
-<h2>0.2.0<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="id18">
+<h2>0.2.0<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
 <p>CLI update</p>
-</section>
-<section id="id17">
-<h2>0.1.2<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id19">
+<h2>0.1.2<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
 <p>General updates</p>
-</section>
-<section id="id18">
-<h2>0.1.1<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id20">
+<h2>0.1.1<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
 <p>General updates</p>
-</section>
-<section id="id19">
-<h2>0.1.0<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id21">
+<h2>0.1.0<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
 <p>Init</p>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -212,44 +229,46 @@
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">unicorn-binance-trailing-stop-loss Change Log</a><ul>
-<li><a class="reference internal" href="#dev-development-stage-unreleased-unstable">0.6.0.dev (development stage/unreleased/unstable)</a><ul>
+<li><a class="reference internal" href="#dev-development-stage-unreleased-unstable">0.7.0.dev (development stage/unreleased/unstable)</a></li>
+<li><a class="reference internal" href="#id1">0.7.0</a><ul>
+<li><a class="reference internal" href="#added">Added</a></li>
 <li><a class="reference internal" href="#changed">Changed</a></li>
 <li><a class="reference internal" href="#renamed">Renamed</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id1">0.6.0</a><ul>
-<li><a class="reference internal" href="#added">Added</a></li>
-<li><a class="reference internal" href="#id2">Changed</a></li>
+<li><a class="reference internal" href="#id2">0.6.0</a><ul>
+<li><a class="reference internal" href="#id3">Added</a></li>
+<li><a class="reference internal" href="#id4">Changed</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id3">0.5.0</a><ul>
-<li><a class="reference internal" href="#id4">Added</a></li>
-<li><a class="reference internal" href="#id5">Changed</a></li>
+<li><a class="reference internal" href="#id5">0.5.0</a><ul>
+<li><a class="reference internal" href="#id6">Added</a></li>
+<li><a class="reference internal" href="#id7">Changed</a></li>
 <li><a class="reference internal" href="#fixed">Fixed</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6">0.4.2</a><ul>
-<li><a class="reference internal" href="#id7">Fixed</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id8">0.4.1</a><ul>
+<li><a class="reference internal" href="#id8">0.4.2</a><ul>
 <li><a class="reference internal" href="#id9">Fixed</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id10">0.4.0</a><ul>
-<li><a class="reference internal" href="#id11">Changed</a></li>
+<li><a class="reference internal" href="#id10">0.4.1</a><ul>
+<li><a class="reference internal" href="#id11">Fixed</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id12">0.3.0</a><ul>
-<li><a class="reference internal" href="#id13">Added</a></li>
-<li><a class="reference internal" href="#id14">Changed</a></li>
-<li><a class="reference internal" href="#id15">Fixed</a></li>
+<li><a class="reference internal" href="#id12">0.4.0</a><ul>
+<li><a class="reference internal" href="#id13">Changed</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id16">0.2.0</a></li>
-<li><a class="reference internal" href="#id17">0.1.2</a></li>
-<li><a class="reference internal" href="#id18">0.1.1</a></li>
-<li><a class="reference internal" href="#id19">0.1.0</a></li>
+<li><a class="reference internal" href="#id14">0.3.0</a><ul>
+<li><a class="reference internal" href="#id15">Added</a></li>
+<li><a class="reference internal" href="#id16">Changed</a></li>
+<li><a class="reference internal" href="#id17">Fixed</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id18">0.2.0</a></li>
+<li><a class="reference internal" href="#id19">0.1.2</a></li>
+<li><a class="reference internal" href="#id20">0.1.1</a></li>
+<li><a class="reference internal" href="#id21">0.1.0</a></li>
 </ul>
 </li>
 </ul>
@@ -328,6 +347,9 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="copyright.html" title="MIT License"
              >next</a> |</li>
         <li class="right" >
@@ -342,7 +364,7 @@
         
     
     
-    <a href="index.html">unicorn-binance-trailing-stop-loss 0.6.0 documentation</a> &#187;
+    <a href="index.html">unicorn-binance-trailing-stop-loss 0.7.0 documentation</a> &#187;
     
 
         <li class="nav-item nav-item-this"><a href="">unicorn-binance-trailing-stop-loss Change Log</a></li>
@@ -356,7 +378,7 @@
     <div class="footer">
         <a href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues">Found a bug</a>?
         <br />
-        Last updated on May 02 2022 at 01:30 (CET).
+        Last updated on May 12 2022 at 00:09 (CET).
         <br />
         &copy; <a href="copyright.html">Copyright</a> 2022-2022, LUCIT Systems and Development and Oliver Zehentleitner.
         <br />

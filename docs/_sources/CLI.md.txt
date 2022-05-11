@@ -20,18 +20,15 @@
 # UNICORN Binance Trailing Stop Loss CLI
 
 [Description](#description) | [Installation](#installation) | [Usage](#usage) | [Example commands](#example-commands) |
-[Example files](#example-files) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
-
-
-***This repository will be ready for deployment in mid-May 2022***
+[Smart Entry](#smart-entry) | [Example files](#example-files) | [Disclaimer](#disclaimer) | 
+[Commercial Support](#commercial-support)
 
 After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
 notification can be sent via email and Telegram afterwards.
 
-In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot, future 
-and margin assets with a limit or market order and then to trail a stop/loss order until sold.
-
-List of [supported exchanges](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss).
+In addition, there is a [smart entry](https://www.lucit.tech/ubtsl-cli.html#smart-entry) option called 
+`jump-in-and-trail`. This offers the possibility to buy spot, future and margin assets with a limit or market order and 
+then to trail a stop/loss order until sold.
 
 The CLI interface `ubtsl`/`ubtsl.exe` is installed during the 
 [installation of `unicorn-binance-trailing-stop-loss` with PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) and 
@@ -48,6 +45,16 @@ known problems before using this tool - you use it at your own risk!
 If you put this engine on a market, you should stop trading manually on this market yourself!
 
 ## Description
+***Supported exchanges:***
+
+| Exchange                                           | Exchange string                  | trail | jump-in-and-trail | 
+|----------------------------------------------------|----------------------------------| ----- |-------------------| 
+| [Binance](https://www.binance.com)                 | `binance.com`                    | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+| [Binance Testnet](https://testnet.binance.vision/) | `binance.com-testnet`            | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+| [Binance Futures](https://www.binance.com)         | `binance.com-futures`            | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+| [Binance Isolated Margin](https://www.binance.com) | `binance.com-isolated_margin`    | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) (experimental)
+| [Binance Margin](https://www.binance.com)          | `binance.com-margin`             | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
+
 
 After startup `ubtsl` tries to load a 
 [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
@@ -56,6 +63,9 @@ and a
 file from the `{home}/.lucit/` and the current working directory. Alternatively, you can specify these files explicitly with the 
 `--configfile` and `--profilesfile` parameters.
 
+Once the tool is started, it trails the stop/loss order until it is completely fulfilled, sends the notifications, and
+then it stops.
+
 ## Installation
 No matter if you installed the [CLI version via PIP/conda](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
 or the [standalone Bot version via setup file](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#installation). 
@@ -63,7 +73,7 @@ Both the configuration and the usage are always absolutely identical for both ve
 
 Every parameter that can be configured via the [`ubtsl_profiles.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini) 
 or the [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
-file can also be defined as a command line argument. Therefore both files are not mandatory, but it increases the 
+file can also be defined as a command line argument. Therefore, both files are not mandatory, but it increases the 
 usability immensely.
 
 ### Create `ubtsl_config.ini`
@@ -88,11 +98,23 @@ $ ubtsl --test notification
 ```
 
 ### Test connectivity to Binance API
-
 If you entered valid API key and secret you can test the connectivity to the Binance API:
 
 ```
 $ ubtsl --test binance-connectivity
+```
+
+### Test data streams
+Test the data streams, this test needs a defined exchange and market parameter:
+
+```
+$ ubtsl --test streams --exchange binance.com --market LUNAUSDT
+```
+
+It is possible to use `exchange` and `market` values of a profile. 
+
+```
+$ ubtsl --profile "LUNAUSDT_SELL" --test streams
 ```
 
 ## Usage
@@ -129,8 +151,7 @@ Instead of loading the values from profiles, they can also be defined explicitly
 
 Any CLI parameters will overwrite predefined values from the profile.
 
-Once the tool is started, it trails the stop/loss order until it is completely fulfilled, sends the notifications, and
-then it stops.
+All parameters that expect numbers can be configured with fixed numerical values as well as with percentage values.
 
 ```
 $ ubtsl --help
@@ -211,14 +232,41 @@ $ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
 ```
 
 ### Smart entry
-Do a smart entry by using `engine = jump-in-and-trail` like it is defined within the profile `LUNAUSDT_SMART_ENTRY`
+***This function is still in an experimental phase and only available for Isolated Margin.***
+
+Do a smart entry by using `engine = jump-in-and-trail` like it is defined within the profile `LUNAUSDT_SMART_ENTRY` 
 of the [example_ubtsl_profiles.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini).
 
-By activating the `jump-in-and-trail` engine, the bot first buys the predefined asset amount and then 
-trails them automatically. 
+By activating the `jump-in-and-trail` engine, the bot first buys the predefined asset amount and then trails them 
+automatically. 
 
 ```
 $ ubtsl --profile LUNAUSDT_SMART_ENTRY
+```
+
+### List all open orders
+Get a list of all open orders.
+
+```
+$ ubtsl --exchange "binance.com" --market "LUNAUSDT" --listopenorders 
+```
+
+It is possible to use `exchange` and `market` values of a profile. 
+
+```
+$ ubtsl --profile "LUNAUSDT_SELL" --listopenorders
+```
+
+### Cancel all open orders
+
+```
+$ ubtsl --exchange "binance.com" --market "LUNAUSDT" --cancelopenorders 
+```
+
+It's possible to use `exchange` and `market` values of a profile.
+
+```
+$ ubtsl --profile "LUNAUSDT_SELL" --listopenorders
 ```
 
 ## Example files

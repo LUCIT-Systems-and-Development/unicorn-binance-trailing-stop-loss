@@ -113,7 +113,8 @@ called `jump-in-and-trail`. This offers the possibility to buy spot, future and 
 order and then to trail a stop/loss order until sold.
 
 ### What are the benefits of the UNICORN Binance Trailing Stop Loss?
-- Using websockets for push notifications about price updates and order updates. (Fast data transfer and low used API weight!)
+- Using websockets for push notifications about price updates and order status updates. (Fast data transfer and low 
+used API weight!)
 - [Smart entry](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#smart-entry)
 - Supported exchanges: 
 
