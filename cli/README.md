@@ -111,6 +111,12 @@ Test the data streams, this test needs a defined exchange and market parameter:
 $ ubtsl --test streams --exchange binance.com --market LUNAUSDT
 ```
 
+It is possible to use `exchange` and `market` values of a profile. 
+
+```
+$ ubtsl --profile "LUNAUSDT_SELL" --test streams
+```
+
 ## Usage
 
 ```
