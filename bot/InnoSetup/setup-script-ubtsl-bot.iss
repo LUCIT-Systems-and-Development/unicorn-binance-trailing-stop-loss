@@ -53,20 +53,18 @@ Name: envPath; Description: "Add to PATH variable (necessary to call ubtsl.exe g
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
     if (CurStep = ssPostInstall) and WizardIsTaskSelected('envPath')
-    then EnvAddPath(ExpandConstant('{app}') +'\bin');
+    then EnvAddPath(ExpandConstant('{app}'));
 end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 begin
     if CurUninstallStep = usPostUninstall
-    then EnvRemovePath(ExpandConstant('{app}') +'\bin');
+    then EnvRemovePath(ExpandConstant('{app}'));
     if CurUninstallStep = usPostUninstall
-    then DelTree(ExpandConstant('{app}') +'\bin', True, True, True);
+    then DelTree(ExpandConstant('{app}'), True, True, True);
 end;
 
 [Run]
-Filename: "{cmd}"; Parameters: "/C mkdir ""{app}\bin"""
-Filename: "{cmd}"; Parameters: "/C mklink /D ""{app}\bin\ubtsl.exe"" ""{app}\ubtsl.exe"""
 Filename: "https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html?source=ubtsl_setup.exe"; Description: "Open the info web page to read about further information."; Flags: shellexec runasoriginaluser postinstall
 Filename: "https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss"; Description: "If you like this project, we would be very happy about a star on GitHub."; Flags: shellexec runasoriginaluser postinstall unchecked 
 Filename: "https://twitter.com/LUCIT_SysDev"; Description: "Follow us on Twitter to be informed about new software releases."; Flags: shellexec runasoriginaluser postinstall unchecked
