@@ -81,8 +81,6 @@ UBTSL = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        telegram_bot_token="telegram_bot_token",
                                        telegram_send_to="telegram_send_to")
 
-print("Testing: ")
-
 
 class TestBinanceComManager(unittest.TestCase):
     def test_stop(self):
@@ -93,78 +91,6 @@ class TestBinanceComManager(unittest.TestCase):
             main()
         except SystemExit:
             pass
-
-    def test_notification(self):
-        tn = BinanceTrailingStopLossManager(callback_error=callback_error,
-                                            callback_finished=callback_finished,
-                                            binance_public_key="aaa",
-                                            binance_private_key="bbb",
-                                            exchange="binance.com-testnet",
-                                            keep_threshold="20%",
-                                            reset_stop_loss_price=True,
-                                            send_to_email_address="blah@example.com",
-                                            send_from_email_address="blub@example.com",
-                                            send_from_email_password="pass",
-                                            send_from_email_server="mail.example.com",
-                                            send_from_email_port=25,
-                                            stop_loss_limit="1.5%",
-                                            market="LUNAUSDT",
-                                            stop_loss_order_type="LIMIT",
-                                            stop_loss_price=88,
-                                            telegram_bot_token="telegram_bot_token",
-                                            telegram_send_to="telegram_send_to",
-                                            test="notification",
-                                            warn_on_update=False)
-        time.sleep(15)
-        tn.stop_manager()
-
-    def test_binance_connectivity(self):
-        tbc = BinanceTrailingStopLossManager(callback_error=callback_error,
-                                             callback_finished=callback_finished,
-                                             binance_public_key="aaa",
-                                             binance_private_key="bbb",
-                                             exchange="binance.com-testnet",
-                                             keep_threshold="20%",
-                                             reset_stop_loss_price=True,
-                                             send_to_email_address="blah@example.com",
-                                             send_from_email_address="blub@example.com",
-                                             send_from_email_password="pass",
-                                             send_from_email_server="mail.example.com",
-                                             send_from_email_port=25,
-                                             stop_loss_limit="1.5%",
-                                             market="LUNAUSDT",
-                                             stop_loss_order_type="LIMIT",
-                                             stop_loss_price=88,
-                                             telegram_bot_token="telegram_bot_token",
-                                             telegram_send_to="telegram_send_to",
-                                             test="binance-connectivity",
-                                             warn_on_update=False)
-        time.sleep(15)
-        tbc.stop_manager()
-
-    def test_streams(self):
-        ts = BinanceTrailingStopLossManager(callback_error=callback_error,
-                                            callback_finished=callback_finished,
-                                            binance_public_key="aaa",
-                                            binance_private_key="bbb",
-                                            exchange="binance.com-testnet",
-                                            keep_threshold="20%",
-                                            reset_stop_loss_price=True,
-                                            send_to_email_address="blah@example.com",
-                                            send_from_email_address="blub@example.com",
-                                            send_from_email_password="pass",
-                                            send_from_email_server="mail.example.com",
-                                            send_from_email_port=25,
-                                            stop_loss_limit="1.5%",
-                                            market="LUNAUSDT",
-                                            stop_loss_order_type="LIMIT",
-                                            stop_loss_price=88,
-                                            telegram_bot_token="telegram_bot_token",
-                                            telegram_send_to="telegram_send_to",
-                                            test="streams20",
-                                            warn_on_update=False)
-        time.sleep(15)
-        ts.stop_manager()
 
 
 if __name__ == '__main__':
