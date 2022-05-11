@@ -278,7 +278,6 @@ def main():
         :return: None
         """
         logger.debug(f"callback_error() started ")
-        print(f"STOP LOSS ERROR - ENGINE IS SHUTTING DOWN! - {message}")
         ubtsl.stop_manager()
 
     def callback_finished(feedback):
@@ -476,7 +475,6 @@ def main():
     stop_loss_start_limit = ""
     stop_loss_order_type = ""
     stop_loss_price: float = 0.0
-    stop_loss_side = ""
     reset_stop_loss_price = False
     test = None
     ubra = False
@@ -528,10 +526,6 @@ def main():
             pass
         try:
             stop_loss_price = float(profiles[options.profile]['stop_loss_price'])
-        except KeyError:
-            pass
-        try:
-            stop_loss_side = profiles[options.profile]['stop_loss_side']
         except KeyError:
             pass
 
@@ -636,7 +630,6 @@ def main():
                                            market=market,
                                            stop_loss_order_type=stop_loss_order_type,
                                            stop_loss_price=stop_loss_price,
-                                           stop_loss_side=stop_loss_side,
                                            stop_loss_start_limit=stop_loss_start_limit,
                                            telegram_bot_token=telegram_bot_token,
                                            telegram_send_to=telegram_send_to,

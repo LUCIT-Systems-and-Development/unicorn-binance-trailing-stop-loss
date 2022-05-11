@@ -35,6 +35,7 @@
 
 # Todo:
 #   - Make notifications customizable
+#   - Smart Entry Limit Order
 #   - calculate_stop_loss_amount() -> Fee calc? how to handle? / VIP Fees
 #   - Use BNB for trading fee
 #   - Precision dynamic
@@ -72,7 +73,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
     In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot,
     future and margin assets with a limit or market order and then to trail a stop/loss order until sold.
 
-    Supported exchanges: binance.com, binance.com-testnet, binance.com-isolated_margin
+    Supported exchanges: binance.com, binance.com-testnet, binance.com-futures, binance.com-margin,
+    binance.com-isolated_margin
 
     :param binance_public_key: Provide the public Binance key.
     :type binance_public_key: str
@@ -186,8 +188,6 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.version = __version__
         self.logger.info(f"New instance of {self.get_user_agent()} on "
                          f"{str(platform.system())} {str(platform.release())} for exchange {exchange} started")
-        if print_notifications:
-            print("Starting stop/loss engine")
         self.binance_public_key = binance_public_key
         self.binance_private_key = binance_private_key
         self.borrow_threshold = borrow_threshold
@@ -292,7 +292,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
             if test is not None:
                 msg = f"Stopping, test `{test}` is an invalid option!"
                 self.logger.error(msg)
-                print(msg)
+                if self.print_notifications:
+                    print(msg)
 
     def calculate_stop_loss_amount(self,
                                    amount: float
@@ -350,33 +351,45 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: bool
         """
-        if self.exchange == "binance.com-isolated_margin":
-            open_orders = self.get_open_orders(market=self.market)
-            if open_orders:
-                for open_order in open_orders:
-                    if open_order['type'] == "STOP_LOSS_LIMIT":
-                        self.logger.info(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - Cancelling "
-                                         f"open STOP_LOSS_LIMIT order (orderID={open_order['orderId']}) "
-                                         f"with stop_loss_price={open_order['price']}.")
-                        try:
+        open_orders = self.get_open_orders(market=self.market)
+        if open_orders:
+            for open_order in open_orders:
+                if open_order['type'] == "STOP_LOSS_LIMIT":
+                    self.logger.info(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - Cancelling "
+                                     f"open STOP_LOSS_LIMIT order (orderID={open_order['orderId']}) "
+                                     f"with stop_loss_price={open_order['price']}.")
+                    try:
+                        if self.exchange == "binance.com" or self.exchange == "binance.com-testnet":
+                            canceled_order = self.ubra.cancel_order(symbol=self.market,
+                                                                    orderId=open_order['orderId'])
+                        elif self.exchange == "binance.com-isolated_margin":
                             canceled_order = self.ubra.cancel_margin_order(symbol=self.market,
                                                                            isIsolated="TRUE",
                                                                            orderId=open_order['orderId'])
-                        except BinanceAPIException as error_msg:
-                            self.logger.error(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - "
-                                              f"error_msg: {error_msg}")
+                        elif self.exchange == "binance.com-margin":
+                            canceled_order = self.ubra.cancel_margin_order(symbol=self.market,
+                                                                           orderId=open_order['orderId'])
+                        elif self.exchange == "binance.com-futures":
+                            canceled_order = self.ubra.futures_cancel_order(symbol=self.market,
+                                                                            orderId=open_order['orderId'])
+                        else:
+                            self.logger.info(
+                                f"BinanceTrailingStopLossManager.create_stop_loss_order() - Invalid exchange "
+                                f"`{self.exchange}`")
+                            if self.print_notifications:
+                                print(f"Invalid exchange `{self.exchange}`")
                             return False
-                        self.logger.info(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - New "
-                                         f"order_status of orderID={canceled_order['orderId']} is"
-                                         f" {canceled_order['status']}.")
-                        return True
-            self.logger.info(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - No open order for "
-                             f"cancellation found!")
-            return False
-        else:
-            self.logger.critical(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - no valid exchange "
-                                 f"provided!")
-            return False
+                    except BinanceAPIException as error_msg:
+                        self.logger.error(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - "
+                                          f"error_msg: {error_msg}")
+                        return False
+                    self.logger.info(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - New "
+                                     f"order_status of orderID={canceled_order['orderId']} is"
+                                     f" {canceled_order['status']}.")
+                    return True
+        self.logger.info(f"BinanceTrailingStopLossManager.cancel_open_stop_loss_order() - No open order for "
+                         f"cancellation found!")
+        return False
 
     def create_stop_loss_order(self,
                                stop_loss_price: float = None,
@@ -432,14 +445,45 @@ class BinanceTrailingStopLossManager(threading.Thread):
                     self.callback_error(msg)
                 return False
             try:
-                new_order = self.ubra.create_margin_order(symbol=self.market,
-                                                          isIsolated="TRUE",
-                                                          side="SELL",
-                                                          type="STOP_LOSS_LIMIT",
-                                                          price=self.stop_loss_price,
-                                                          stopPrice=self.get_stop_loss_trigger_price(stop_loss_price),
-                                                          quantity=stop_loss_quantity,
-                                                          timeInForce="GTC")
+                if self.exchange == "binance.com" or self.exchange == "binance.com-testnet":
+                    new_order = self.ubra.create_order(symbol=self.market,
+                                                       side="SELL",
+                                                       type="STOP_LOSS_LIMIT",
+                                                       price=self.stop_loss_price,
+                                                       stopPrice=self.get_stop_loss_trigger_price(stop_loss_price),
+                                                       quantity=stop_loss_quantity,
+                                                       timeInForce="GTC")
+                elif self.exchange == "binance.com-isolated_margin":
+                    new_order = self.ubra.create_margin_order(symbol=self.market,
+                                                              isIsolated="TRUE",
+                                                              side="SELL",
+                                                              type="STOP_LOSS_LIMIT",
+                                                              price=self.stop_loss_price,
+                                                              stopPrice=self.get_stop_loss_trigger_price(stop_loss_price),
+                                                              quantity=stop_loss_quantity,
+                                                              timeInForce="GTC")
+                elif self.exchange == "binance.com-margin":
+                    new_order = self.ubra.create_margin_order(symbol=self.market,
+                                                              side="SELL",
+                                                              type="STOP_LOSS_LIMIT",
+                                                              price=self.stop_loss_price,
+                                                              stopPrice=self.get_stop_loss_trigger_price(stop_loss_price),
+                                                              quantity=stop_loss_quantity,
+                                                              timeInForce="GTC")
+                elif self.exchange == "binance.com-futures":
+                    new_order = self.ubra.futures_create_order(symbol=self.market,
+                                                               side="SELL",
+                                                               type="STOP_LOSS_LIMIT",
+                                                               price=self.stop_loss_price,
+                                                               stopPrice=self.get_stop_loss_trigger_price(stop_loss_price),
+                                                               quantity=stop_loss_quantity,
+                                                               timeInForce="GTC")
+                else:
+                    self.logger.info(f"BinanceTrailingStopLossManager.create_stop_loss_order() - Invalid exchange "
+                                     f"`{self.exchange}`")
+                    if self.print_notifications:
+                        print(f"Invalid exchange `{self.exchange}`")
+                    return False
                 self.stop_loss_order_id = new_order['orderId']
                 self.logger.info(f"BinanceTrailingStopLossManager.create_stop_loss_order() - Created stop/loss order "
                                  f"for market {new_order['symbol']} with orderId="
@@ -488,7 +532,18 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: dict or bool
         """
-        self.exchange_info = self.ubra.get_exchange_info()
+        if self.exchange == "binance.com" or self.exchange == "binance.com-testnet" or \
+                self.exchange == "binance.com-margin" or self.exchange == "binance.com-isolated_margin":
+            self.exchange_info = self.ubra.get_exchange_info()
+        elif self.exchange == "binance.com-futures":
+            self.exchange_info = self.ubra.futures_exchange_info()
+        else:
+            self.logger.error(f"BinanceTrailingStopLossManager.get_exchange_info() - Invalid exchange "
+                              f"`{self.exchange}`")
+            if self.print_notifications:
+                print(f"Invalid exchange `{self.exchange}`")
+            return False
+
         for item in self.exchange_info['symbols']:
             if item['symbol'] == self.market:
                 return item
@@ -502,10 +557,10 @@ class BinanceTrailingStopLossManager(threading.Thread):
         :return: dict or None
         """
         try:
-            if self.exchange == "binance.com":
+            if self.exchange == "binance.com" or self.exchange == "binance.com-testnet":
                 open_orders = self.ubra.get_open_orders(symbol=market)
             elif self.exchange == "binance.com-futures":
-                open_orders = self.ubra.get_open_margin_orders(symbol=market)
+                open_orders = self.ubra.futures_get_open_orders(symbol=market)
             elif self.exchange == "binance.com-margin":
                 open_orders = self.ubra.get_open_margin_orders(symbol=market)
             elif self.exchange == "binance.com-isolated_margin":
@@ -525,28 +580,36 @@ class BinanceTrailingStopLossManager(threading.Thread):
         :return: tuple (total, free) or None
         """
         try:
-            if self.exchange == "binance.com":
-                return None
+            if self.exchange == "binance.com" or self.exchange == "binance.com-testnet":
+                account_info = self.ubra.get_account()
             elif self.exchange == "binance.com-futures":
-                return None
+                account_info = self.ubra.futures_account()
             elif self.exchange == "binance.com-margin":
-                return None
+                account_info = self.ubra.get_margin_account()
             elif self.exchange == "binance.com-isolated_margin":
                 account_info = self.ubra.get_isolated_margin_account()
-                for item in account_info['assets']:
-                    base_asset_pool = item['baseAsset']
-                    if base_asset_pool['asset'] == base_asset:
-                        self.logger.info(f"BinanceTrailingStopLossManager.get_owning_amount() - Owning "
-                                         f"{base_asset_pool['asset']}: free={base_asset_pool['free']}, "
-                                         f"total={base_asset_pool['totalAsset']} "
-                                         f"(interest={base_asset_pool['interest']})")
-                        return float(base_asset_pool['totalAsset']), float(base_asset_pool['free'])
-                    return None
             else:
+                self.logger.error(f"BinanceTrailingStopLossManager.get_owning_amount() - Invalid exchange "
+                                  f"`{self.exchange}`")
+                if self.print_notifications:
+                    print(f"Invalid exchange `{self.exchange}`")
                 return None
         except BinanceAPIException as error_msg:
             self.logger.error(f"BinanceTrailingStopLossManager.get_owning_amount() - {error_msg}")
             return None
+
+        for item in account_info['assets']:
+            base_asset_pool = item['baseAsset']
+            if base_asset_pool['asset'] == base_asset:
+                self.logger.info(f"BinanceTrailingStopLossManager.get_owning_amount() - Owning "
+                                 f"{base_asset_pool['asset']}: free={base_asset_pool['free']}, "
+                                 f"total={base_asset_pool['totalAsset']} "
+                                 f"(interest={base_asset_pool['interest']})")
+                return float(base_asset_pool['totalAsset']), float(base_asset_pool['free'])
+            return None
+        else:
+            return None
+
 
     def get_stop_loss_asset_amount(self) -> Optional[float]:
         """
@@ -613,9 +676,9 @@ class BinanceTrailingStopLossManager(threading.Thread):
             if self.exchange == "binance.com":
                 return None
             elif self.exchange == "binance.com-futures":
-                return None
+                symbol_info = self.ubra.get_symbol_info(symbol=symbol)
             elif self.exchange == "binance.com-margin":
-                return None
+                symbol_info = self.ubra.get_margin_symbol(symbol=symbol)
             elif self.exchange == "binance.com-isolated_margin":
                 symbol_info = self.ubra.get_isolated_margin_symbol(symbol=symbol)
             else:
@@ -624,6 +687,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
         except BinanceAPIException as error_msg:
             self.logger.error(f"BinanceTrailingStopLossManager.get_symbol_info() - {error_msg}")
             if "APIError(code=-2008): Invalid Api-Key ID" in error_msg:
+                if self.print_notifications:
+                    print(f"ERROR: Not able to fetch `symbol_info`. {error_msg}")
                 sys.exit(1)
             return None
 
@@ -802,15 +867,11 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
                 for item in isolated_margin_account['assets']:
                     if item['symbol'] == self.market:
-                        # Todo: Take full loan option
-                            if self.borrow_threshold:
-                                pass
+                        if self.borrow_threshold:
+                            loan_details = self.ubra.get_margin_loan_details()
+                            print(f"Loan details: {loan_details}")
+                            # Todo: Take loan -> gain free quote asset
 
-                        # Todo: Add LIMIT buy order option
-                        #   ask_price = ubra.get_ticker(symbol=market)['askPrice']
-
-                        # Todo: Calc borrow_threshold:
-                        #   `free_quote_asset` takes all!
                         amount_to_buy = isolated_margin_account['assets'][0]['quoteAsset']['free']
 
                         try:
@@ -820,9 +881,10 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                       type="MARKET",
                                                                       quoteOrderQty=amount_to_buy,
                                                                       sideEffectType="MARGIN_BUY")
-                            # Todo:
-                            #  - Calculate the average price instead of using the price of the first execution
-                            #  - set price
+
+                            print(f"Buy order: {buy_order}")
+
+                            # Todo: Calc real buy price (average)
                             buy_price = buy_order['fills'][0]['price']
 
                             self.stop_loss_price = self.calculate_stop_loss_price(price=buy_price,
@@ -838,7 +900,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                             return None
 
                         # We expect only one match, so we leave after we found it
-                        break
+
             else:
                 msg = f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange " \
                       f"'{self.exchange}'!"
