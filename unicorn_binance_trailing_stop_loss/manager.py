@@ -129,8 +129,9 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type stop_loss_start_limit: str
     :param stop_loss_trigger_gap: Gap between stopPrice and limit order price, use integer or percent values.
     :type stop_loss_trigger_gap: str
-    :param test: Use this to test specific systems like "notification" or "binance-connectivity". If test is not None
-                 the engine will NOT start! It only tests!
+    :param test: Use this to test specific systems like "notification", "binance-connectivity" and "streams". The
+                 streams test needs a valid exchange and market. If test is not None the engine will NOT start! It
+                 only tests!
     :type test: str
     :param telegram_bot_token: Token to connect with Telegram API.
     :type telegram_bot_token: str
@@ -228,11 +229,13 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.telegram_bot_token = telegram_bot_token
         self.telegram_send_to = telegram_send_to
         self.test = test
+        self.trade_stream_id = None
         self.trading_fee_discount_futures_percent = trading_fee_discount_futures_percent
         self.trading_fee_discount_margin_percent = trading_fee_discount_margin_percent
         self.trading_fee_discount_spot_percent = trading_fee_discount_spot_percent
         self.trading_fee_percent = trading_fee_percent
         self.trading_fee_use_bnb = trading_fee_use_bnb
+        self.user_stream_id = None
         self.ubra: BinanceRestApiManager = ubra_manager or BinanceRestApiManager(self.binance_public_key,
                                                                                  self.binance_private_key,
                                                                                  exchange=self.exchange,
@@ -251,39 +254,64 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                                    warn_on_update=warn_on_update)
         except UnknownExchange:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
-            if test is None:
+            if test is None or test == "streams":
                 if self.print_notifications:
                     print(f"Please use a valid exchange!")
                 sys.exit(1)
         if test is None and start_engine is True:
             msg = f"Starting the ubtsl engine"
             self.logger.info(msg)
-            print(msg)
+            if self.print_notifications:
+                print(msg)
             self.start()
         elif test == "notification":
             msg = f"Starting notification test"
             self.logger.info(msg)
-            print(msg)
-            msg2 = f"Subject: unicorn-binance-trailing-stop-loss notificaton test\n\nTest notification"
-            if self.send_email_notification(msg2):
-                msg3 = f"E-Mail sent, please check for incoming messages!"
-                self.logger.info(msg3)
-                print(msg3)
-            if self.send_telegram_notification(msg2):
-                msg4 = f"Telegram sent, please check for incoming messages!"
-                self.logger.info(msg4)
-                print(msg4)
+            if self.print_notifications:
+                print(msg)
+            notification_text = f"Subject: unicorn-binance-trailing-stop-loss notificaton test\n\nTest notification"
+            if self.send_email_notification(notification_text):
+                msg = f"E-Mail sent, please check for incoming messages!"
+                self.logger.info(msg)
+                if self.print_notifications:
+                    print(msg)
+            if self.send_telegram_notification(notification_text):
+                msg = f"Telegram sent, please check for incoming messages!"
+                self.logger.info(msg)
+                if self.print_notifications:
+                    print(msg)
         elif test == "binance-connectivity":
             msg = f"Starting connectivity test to Binance API"
             self.logger.info(msg)
-            print(msg)
+            if self.print_notifications:
+                print(msg)
             try:
                 response = self.ubra.get_account()
                 if response['makerCommission']:
-                    print(f"Connection to Binance API successfully established!")
+                    if self.print_notifications:
+                        msg = f"Connection to Binance API successfully established!"
+                        self.logger.error(msg)
+                        if self.print_notifications:
+                            print(msg)
             except BinanceAPIException as error_msg:
                 self.logger.error(error_msg)
-                print(error_msg)
+                if self.print_notifications:
+                    print(error_msg)
+        elif test == "streams":
+            msg = f"Starting streams test"
+            self.logger.info(msg)
+            if self.print_notifications:
+                print(msg)
+            self.start_streams()
+            try:
+                while self.stop_request is False:
+                    self.ubwa.print_summary(title=f"UNICORN Binance Trailing Stop Loss {self.version} - Testing streams")
+                    print(f"Press CTRL+C to leave this test!\r\n")
+                    time.sleep(1)
+            except KeyboardInterrupt:
+                print("\nStopping ... just wait a few seconds!")
+                self.stop_manager()
+                sys.exit(0)
         else:
             if test is not None:
                 msg = f"Stopping, test `{test}` is an invalid option!"
@@ -295,7 +323,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                    amount: float
                                    ) -> Optional[float]:
         """
-        Calculate the tradable stop/loss asset amount (= owning and free - trading fee)
+        Calculate the tradeable stop/loss asset amount (= owning and free - trading fee)
 
         :param amount: The full owning asset amount.
         :type amount: float
@@ -808,6 +836,10 @@ class BinanceTrailingStopLossManager(threading.Thread):
 
         :return: bool
         """
+        if self.test == "streams":
+            self.logger.debug(f"BinanceTrailingStopLossManager.process_price_feed_stream() - Not processing in test "
+                              f"mode")
+            return True
         self.logger.debug(f"BinanceTrailingStopLossManager.process_price_feed_stream(stream_data={stream_data}, "
                           f"stream_buffer_name={stream_buffer_name}) started")
         if stream_data.get('price'):
@@ -849,27 +881,30 @@ class BinanceTrailingStopLossManager(threading.Thread):
             factor = 10 ** decimals
             return math.floor(number * factor) / factor
 
+    def start_streams(self) -> bool:
+        if self.exchange == "binance.com-isolated_margin":
+            symbol = self.market
+        else:
+            symbol = False
+        self.user_stream_id = self.ubwa.create_stream("arr", "!userData",
+                                                      api_key=self.binance_public_key,
+                                                      api_secret=self.binance_private_key,
+                                                      process_stream_data=self.process_userdata_stream,
+                                                      symbols=symbol,
+                                                      stream_label="UserData")
+        self.trade_stream_id = self.ubwa.create_stream(channels="aggTrade",
+                                                       markets=self.market,
+                                                       process_stream_data=self.process_price_feed_stream,
+                                                       stream_label="PriceFeed")
+        return True
+
     def run(self) -> None:
         """
         Start Stop/Loss with provided settings!
 
         :return: None
         """
-        if self.exchange == "binance.com-isolated_margin":
-            symbol = self.market
-        else:
-            symbol = False
-
-        user_stream_id = self.ubwa.create_stream("arr", "!userData",
-                                                 api_key=self.binance_public_key,
-                                                 api_secret=self.binance_private_key,
-                                                 process_stream_data=self.process_userdata_stream,
-                                                 symbols=symbol,
-                                                 stream_label="UserData")
-        trade_stream_id = self.ubwa.create_stream(channels="aggTrade",
-                                                  markets=self.market,
-                                                  process_stream_data=self.process_price_feed_stream,
-                                                  stream_label="PriceFeed")
+        self.start_streams()
 
         if self.stop_loss_start_limit:
             limit = self.stop_loss_start_limit
@@ -922,7 +957,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                             return None
 
                         # We expect only one match, so we leave after we found it
-
+                        break
             else:
                 msg = f"Option `jump-in-and-trail` in parameter `engine` is not supported for exchange " \
                       f"'{self.exchange}'!"
@@ -962,8 +997,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.update_stop_loss_asset_amount()
 
         self.logger.info(f"BinanceTrailingStopLossManager.start() - Waiting till streams are running")
-        if self.ubwa.wait_till_stream_has_started(user_stream_id) and \
-                self.ubwa.wait_till_stream_has_started(trade_stream_id):
+        if self.ubwa.wait_till_stream_has_started(self.user_stream_id) and \
+                self.ubwa.wait_till_stream_has_started(self.trade_stream_id):
             time.sleep(5)
             self.logger.info(f"BinanceTrailingStopLossManager.start() - UserData and Trade streams are running!")
 
@@ -1059,12 +1094,6 @@ class BinanceTrailingStopLossManager(threading.Thread):
             return True
         except KeyboardInterrupt:
             print("\nStopping ... just wait a few seconds!")
-        try:
-            self.ubwa.stop_manager_with_all_streams()
-            return True
-        except KeyboardInterrupt:
-            print("\nStopping ... just wait a few seconds!")
-            return True
 
     def set_stop_loss_price(self,
                             stop_loss_price: float = None) -> bool:

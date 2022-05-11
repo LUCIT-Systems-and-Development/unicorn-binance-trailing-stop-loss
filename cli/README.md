@@ -90,11 +90,17 @@ $ ubtsl --test notification
 ```
 
 ### Test connectivity to Binance API
-
 If you entered valid API key and secret you can test the connectivity to the Binance API:
 
 ```
 $ ubtsl --test binance-connectivity
+```
+
+### Test data streams
+Test the data streams, this test needs a defined exchange and market parameter:
+
+```
+$ ubtsl --test streams --exchange binance.com --market LUNAUSDT
 ```
 
 ## Usage

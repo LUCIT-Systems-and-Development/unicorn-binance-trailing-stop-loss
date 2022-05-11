@@ -647,7 +647,7 @@ def main():
     if test is None:
         try:
             while ubtsl.stop_request is False:
-                time.sleep(5)
+                time.sleep(1)
         except KeyboardInterrupt:
             print("\nStopping ... just wait a few seconds!")
             ubtsl.stop_manager()
