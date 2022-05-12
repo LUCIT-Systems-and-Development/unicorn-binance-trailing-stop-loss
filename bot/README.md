@@ -54,8 +54,8 @@ Part of ['UNICORN Binance Suite'](https://www.lucit.tech/unicorn-binance-suite.h
 
 ## Description
 The Bot and [CLI version](https://www.lucit.tech/ubtsl-cli.html) are absolutely identical, except for the installation 
-method and that the Bot version does not require a pre-installed Python environment. Please read the 
-[CLI description](https://www.lucit.tech/ubtsl-cli.html#description) for more information. 
+method and that the Bot version does not require a pre-installed Python environment. It is the same source code! Please 
+read the [CLI description](https://www.lucit.tech/ubtsl-cli.html#description) for more information. 
 
 ## Installation
 ### Windows
