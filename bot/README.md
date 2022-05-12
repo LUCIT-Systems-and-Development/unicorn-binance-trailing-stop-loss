@@ -65,10 +65,9 @@ from GitHub.
 3. Click on `More info`: ![Screenshot_0](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/0.png)
 4. Click on `Run anyway`: ![Screenshot_1](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/1.png)
 5. Click on `Yes`: ![Screenshot_2](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/2.png)
-6. Accept the license: ![Screenshot_2](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/2.png)
+6. Accept the license: ![Screenshot_3](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/3.png)
 7. Click "Next" 3 times, then click "Install". 
-
-Read the following post [installation instructions](https://www.lucit.tech/ubtsl-cli.html#installation).
+8. Read the following post [installation instructions](https://www.lucit.tech/ubtsl-cli.html#installation).
 
 ### Mac
 Comming soon!
