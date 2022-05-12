@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to 
 [Semantic Versioning](http://semver.org/).
 
-## 0.7.1.dev (development stage/unreleased/unstable)
+## 0.8.0.dev (development stage/unreleased/unstable)
+
+## 0.8.0
+### Added
+- Parameter `installupdate` (only available in Bot mode)
+### Fixed
+- Create logfile parent dir if not exists
+- Handling exceptions while opening a non existing ini file
+- Bug in test "streams"
 
 ## 0.7.1
 ### Fixed
