@@ -49,6 +49,8 @@ If you put this bot on a market, you should stop trading manually on this market
 
 For more information about the usage [read here](https://www.lucit.tech/ubtsl-cli.html).
 
+Part of ['UNICORN Binance Suite'](https://www.lucit.tech/unicorn-binance-suite.html).
+
 ## Description
 The Bot and [CLI version](https://www.lucit.tech/ubtsl-cli.html) are absolutely identical, except for the installation 
 method and that the Bot version does not require a pre-installed Python environment. Please read the 
