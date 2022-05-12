@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 0.7.1
 ### Fixed
-- self.test not iterable as None type
+- `self.test` not iterable as None type
 
 ## 0.7.0
 ### Added

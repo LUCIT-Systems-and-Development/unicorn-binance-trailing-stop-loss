@@ -57,15 +57,13 @@ then it stops.
 
 ***Supported exchanges:***
 
-| Exchange                                           | Exchange string                  | trail | jump-in-and-trail | 
-|----------------------------------------------------|----------------------------------| ----- |-------------------| 
-| [Binance](https://www.binance.com)                 | `binance.com`                    | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
-| [Binance Testnet](https://testnet.binance.vision/) | `binance.com-testnet`            | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
-| [Binance Futures](https://www.binance.com)         | `binance.com-futures`            | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
-| [Binance Isolated Margin](https://www.binance.com) | `binance.com-isolated_margin`    | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) (experimental)
-| [Binance Margin](https://www.binance.com)          | `binance.com-margin`             | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)
-
-
+| Exchange                                           | Exchange string               | trail                                                                                                                                     | jump-in-and-trail                                                                                                                                        | 
+|----------------------------------------------------|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| [Binance](https://www.binance.com)                 | `binance.com`                 | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)                  
+| [Binance Testnet](https://testnet.binance.vision/) | `binance.com-testnet`         | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![no](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)                  
+| [Binance Futures](https://www.binance.com)         | `binance.com-futures`         | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)                 
+| [Binance Isolated Margin](https://www.binance.com) | `binance.com-isolated_margin` | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) (experimental) 
+| [Binance Margin](https://www.binance.com)          | `binance.com-margin`          | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)                 
 
 ## Installation
 No matter if you installed the [CLI version via PIP/conda](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
@@ -156,60 +154,76 @@ All parameters that expect numbers can be configured with fixed numerical values
 
 ```
 $ ubtsl --help
-usage: ubtsl [-h] [-ak APIKEY] [-as APISECRET] [-cci] [-cpi] [-cf CONFIGFILE] [-cu] [-ex EXAMPLE] [-e EXCHANGE] [-n ENGINE] [-k KEEPTHRESHOLD] [-lf LOGFILE] [-ll LOGLEVEL] [-oci] [-opi] [-os ORDERSIDE] [-ot ORDERTYPE]
-             [-pf PROFILE] [-pff PROFILESFILE] [-r RESETSTOPLOSSPRICE] [-l STOPLOSSLIMIT] [-p STOPLOSSPRICE] [-sl STOPLOSSSTARTLIMIT] [-s SYMBOL] [-t TEST] [-v]
+usage: ubtsl [-h] [-ak APIKEY] [-as APISECRET] [-bt BORROWTHRESHOLD] [-coo] [-cci] [-cpi] [-cf CONFIGFILE] [-cu]
+             [-ex EXAMPLE] [-e EXCHANGE] [-n ENGINE] [-k KEEPTHRESHOLD] [-lf LOGFILE] [-ll LOGLEVEL] [-loo]
+             [-m MARKET] [-oci] [-opi] [-ot ORDERTYPE] [-pf PROFILE] [-pff PROFILESFILE] [-r RESETSTOPLOSSPRICE]
+             [-l STOPLOSSLIMIT] [-sl STOPLOSSSTARTLIMIT] [-p STOPLOSSPRICE] [-t TEST] [-v]
 
-UNICORN Binance Trailing Stop Loss 0.6.0 (MIT License)
+UNICORN Binance Trailing Stop Loss 0.7.1 by LUCIT Systems and Development (MIT License)
 
 options:
   -h, --help            show this help message and exit
   -ak APIKEY, --apikey APIKEY
                         the API key
   -as APISECRET, --apisecret APISECRET
-                        the API secret
+                        The Binance API secret.
+  -bt BORROWTHRESHOLD, --borrowthreshold BORROWTHRESHOLD
+                        How much of the possible credit line to exhaust. (Only available in Margin)
+  -coo, --cancelopenorders
+                        Cancel all open orders and then stop. Only valid in combination with parameter `exchange` and
+                        `market`.
   -cci, --createconfigini
-                        create the config file and then stop
+                        Create the config file and then stop.
   -cpi, --createprofilesini
-                        create the profiles file and then stop
+                        Create the profiles file and then stop.
   -cf CONFIGFILE, --configfile CONFIGFILE
-                        specify path including filename to the config file (ex: `~/my_config.ini`). if not provided ubtsl tries to load a `ubtsl_config.ini` from the `C:\Users\Oliver\.lucit\` and the current working directory.      
-  -cu, --checkupdate    check if update is available and then stop.
+                        Specify path including filename to the config file (ex: `~/my_config.ini`). If not provided
+                        ubtsl tries to load a `ubtsl_config.ini` from the `{home}\.lucit\` and the current
+                        working directory.
+  -cu, --checkupdate    Check if update is available and then stop.
   -ex EXAMPLE, --example EXAMPLE
-                        show an example ini file from GitHub and then stop. options: `config` or `profiles`
+                        Show an example ini file from GitHub and then stop. Options: `config` or `profiles`.
   -e EXCHANGE, --exchange EXCHANGE
-                        exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+                        Exchange: binance.com, binance.com-testnet, binance.com-futures, binance.com-isolated_margin,
+                        binance.com-margin
   -n ENGINE, --engine ENGINE
-                        default: `trail`, options: `jump-in-and-trail` to place a market buy order and trail
+                        Choose the engine. Default: `trail` Options: `jump-in-and-trail` to place a buy order and
+                        trail
   -k KEEPTHRESHOLD, --keepthreshold KEEPTHRESHOLD
-                        exchange: binance.com, binance.com-margin, binance.com-isolated_margin, ...
+                        Set the threshold to be kept. This is the amount that will not get sold.
   -lf LOGFILE, --logfile LOGFILE
-                        specify path including filename to the logfile
+                        Specify path including filename to the logfile.
   -ll LOGLEVEL, --loglevel LOGLEVEL
-                        default: INFO available log levels: DEBUG, INFO, WARNING, ERROR and CRITICAL
+                        Choose a loglevel. Default: INFO Options: DEBUG, INFO, WARNING, ERROR and CRITICAL
+  -loo, --listopenorders
+                        List all open orders and then stop. Only valid in combination with parameter `exchange` and
+                        `market`.
+  -m MARKET, --market MARKET
+                        The market on which is traded.
   -oci, --openconfigini
-                        open the used config file and then stop
+                        Open the used config file and then stop.
   -opi, --openprofilesini
-                        open the used profiles file and then stop
-  -os ORDERSIDE, --orderside ORDERSIDE
-                        specify whether the trailing stop loss should be in buying or selling mode. (ex: 'buy' or 'sell')
+                        Open the used profiles file and then stop.
   -ot ORDERTYPE, --ordertype ORDERTYPE
-                        use `limit` or `market`
+                        Use `limit` or `market`.
   -pf PROFILE, --profile PROFILE
-                        name of the profile to load from ubtsl_profiles.ini!
+                        Name of the profile to load from ubtsl_profiles.ini!
   -pff PROFILESFILE, --profilesfile PROFILESFILE
-                        specify path including filename to the profiles file (ex: `~/my_profiles.ini`). if not available ubtsl tries to load a ubtsl_profile.ini from the `C:\Users\Oliver\.lucit\` and the current working directory   
+                        Specify path including filename to the profiles file (ex: `~/my_profiles.ini`). If not
+                        available ubtsl tries to load a ubtsl_profile.ini from the `{home}\.lucit\` and the
+                        current working directory.
   -r RESETSTOPLOSSPRICE, --resetstoplossprice RESETSTOPLOSSPRICE
-                        reset the existing stop_loss_price! usage: True anything else is False
+                        Reset the existing stop_loss_price! usage: True anything else is False.
   -l STOPLOSSLIMIT, --stoplosslimit STOPLOSSLIMIT
-                        stop/loss limit in float or percent
-  -p STOPLOSSPRICE, --stoplossprice STOPLOSSPRICE
-                        set the start stop/loss price as float value
+                        Stop/loss limit in float or percent.
   -sl STOPLOSSSTARTLIMIT, --stoplossstartlimit STOPLOSSSTARTLIMIT
-                        set the start stop/loss limit in float or percent. (only used in `jump-in-and-trail`
-  -s SYMBOL, --symbol SYMBOL
-                        the market symbol as used by binance
-  -t TEST, --test TEST  use this to test specific systems like "notification". if test is not None the engine will NOT start! it only tests!
-  -v, --version         show the program version and then stop. the version is `0.6.0` by the way :)
+                        Set the start stop/loss limit in float or percent.
+  -p STOPLOSSPRICE, --stoplossprice STOPLOSSPRICE
+                        Set the start stop/loss price as float value.
+  -t TEST, --test TEST  Use this to test specific systems like "notification", "binance-connectivity" and "streams".
+                        The streams test needs a valid exchange and market. If test is not None the engine will NOT
+                        start! It only tests!
+  -v, --version         Show the program version and then stop. the version is `0.7.1` by the way :)
 ```
 
 ## Example commands
