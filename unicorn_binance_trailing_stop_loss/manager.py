@@ -52,7 +52,7 @@ import time
 
 __app_name__ = "unicorn_binance_trailing_stop_loss"
 __logger__ = logging.getLogger(__app_name__)
-__version__ = "0.7.1"
+__version__ = "0.7.1.dev"
 
 
 class BinanceTrailingStopLossManager(threading.Thread):
