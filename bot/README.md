@@ -19,7 +19,9 @@
 
 # UNICORN Binance Trailing Stop Loss Bot
 
-[Description](#description) | [Installation](#installation) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
+[Description](#description) | [Installation](#installation) | [Change Log](#change-log) | [Wiki](#wiki) | 
+[Social](#social) | [Notifications](#receive-notifications) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
+[Contributing](#contributing) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
 
 After starting the bot, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a 
 notification can be sent via email and Telegram afterwards.
@@ -59,6 +61,71 @@ from GitHub.
 
 ### Mac
 Comming soon!
+
+## Change Log
+[https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html)
+
+## Documentation
+- [General](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech)
+- [Modules](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html)
+- [CLI](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html)
+- [Bot](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/Bot.html)
+
+## Project Homepage
+[https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)
+
+## Wiki
+[https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki)
+
+## Social
+- [Discussions](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/discussions)
+- [https://t.me/unicorndevs](https://t.me/unicorndevs)
+- [https://dev.binance.vision](https://dev.binance.vision)
+- [https://community.binance.org](https://community.binance.org)
+
+## Receive Notifications
+To receive notifications on available updates you can 
+[![watch](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/watch.png)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/watchers) 
+the repository on [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss), write your 
+[own script](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_version_of_this_package.py) 
+with using 
+[`is_update_available()`](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html#unicorn_binance_trailing_stop_loss.manager.BinanceWebSocketApiManager.is_update_availabe) 
+or you use the 
+[monitoring API service](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki/UNICORN-Monitoring-API-Service).
+
+Follow us on [Twitter](https://twitter.com/LUCIT_SysDev) or on [Facebook](https://www.facebook.com/lucit.systems.and.development) for general news about the [unicorn-binance-suite](https://www.lucit.tech/unicorn-binance-suite.html)!
+
+To receive news (like inspection windows/maintenance) about the Binance API`s subscribe to their telegram groups: 
+
+- [https://t.me/binance_api_announcements](https://t.me/binance_api_announcements)
+- [https://t.me/binance_api_english](https://t.me/binance_api_english)
+- [https://t.me/Binance_JEX_EN](https://t.me/Binance_JEX_EN)
+- [https://t.me/Binance_USA](https://t.me/Binance_USA)
+- [https://t.me/TRBinanceTR](https://t.me/TRBinanceTR)
+- [https://t.me/BinanceDEXchange](https://t.me/BinanceDEXchange)
+- [https://t.me/BinanceExchange](https://t.me/BinanceExchange)
+
+## How to report Bugs or suggest Improvements?
+[List of planned features](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) - 
+click ![thumbs-up](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/thumbup.png) if you need one of them or suggest a new feature!
+
+Before you report a bug, [try the latest release](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss#installation-and-upgrade). If the issue still exists, provide the error trace, OS 
+and Python version and explain how to reproduce the error. A demo script is appreciated.
+
+If you dont find an issue related to your topic, please open a new [issue](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues)!
+
+[Report a security bug!](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/security/policy)
+
+## Contributing
+[UNICORN Binance Trailing Stop Loss](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) is an open 
+source project which welcomes contributions which can be anything from simple documentation fixes and reporting dead links to new features. To 
+contribute follow 
+[this guide](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/CONTRIBUTING.md).
+ 
+### Contributors
+[![Contributors](https://contributors-img.web.app/image?repo=LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/graphs/contributors)
+
+We ![love](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/heart.png) open source!
 
 ## Disclaimer
 This project is for informational purposes only. You should not construe this information or any other material as 

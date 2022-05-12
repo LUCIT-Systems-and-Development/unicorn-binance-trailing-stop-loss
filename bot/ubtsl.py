@@ -35,4 +35,4 @@
 
 from unicorn_binance_trailing_stop_loss.cli import main
 
-main()
+main(is_bot=True)

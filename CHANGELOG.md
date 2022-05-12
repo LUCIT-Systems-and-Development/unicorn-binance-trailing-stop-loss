@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [Semantic Versioning](http://semver.org/).
 
 ## 0.7.1.dev (development stage/unreleased/unstable)
+### Fixed
+- Create logfile parent dir if not exists
 
 ## 0.7.1
 ### Fixed

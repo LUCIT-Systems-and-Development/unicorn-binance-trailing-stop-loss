@@ -51,7 +51,7 @@ import time
 import webbrowser
 
 
-def main():
+def main(is_bot=False):
     """
         UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
 
@@ -68,10 +68,10 @@ def main():
     log_format = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
     parser = argparse.ArgumentParser(
-          description=f"UNICORN Binance Trailing Stop Loss {version} by LUCIT Systems and Development (MIT License)",
-          prog=f"ubtsl",
-          formatter_class=argparse.RawDescriptionHelpFormatter,
-          epilog=textwrap.dedent('''\
+        description=f"UNICORN Binance Trailing Stop Loss {version} by LUCIT Systems and Development (MIT License)",
+        prog=f"ubtsl",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=textwrap.dedent('''\
              examples:
                  Check if a new update is available:
                  $ ubtsl --checkupdate
@@ -150,7 +150,7 @@ def main():
                         action='store_true')
     parser.add_argument('-ex', '--example',
                         type=str,
-                        help=f'Show an example ini file from GitHub and then stop.\r\nOptions: `config` or `profiles`.',
+                        help=f'Show an example ini file from GitHub and then stop. Options: `config` or `profiles`.',
                         required=False)
     parser.add_argument('-e', '--exchange',
                         type=str,
@@ -159,8 +159,8 @@ def main():
                         required=False)
     parser.add_argument('-n', '--engine',
                         type=str,
-                        help='Choose the engine. Default: `trail`\r\n'
-                             'Options: `jump-in-and-trail` to place a buy order and trail',
+                        help='Choose the engine. Default: `trail` Options: `jump-in-and-trail` to place a buy order '
+                             'and trail',
                         required=False)
     parser.add_argument('-k', '--keepthreshold',
                         type=str,
@@ -168,12 +168,12 @@ def main():
                         required=False)
     parser.add_argument('-lf', '--logfile',
                         type=str,
-                        help='Specify path including filename to the logfile.',
+                        help='Specify path including filename to the logfile. Default is logfile path is '
+                             '`{config_path}`',
                         required=False)
     parser.add_argument('-ll', '--loglevel',
                         type=str,
-                        help='Choose a loglevel. Default: INFO\r\n'
-                             'Options: DEBUG, INFO, WARNING, ERROR and CRITICAL',
+                        help='Choose a loglevel. Default: INFO; Options: DEBUG, INFO, WARNING, ERROR and CRITICAL',
                         required=False)
     parser.add_argument('-loo', '--listopenorders',
                         help=f'List all open orders and then stop. Only valid in combination with parameter '
@@ -229,11 +229,12 @@ def main():
                              'engine will NOT start! It only tests!',
                         required=False)
     parser.add_argument('-v', '--version',
-                        help=f'Show the program version and then stop. the version is `{version}` by the way :)',
+                        help=f'Show the program version and then stop. The version is `{version}` by the way :)',
                         required=False,
                         action='store_true')
     options = parser.parse_args()
 
+    # Vars
     public_key = None
     private_key = None
     send_to_email_address = None
@@ -248,7 +249,7 @@ def main():
     if options.logfile is True:
         logfile = options.logfile
     else:
-        logfile = config_path + os.path.basename(__file__) + '.log'
+        logfile = config_path + 'ubtsl.log'
 
     # Log level
     if options.loglevel == "DEBUG":
@@ -265,10 +266,16 @@ def main():
         loglevel = logging.INFO
 
     # Config logger
-    logging.basicConfig(level=loglevel,
-                        filename=logfile,
-                        format=log_format,
-                        style="{")
+    parent_dir = Path(logfile).parent
+    if not os.path.isdir(parent_dir):
+        os.makedirs(parent_dir)
+    try:
+        logging.basicConfig(level=loglevel,
+                            filename=logfile,
+                            format=log_format,
+                            style="{")
+    except FileNotFoundError as error_msg:
+        print(f"File not found: {error_msg}")
     logger = logging.getLogger("unicorn_binance_trailing_stop_loss")
 
     # Functions
@@ -330,7 +337,7 @@ def main():
         :type directory: str
         :return: bool
         """
-        logger.info(f"create_directory() started ")
+        logger.debug(f"create_directory() started ")
         if os.path.isdir(directory):
             return True
         else:
