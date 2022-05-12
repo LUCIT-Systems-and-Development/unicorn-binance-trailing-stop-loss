@@ -33,5 +33,5 @@
 
 :: Env path: "c:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\"
 
-signtool.exe sign /a /fd SHA256 Z:\unicorn-binance-trailing-stop-loss\dist\ubtsl_setup.exe
-signtool.exe timestamp /tr http://timestamp.sectigo.com /td SHA256 Z:\unicorn-binance-trailing-stop-loss\dist\ubtsl_setup.exe
+signtool.exe sign /a /tr http://timestamp.sectigo.com /td SHA256 /fd SHA256 Z:\unicorn-binance-trailing-stop-loss\dist\ubtsl_setup.exe
+
