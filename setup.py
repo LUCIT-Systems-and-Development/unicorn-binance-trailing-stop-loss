@@ -51,7 +51,8 @@ setuptools.setup(
      long_description_content_type="text/markdown",
      license='MIT License',
      install_requires=['requests', 'unicorn-binance-websocket-api', 'unicorn-binance-rest-api', 'ubtsl'],
-     keywords='binance, ',
+     keywords='Binance, Binance Futures, Binance Margin, Binance Isolated Margin, Binance Testnet, Trailing Stop Loss, '
+              'Smart Entry',
      project_urls={
         'Documentation': 'https://lucit-systems-and-development.github.io/unicorn-binance-trailing-stop-loss',
         'Wiki': 'https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki',

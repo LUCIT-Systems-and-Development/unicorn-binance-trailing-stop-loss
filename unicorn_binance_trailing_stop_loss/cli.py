@@ -45,6 +45,7 @@ import logging
 import platform
 import os
 import requests
+import subprocess
 import sys
 import textwrap
 import time
@@ -59,12 +60,8 @@ def main(is_bot=False):
     """
     version = BinanceTrailingStopLossManager.get_version()
     os_type = platform.system()
-    if os_type == "Windows":
-        path_separator = "\\"
-    else:
-        path_separator = "/"
-    home_path = str(Path.home()) + path_separator
-    config_path = f"{home_path}.lucit{path_separator}"
+    home_path = f"{Path.home()}{os.sep}"
+    config_path = f"{home_path}.lucit{os.sep}"
     log_format = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
     parser = argparse.ArgumentParser(
@@ -161,8 +158,13 @@ def main(is_bot=False):
     parser.add_argument('-n', '--engine',
                         type=str,
                         help='Choose the engine. Default: `trail` Options: `jump-in-and-trail` to place a buy order '
-                             'and trail',
+                             'and trail.',
                         required=False)
+    if is_bot:
+        parser.add_argument('-iu', '--installupdate',
+                            help="Trigger an update installation. Only available in the Bot version.",
+                            required=False,
+                            action='store_true')
     parser.add_argument('-k', '--keepthreshold',
                         type=str,
                         help="Set the threshold to be kept. This is the amount that will not get sold.",
@@ -312,6 +314,28 @@ def main(is_bot=False):
                   f"profit: {profit}")
         ubtsl.stop_manager()
 
+    def download_bot_installer_from_github() -> Optional[str]:
+        """
+        Download Bot installer files from GitHub and get the file path.
+
+        :return: str or None
+        """
+        if is_bot is False:
+            logger.error(f"download_bot_installer_from_github() not starting because `is_bot` is False")
+            return None
+        logger.info(f"download_bot_installer_from_github() started")
+        if os_type == "Windows":
+            installer_file = "ubtsl_setup.exe"
+        else:
+            return None
+        installer_file_path = f"{config_path}{installer_file}"
+        installer_source = f"https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/" \
+                           f"releases/latest/download/{installer_file}"
+        response = requests.get(installer_source)
+        with open(installer_file_path, "wb+") as installer_file_handler:
+            installer_file_handler.write(response.content)
+        return installer_file_path
+
     def load_examples_ini_from_github(example_name: str = None) -> Optional[str]:
         """
         Load example_*.ini files from GitHub
@@ -392,6 +416,29 @@ def main(is_bot=False):
             print("No available updates found!")
         ubtsl.stop_manager()
         sys.exit(0)
+
+    # Install an available update
+    if is_bot:
+        if options.installupdate is True:
+            ubtsl = BinanceTrailingStopLossManager(start_engine=False, warn_on_update=False)
+            if ubtsl.is_update_available():
+                setup_file_path = f"{config_path}ubtsl_setup.exe"
+                print("The update is being downloaded, please be patient")
+                if os.path.isfile(setup_file_path):
+                    decision = input(f"The file `{setup_file_path}` already exists. Do you want to overwrite it? [y/N]")
+                    if decision.upper() != "Y":
+                        sys.exit(0)
+                create_directory(config_path)
+                start_installer_file = download_bot_installer_from_github()
+                print(f"Update successfully downloaded, starting the installer")
+                process = subprocess.Popen(start_installer_file, shell=True)
+                process.wait()
+                print(f"Deleting `{start_installer_file}`")
+                os.remove(start_installer_file)
+            else:
+                print("No available updates found!")
+            ubtsl.stop_manager()
+            sys.exit(0)
 
     # Print the version
     if options.version is True:
