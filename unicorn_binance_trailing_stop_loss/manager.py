@@ -648,9 +648,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                  f"total={base_asset_pool['totalAsset']} "
                                  f"(interest={base_asset_pool['interest']})")
                 return float(base_asset_pool['totalAsset']), float(base_asset_pool['free'])
-            return None
-        else:
-            return None
+        return None
 
     def get_stop_loss_asset_amount(self) -> Optional[float]:
         """
