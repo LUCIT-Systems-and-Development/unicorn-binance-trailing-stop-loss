@@ -68,7 +68,8 @@ def main(is_bot=False):
     log_format = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
     parser = argparse.ArgumentParser(
-        description=f"UNICORN Binance Trailing Stop Loss {version} by LUCIT Systems and Development (MIT License)",
+        description=f"UNICORN Binance Trailing Stop Loss {'Bot' if is_bot else ''} {version} by LUCIT Systems and "
+                    f"Development (MIT License)",
         prog=f"ubtsl",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent('''\
