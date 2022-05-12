@@ -59,7 +59,7 @@ read the [CLI description](https://www.lucit.tech/ubtsl-cli.html#description) fo
 
 ## Installation
 ### Windows
-1. Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest/download/ubtsl_setup.exe)
+1. [Download ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest/download/ubtsl_setup.exe)
 from GitHub.
 2. Start the downloaded `ubtsl_setup.exe`.
 3. Click on `More info`: ![Screenshot_0](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/step_0.png)
