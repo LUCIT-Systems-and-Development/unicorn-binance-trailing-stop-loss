@@ -62,15 +62,16 @@ method and that the Bot version does not require a pre-installed Python environm
 1. Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest/download/ubtsl_setup.exe)
 from GitHub.
 2. Start the downloaded `ubtsl_setup.exe`.
-3. Click on `More info`: ![Screenshot_0](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/0.png)
-4. Click on `Run anyway`: ![Screenshot_1](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/1.png)
-5. Click on `Yes`: ![Screenshot_2](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/2.png)
-6. Accept the license: ![Screenshot_3](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/3.png)
+3. Click on `More info`: ![Screenshot_0](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/step_0.png)
+4. Click on `Run anyway`: ![Screenshot_1](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/step_1.png)
+5. Click on `Yes`: ![Screenshot_2](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/step_2.png)
+6. Accept the license: ![Screenshot_3](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/step_3.png)
 7. Click "Next" 3 times, then click "Install". 
 8. Read the following post [installation instructions](https://www.lucit.tech/ubtsl-cli.html#installation).
 
 ### Mac
-Comming soon!
+Comming soon! Receive a 
+[notification](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#receive-notifications) on release.
 
 ## Change Log
 [https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html)
