@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 0.7.1.dev (development stage/unreleased/unstable)
 ### Fixed
 - Create logfile parent dir if not exists
+- Handling exceptions while opening a non existing ini file
 
 ## 0.7.1
 ### Fixed

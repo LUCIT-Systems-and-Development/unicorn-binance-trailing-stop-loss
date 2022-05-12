@@ -35,15 +35,15 @@ List of [supported exchanges](https://www.lucit.tech/unicorn-binance-trailing-st
 The `UNICORN Binance Trailing Stop Loss Bot` uses the engine of the Python library [`unicorn-binance-trailing-stop-loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html)
 and has the exact same interface and configuration setup as the[`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html).
 
-
 The bot only does not require a pre-installed Python environment and can be easily installed on [Windows](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#windows) 
 and [Mac](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#mac) with a 
 setup file. If you already have an installed Python environment, we recommend [installing via PIP](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
 and using the [`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html).
 
-Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/) and 
-look in the [issues](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues) about 
-known problems before using this tool - you use it at your own risk!
+Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/), our
+[disclaimer](#disclaimer) and look in the 
+[issues](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues) about known 
+problems before using this tool - ***you use it at your own risk!***
 
 If you put this bot on a market, you should stop trading manually on this market yourself!
 

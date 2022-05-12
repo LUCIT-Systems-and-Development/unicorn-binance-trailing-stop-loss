@@ -294,7 +294,9 @@ class BinanceTrailingStopLossManager(threading.Thread):
         elif "streams" in str(test):
             msg = f"Starting streams test"
             test_time_in_seconds = str(test).replace("streams", "")
-            if test_time_in_seconds != "":
+            if test_time_in_seconds == "":
+                test_time_in_seconds = 0
+            else:
                 test_time_in_seconds = int(test_time_in_seconds)
             self.logger.info(msg)
             if self.print_notifications:
@@ -307,7 +309,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                     self.ubwa.print_summary(title=f"UNICORN Binance Trailing Stop Loss {self.version} - "
                                                   f"Testing streams")
                     print(f"Press CTRL+C to leave this test!\r\n")
-                    if test_time_in_seconds > i:
+                    if test_time_in_seconds == 0 or test_time_in_seconds > i:
                         time.sleep(1)
                     else:
                         break

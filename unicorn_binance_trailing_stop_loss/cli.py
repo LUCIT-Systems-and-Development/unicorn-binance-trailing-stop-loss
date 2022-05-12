@@ -35,7 +35,7 @@
 
 
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
-# from manager import BinanceTrailingStopLossManager  # need for testing the the cli interface during development
+from manager import BinanceTrailingStopLossManager  # need for testing the the cli interface during development
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 from pathlib import Path
@@ -368,7 +368,7 @@ def main(is_bot=False):
     # Create profiles ini
     if options.createprofilesini is True:
         profiles_file_path = f"{config_path}ubtsl_profiles.ini"
-        print("Creating config ini file ")
+        print("Creating profiles ini file ")
         if os.path.isfile(profiles_file_path):
             decision = input(f"The file `{profiles_file_path}` already exists. Do you want to overwrite it? [y/N]")
             if decision.upper() != "Y":
@@ -422,12 +422,13 @@ def main(is_bot=False):
             config_file = config_file_home
         else:
             config_file = None
-            if options.apikey is None or options.apisecret is None:
-                msg = f"You must provide a valid Binance API key and secret, either as commandline parameter or as " \
-                      f"profile parameter.  Please use `ubtsl --help` for further information!"
-                logger.critical(msg)
-                print(msg)
-                sys.exit(1)
+            if not options.openconfigini and not options.openprofilesini:
+                if options.apikey is None or options.apisecret is None:
+                    msg = f"You must provide a valid Binance API key and secret, either as commandline parameter or as " \
+                          f"profile parameter.  Please use `ubtsl --help` for further information!"
+                    logger.critical(msg)
+                    print(msg)
+                    sys.exit(1)
 
     # Choose profiles file
     if options.profilesfile is not None:
@@ -445,13 +446,21 @@ def main(is_bot=False):
 
     # Open ini files
     if options.openconfigini:
-        print(f"Opening `{config_file}`")
-        webbrowser.open(config_file)
+        if config_file is None:
+            print(f"No config file found!\r\n"
+                  f"Use `ubtsl --createconfigini` to create one.")
+        else:
+            print(f"Opening `{config_file}`")
+            webbrowser.open(config_file)
         sys.exit(0)
 
     if options.openprofilesini:
-        print(f"Opening `{profiles_file}`")
-        webbrowser.open(profiles_file)
+        if profiles_file is None:
+            print(f"No profiles file found!\r\n"
+                  f"Use `ubtsl --createprofilesini` to create one.")
+        else:
+            print(f"Opening `{profiles_file}`")
+            webbrowser.open(profiles_file)
         sys.exit(0)
 
     # Officially starting :)

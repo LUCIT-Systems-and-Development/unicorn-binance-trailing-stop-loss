@@ -21,7 +21,7 @@
 
 [Description](#description) | [Installation](#installation) | [Usage](#usage) | 
 [Example commands](#example-commands) | [Smart Entry](#smart-entry) | [Example files](#example-files) | 
-[Examples](#examples) | [Change Log](#change-log) | [Wiki](#wiki) | [Social](#social) |
+[Change Log](#change-log) | [Wiki](#wiki) | [Social](#social) |
 [Notifications](#receive-notifications) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
 [Contributing](#contributing) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
 
@@ -40,9 +40,10 @@ is used to interact with the
 If you are looking for a standalone version that runs without an installed Python environment, you can use
 [`UNICORN Binance Tailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html).
 
-Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/) and 
-look in the [issues](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues) about 
-known problems before using this tool - you use it at your own risk!
+Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/), our
+[disclaimer](#disclaimer) and look in the 
+[issues](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues) about known 
+problems before using this tool - ***you use it at your own risk!***
 
 If you put this engine on a market, you should stop trading manually on this market yourself!
 
@@ -72,7 +73,7 @@ then it stops.
 ## Installation
 No matter if you installed the [CLI version via PIP/conda](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
 or the [standalone Bot version via setup file](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#installation). 
-Both the configuration and the usage are always absolutely identical for both versions.
+Both the configuration and the usage are always absolutely identical for both versions. It is the same source code!
 
 Every parameter that can be configured via the [`ubtsl_profiles.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini) 
 or the [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
@@ -91,6 +92,20 @@ The same command is available for the `ubtsl_profiles.ini` file:
 
 ```
 $ ubtsl --createprofilesini 
+```
+
+### Open `ubtsl_config.ini`
+Open the used `ubtsl_config.ini` file in a GUI editor: 
+
+```
+$ ubtsl --openconfigini 
+```
+
+### Open `ubtsl_profiles.ini`
+The same command is available for the `ubtsl_profiles.ini` file:
+
+```
+$ ubtsl --openprofilesini 
 ```
 
 ### Test the notification settings
