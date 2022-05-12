@@ -45,7 +45,8 @@ setuptools.setup(
      author="LUCIT Systems and Development",
      author_email='info@lucit.tech',
      url="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss",
-     description="",
+     description="A Python library with a command line interface for a trailing stop loss and smart entry on the "
+                 "Binance exchange.",
      long_description=long_description,
      long_description_content_type="text/markdown",
      license='MIT License',
