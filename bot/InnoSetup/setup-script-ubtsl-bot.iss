@@ -22,7 +22,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\Oliver\PycharmProjects\unicorn-binance-trailing-stop-loss\LICENSE
+LicenseFile=C:\Users\Oliver\PycharmProjects\unicorn-binance-trailing-stop-loss\bot\InnoSetup\LICENSE
 InfoBeforeFile=C:\Users\Oliver\PycharmProjects\unicorn-binance-trailing-stop-loss\bot\InnoSetup\before_installation.txt
 InfoAfterFile=C:\Users\Oliver\PycharmProjects\unicorn-binance-trailing-stop-loss\bot\InnoSetup\after_installation.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
