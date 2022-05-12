@@ -6,7 +6,11 @@ If you want to use the config and profiles ini files, then run these commands af
 $ ubtsl --createconfigini
 $ ubtsl --createprofilesini
 
-Please read carefully all provided documentation and look in the issues on GitHub about known problems before using this tool - you use it at your own risk!
+Edit the ini files:
+$ ubtsl --openconfigini
+$ ubtsl --openprofilesini
+
+Please read carefully all provided documentation, our disclaimer and look in the issues on GitHub about known problems before using this tool - you use it at your own risk!
 
 https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html
 

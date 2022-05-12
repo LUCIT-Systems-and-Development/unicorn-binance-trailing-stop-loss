@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - Create logfile parent dir if not exists
 - Handling exceptions while opening a non existing ini file
+- Bug in test "streams"
 
 ## 0.7.1
 ### Fixed

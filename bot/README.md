@@ -30,10 +30,11 @@ In addition, there is a [smart entry](https://www.lucit.tech/ubtsl-cli.html#smar
 `jump-in-and-trail`. This offers the possibility to buy spot, future and margin assets with a limit or market order 
 and then to trail a stop/loss order until sold.
 
-List of [supported exchanges](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#what-are-the-benefits-of-the-unicorn-binance-trailing-stop-loss).
+List of [supported exchanges](https://www.lucit.tech/ubtsl-cli.html#description).
 
 The `UNICORN Binance Trailing Stop Loss Bot` uses the engine of the Python library [`unicorn-binance-trailing-stop-loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html)
 and has the exact same interface and configuration setup as the[`UNICORN Binance Trailing Stop Loss CLI`](https://www.lucit.tech/ubtsl-cli.html).
+It is the same source code!
 
 The bot only does not require a pre-installed Python environment and can be easily installed on [Windows](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#windows) 
 and [Mac](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#mac) with a 
@@ -58,8 +59,16 @@ method and that the Bot version does not require a pre-installed Python environm
 
 ## Installation
 ### Windows
-Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest/download/ubtsl_setup.exe)
+1. Download [ubtsl_setup.exe](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest/download/ubtsl_setup.exe)
 from GitHub.
+2. Start the downloaded `ubtsl_setup.exe`.
+3. Click on `More info`: ![Screenshot_0](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/0.png)
+4. Click on `Run anyway`: ![Screenshot_1](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/1.png)
+5. Click on `Yes`: ![Screenshot_2](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/2.png)
+6. Accept the license: ![Screenshot_2](https://www.lucit.tech/files/images/dev/ubtsl/bot/windows/2.png)
+7. Click "Next" 3 times, then click "Install". 
+
+Read the following post [installation instructions](https://www.lucit.tech/ubtsl-cli.html#installation).
 
 ### Mac
 Comming soon!
