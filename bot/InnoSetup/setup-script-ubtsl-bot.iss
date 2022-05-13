@@ -16,6 +16,7 @@ AppId={{B45308C4-B11C-4831-8B01-83C95C488062}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
+AppCopyright=Copyright (c) 2022-2022 LUCIT Systems and Development (https://www.lucit.tech) and Oliver Zehentleitner (https://about.me/oliver-zehentleitner)
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -65,6 +66,8 @@ begin
 end;
 
 [Run]
+Filename: "cmd.exe"; WorkingDir: {app};
+Filename: "powershell.exe"; WorkingDir: {app};
 Filename: "https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html?source=ubtsl_setup.exe"; Description: "Open the info web page to read about further information."; Flags: shellexec runasoriginaluser postinstall
 Filename: "https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss"; Description: "If you like this project, we would be very happy about a star on GitHub."; Flags: shellexec runasoriginaluser postinstall unchecked 
 Filename: "https://twitter.com/LUCIT_SysDev"; Description: "Follow us on Twitter to be informed about new software releases."; Flags: shellexec runasoriginaluser postinstall unchecked
