@@ -32,7 +32,7 @@
 :: IN THE SOFTWARE.
 
 echo Installing wheel
-py -m pip install "Z:\unicorn-binance-trailing-stop-loss\dist\unicorn_binance_trailing_stop_loss-0.7.1-py3-none-any.whl" --upgrade
+py -m pip install "Z:\unicorn-binance-trailing-stop-loss\dist\unicorn_binance_trailing_stop_loss-0.8.0-py3-none-any.whl" --upgrade
 :: py -m pip install "Z:\unicorn-binance-trailing-stop-loss\dist\unicorn_binance_trailing_stop_loss-0.5.0-py3-none-any.whl" --upgrade --force-reinstall
 echo Creating ubtsl.exe ...
 cd bot
