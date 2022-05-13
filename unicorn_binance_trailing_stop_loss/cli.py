@@ -412,6 +412,9 @@ def main(is_bot=False):
         if ubtsl.is_update_available():
             print("A new update is available: https://github.com/LUCIT-Systems-and-Development/"
                   "unicorn-binance-trailing-stop-loss/releases/latest")
+            if is_bot:
+                if os_type == "Windows":
+                    print(f"Use `ubtsl --installupdate` to start the installation of the update.")
         else:
             print("No available updates found!")
         ubtsl.stop_manager()
