@@ -66,7 +66,7 @@ begin
 end;
 
 [Run]
-Filename: "cmd.exe"; WorkingDir: {app};
+Filename: "cmd.exe"; WorkingDir: {app}; Flags: unchecked
 Filename: "powershell.exe"; WorkingDir: {app};
 Filename: "https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html?source=ubtsl_setup.exe"; Description: "Open the info web page to read about further information."; Flags: shellexec runasoriginaluser postinstall
 Filename: "https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss"; Description: "If you like this project, we would be very happy about a star on GitHub."; Flags: shellexec runasoriginaluser postinstall unchecked 
