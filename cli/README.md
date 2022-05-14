@@ -141,7 +141,7 @@ $ ubtsl --profile "LUNAUSDT_SELL" --test streams
 $ ubtsl --help
 ```
 
-Alternatively it is possible to start `ubtsl` like this:
+Alternatively it is possible to start `ubtsl` in the Python envirnment like this (not available in the Bot/stand alone vesion):
 
 Linux/Mac:
 
