@@ -76,7 +76,7 @@ ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        stop_loss_limit="1.5%",
                                        stop_loss_order_type="LIMIT",
                                        stop_loss_price=88,
-                                       stop_loss_start_limit=stop_loss_start_limit,
+                                       stop_loss_start_limit="0.5%",
                                        telegram_bot_token="telegram_bot_token",
                                        telegram_send_to="telegram_send_to")
 ```
