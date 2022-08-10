@@ -1,4 +1,4 @@
-![LUCIT-UBTSL-Banner-GitHub](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-websocket-api/master/images/logo/LUCIT-UBTSL-Banner-GitHub.png)
+![LUCIT-UBTSL-Banner-GitHub](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/logo/LUCIT-UBTSL-Banner-GitHub.png)
 
 [![GitHub Release](https://img.shields.io/github/release/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss.svg?label=github)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases)
 [![GitHub Downloads](https://img.shields.io/github/downloads/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/total?color=blue)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases)
