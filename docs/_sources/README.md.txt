@@ -63,7 +63,7 @@ ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        borrow_threshold="100%",
                                        exchange="binance.com",
                                        keep_threshold="20%",
-                                       market="LUNAUSDT",
+                                       market="BTCUSDT",
                                        print_notifications=True,
                                        reset_stop_loss_price=True,
                                        send_to_email_address="blah@example.com",
@@ -93,7 +93,7 @@ logging.getLogger("unicorn_binance_trailing_stop_loss")
 
 ## Start the engine on the command line (Windows, Linux and Mac):
 ```
-$ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
+$ ubtsl --profile BTCUSDT_SELL --stoplosslimit 0.5%
 ```
 
 Read about the [CLI usage](https://www.lucit.tech/ubtsl-cli.html).

@@ -128,13 +128,13 @@ $ ubtsl --test binance-connectivity
 Test the data streams, this test needs a defined exchange and market parameter:
 
 ```
-$ ubtsl --test streams --exchange binance.com --market LUNAUSDT
+$ ubtsl --test streams --exchange binance.com --market BTCUSDT
 ```
 
 It is possible to use `exchange` and `market` values of a profile. 
 
 ```
-$ ubtsl --profile "LUNAUSDT_SELL" --test streams
+$ ubtsl --profile "BTCUSDT_SELL" --test streams
 ```
 
 ## Usage
@@ -162,7 +162,7 @@ $ py -m ubtsl --help
 If profiles are available, they can be activated with the `--profile` parameter at startup. 
 
 ```
-$ ubtsl --profile LUNAUSDT_SELL
+$ ubtsl --profile BTCUSDT_SELL
 ```
 
 ### Command line arguments
@@ -261,48 +261,48 @@ $ ubtsl --version
 ### Overwrite values
 Arguments defined in the CLI overrule values from the loaded profile!
 
-Start with profile "LUNAUSDT_SELL" and overwrite the stoplosslimit:
+Start with profile "BTCUSDT_SELL" and overwrite the stoplosslimit:
 
 ```
-$ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
+$ ubtsl --profile BTCUSDT_SELL --stoplosslimit 0.5%
 ```
 
 ### Smart entry
 ***This function is still in an experimental phase and only available for Isolated Margin.***
 
-Do a smart entry by using `engine = jump-in-and-trail` like it is defined within the profile `LUNAUSDT_SMART_ENTRY` 
+Do a smart entry by using `engine = jump-in-and-trail` like it is defined within the profile `BTCUSDT_SMART_ENTRY` 
 of the [example_ubtsl_profiles.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini).
 
 By activating the `jump-in-and-trail` engine, the bot first buys the predefined asset amount and then trails them 
 automatically. 
 
 ```
-$ ubtsl --profile LUNAUSDT_SMART_ENTRY
+$ ubtsl --profile BTCUSDT_SMART_ENTRY
 ```
 
 ### List all open orders
 Get a list of all open orders.
 
 ```
-$ ubtsl --exchange "binance.com" --market "LUNAUSDT" --listopenorders 
+$ ubtsl --exchange "binance.com" --market "BTCUSDT" --listopenorders 
 ```
 
 It is possible to use `exchange` and `market` values of a profile. 
 
 ```
-$ ubtsl --profile "LUNAUSDT_SELL" --listopenorders
+$ ubtsl --profile "BTCUSDT_SELL" --listopenorders
 ```
 
 ### Cancel all open orders
 
 ```
-$ ubtsl --exchange "binance.com" --market "LUNAUSDT" --cancelopenorders 
+$ ubtsl --exchange "binance.com" --market "BTCUSDT" --cancelopenorders 
 ```
 
 It's possible to use `exchange` and `market` values of a profile.
 
 ```
-$ ubtsl --profile "LUNAUSDT_SELL" --listopenorders
+$ ubtsl --profile "BTCUSDT_SELL" --listopenorders
 ```
 
 ## Example files

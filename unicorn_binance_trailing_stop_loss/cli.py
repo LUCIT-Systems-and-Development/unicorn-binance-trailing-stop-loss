@@ -83,12 +83,12 @@ def main(is_bot=False):
                  Test notifications:
                  $ ubtsl --test notification
                  
-                 Start with profile "LUNAUSDT_SELL" and overwrite the stoplosslimit:
-                 $ ubtsl --profile LUNAUSDT_SELL --stoplosslimit 0.5%
+                 Start with profile "BTCUSDT_SELL" and overwrite the stoplosslimit:
+                 $ ubtsl --profile BTCUSDT_SELL --stoplosslimit 0.5%
  
                  List all open orders:
-                 $ ubtsl --exchange "binance.com" --market "LUNAUSDT" --listopenorders 
-                 $ ubtsl --profile LUNAUSDT_SELL --listopenorders 
+                 $ ubtsl --exchange "binance.com" --market "BTCUSDT" --listopenorders 
+                 $ ubtsl --profile BTCUSDT_SELL --listopenorders 
              
              additional information:
                  Author: https://www.lucit.tech
