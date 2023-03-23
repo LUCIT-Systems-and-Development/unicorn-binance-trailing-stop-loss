@@ -197,7 +197,7 @@ or the [current master branch](https://github.com/LUCIT-Systems-and-Development/
 
 ## Documentation
 - [General](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech)
-- [Modules](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html)
+- [Modules](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/modules.html)
 - [CLI](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html)
 - [Bot](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/Bot.html)
 
