@@ -236,8 +236,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                                  warn_on_update=warn_on_update)
         if warn_on_update and self.is_update_available():
             update_msg = f"Release {self.name}_" + f"{self.get_latest_version()}" + " is available, " \
-                         "please consider updating! (Changelog: https://github.com/LUCIT-Systems-and-Development/" \
-                         "unicorn-binance-trailing-stop-loss/blob/master/CHANGELOG.md)"
+                         "please consider updating! (Changelog: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html)"
             print(update_msg)
             self.logger.warning(update_msg)
         try:
