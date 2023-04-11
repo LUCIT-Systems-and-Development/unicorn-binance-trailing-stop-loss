@@ -80,7 +80,7 @@ Coming soon! Receive a
 ### Windows
 Just start `ubtsl` with the parameter `--installupdate`. Only available in the bot version!
 
-```
+```sh
 $ ubtsl --installupdate
 ```
 
