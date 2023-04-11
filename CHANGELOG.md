@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 0.8.0.dev (development stage/unreleased/unstable)
 ### Added
-- Additional infos for a better user experience
+- Additional info for a better user experience
 
 ## 0.8.0
 ### Added
