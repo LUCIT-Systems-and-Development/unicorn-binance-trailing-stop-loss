@@ -235,8 +235,9 @@ class BinanceTrailingStopLossManager(threading.Thread):
                                                                                  exchange=self.exchange,
                                                                                  warn_on_update=warn_on_update)
         if warn_on_update and self.is_update_available():
-            update_msg = f"Release {self.name}_" + f"{self.get_latest_version()}" + " is available, " \
-                         "please consider updating! (Changelog: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html)"
+            update_msg = f"Release {self.name}_{self.get_latest_version()} is available,"
+            "please consider updating! (Changelog: "
+            "https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html)"
             print(update_msg)
             self.logger.warning(update_msg)
         try:
@@ -262,7 +263,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             self.logger.info(msg)
             if self.print_notifications:
                 print(msg)
-            notification_text = f"Subject: unicorn-binance-trailing-stop-loss notificaton test\n\nTest notification"
+            notification_text = f"Subject: unicorn-binance-trailing-stop-loss notification test\n\nTest notification"
             if self.send_email_notification(notification_text):
                 msg = f"E-Mail sent, please check for incoming messages!"
                 self.logger.info(msg)
@@ -541,7 +542,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
     @staticmethod
     def get_latest_release_info():
         """
-        Get infos about the latest available release
+        Get info about the latest available release
         :return: dict or False
         """
         try:
@@ -595,7 +596,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
     def get_open_orders(self,
                         market: str = None) -> Optional[dict]:
         """
-        Get the owning amount of the stop/loss asset.
+        Get the open orders on a given market.
 
         :return: dict or None
         """
@@ -829,7 +830,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
             self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - Received: {stream_data}")
         else:
             self.logger.debug(f"BinanceTrailingStopLossManager.process_userdata_stream() - "
-                              f"Received unkown stream_data: {stream_data}")
+                              f"Received unknown stream_data: {stream_data}")
             if self.print_notifications:
                 print("Unknown, please report:", str(stream_data))
 
