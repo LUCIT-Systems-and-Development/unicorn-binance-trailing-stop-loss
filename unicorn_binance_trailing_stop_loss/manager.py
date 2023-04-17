@@ -57,89 +57,123 @@ __version__ = "0.8.0"
 
 class BinanceTrailingStopLossManager(threading.Thread):
     """
-    After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a
-    notification can be sent via email and Telegram afterwards. Then it calls the function passed with the
-    `callback_finished` parameter or on error it calls the function passed to `callback_error`.
+    Manage stop/loss orders on the Binance exchange.
 
-    Partially filled orders are currently not handled by the engine. If you want to react individually to this event,
-    you can use the function provided to `callback_partially_filled`.
+    Initialising the class spawns a new thread in which a stop/loss order is placed and trailed until it is
+    completely fulfilled.
 
-    In addition, there is a smart entry option called `jump-in-and-trail`. This offers the possibility to buy spot,
-    future and margin assets with a limit or market order and then to trail a stop/loss order until sold.
+    Optional support for:
+        - Telegram and Email notifications - see `send_*` and `telegram_*` parameters.
+        - Setting "success" and "error" callback functions - see `callback_finished` and `callback_error` parameters.
+        - Handling of partial fills - see `callback_partially_filled` parameter, note that partial fills are
+        currently not directly handled by the engine.
+        - Smart entry - by setting the `engine` param to `jump-in-and-trail`, it offers the possibility to buy
+        spot, future and margin assets with a limit or market order and then to trail a stop/loss order until sold.
 
     Supported exchanges: binance.com, binance.com-testnet, binance.com-futures, binance.com-margin,
     binance.com-isolated_margin
 
-    :param binance_public_key: Provide the public Binance key.
+    # Authentication parameters
+
+    :param binance_public_key: Provide Binance API public key.
     :type binance_public_key: str
-    :param binance_private_key: Provide the private Binance key.
+    :param binance_private_key: Provide Binance API private key.
     :type binance_private_key: str
-    :param borrow_threshold: Provide the private Binance key.
-    :type borrow_threshold: str
-    :param callback_error: Callback function used if an error occurs.
-    :type callback_error: function or None
-    :param callback_finished: Callback function used if stop_loss gets filled.
-    :type callback_finished: function or None
-    :param callback_partially_filled: Callback function used if stop_loss gets partially filled filled.
-    :type callback_partially_filled: function or None
-    :param engine: Option `trail` (default) for standard trailing stop/loss or `jump-in-and-trail` to activate smart
-                   entry function.
+
+    # Engine Control parameters
+
+    :param engine: Activate standard trailing stop/loss with `trail` (default), or activate the experimental smart
+    entry method by setting `jump-in-and-trail`
     :type engine: str
-    :param exchange: Choose the exchange endpoint: binance.com, binance.com-futures, binance.com-margin,
-                     binance.com-isolated_margin
-    :type exchange: str
-    :param keep_threshold: If empty we sell the full balance, use integer or percent values.
-    :type keep_threshold: str
-    :param market: The market to enforce stop/loss.
-    :type market: str
-    :param print_notifications: If True the lib is printing user friendly information to terminal.
-    :type print_notifications: bool
-    :param reset_stop_loss_price: Reset an existing stop_loss_price and calculate a new one. Only True is True, anything
-                                  else is False!
-    :type reset_stop_loss_price: bool
-    :param send_to_email_address: Email address of receiver
-    :type send_to_email_address: str
-    :param send_from_email_address: Email address of sender
-    :type send_from_email_address: str
-    :param send_from_email_password: Password for SMTP auth
-    :type send_from_email_password: str
-    :param send_from_email_server: Hostname or IP of SMTP server
-    :type send_from_email_server: str
-    :param send_from_email_port: Port of SMTP server
-    :type send_from_email_port: int
     :param start_engine: Start the trailing stop loss engine. Default is True
     :type start_engine: bool
-    :param stop_loss_limit: The limit is used to calculate the `stop_loss_price` of the highest given price, use integer
-                            or percent values.
-    :type stop_loss_limit: str
-    :param stop_loss_order_type: Can be `limit` or `market` - default is None which leads to a stop of the algorithm.
-    :type stop_loss_order_type: str
-    :param stop_loss_price: Set a price to use for stop/loss, this is valid till it get overwritten with a higher price.
-    :type stop_loss_price: float
-    :param stop_loss_start_limit: The trailing stop/loss order is trailed with the distance defined in
-                                  `stop_loss_limit`. If you want to use a different value at the start, you can specify
-                                  it with `stop_loss_start_limit`. This value will be used instead of the
-                                  `stop_loss_limit` value until this value is caught up and then trailed.
-    :type stop_loss_start_limit: str
-    :param stop_loss_trigger_gap: Gap between stopPrice and limit order price, use integer or percent values.
-    :type stop_loss_trigger_gap: str
-    :param test: Use this to test specific systems like "notification", "binance-connectivity" and "streams". The
-                 streams test needs a valid exchange and market. If test is not None the engine will NOT start! It
-                 only tests!
+    :param test: Specify the subsystem to test. Supported options are : "notification", "binance-connectivity"
+                and "streams". The streams test needs a valid exchange and market. Note that this value MUST be None
+                or the engine will NOT start! Only tests will be performed.
     :type test: str
-    :param telegram_bot_token: Token to connect with Telegram API.
-    :type telegram_bot_token: str
-    :param telegram_send_to: Receiver of the message sent via Telegram.
-    :type telegram_send_to: str
-    :param trading_fee_use_bnb: Default is False. Set to True to use BNB for a discount on trading fees:
-                                https://www.binance.com/en/support/faq/115000583311.
+
+    # Stop loss parameters
+
+    :param stop_loss_order_type: Order type. Possible values are `limit` and `market`. If neither is
+    set, the algorithm will NOT run.
+    :type stop_loss_order_type: str
+
+    :param stop_loss_price: Price at which the stop/loss order is submitted. Valid until it gets overwritten
+    by a higher price.
+    :type stop_loss_price: float
+
+    :param stop_loss_limit: Stop loss limit in percent or as fixed float value
+    :type stop_loss_limit: str
+
+    :param stop_loss_start_limit: The stop/loss order is trailed with the distance defined in `stop_loss_limit`. For
+                                 different initial parameters, you can use `stop_loss_start_limit`. This value will be
+                                 used instead of the `stop_loss_limit` value until this value is caught up and then
+                                 trailed.
+    :type stop_loss_start_limit: str
+
+    :param stop_loss_trigger_gap: Gap between stop price and limit order price, use integer or percent
+    values.
+    :type stop_loss_trigger_gap: str
+
+    :param reset_stop_loss_price: Reset an existing stop_loss_price and force a new one to be calculated. Only True
+                                  evaluates to True, anything else is False!
+    :type reset_stop_loss_price: bool
+
+    :param keep_threshold: Percentage to keep when selling. Providing % symbol is optional , i.e. "1" is equal to
+    "1%". If empty, the full balance is sold.
+    :type keep_threshold: str
+
+    :param borrow_threshold: TODO provide description
+    :type borrow_threshold: str
+
+    # Callback parameters
+
+    :param callback_error: Callback to call if error occurs.
+    :type callback_error: function or None
+    :param callback_finished: Callback to call if stop_loss gets filled.
+    :type callback_finished: function or None
+    :param callback_partially_filled: Callback to call if stop_loss is only partially filled.
+    :type callback_partially_filled: function or None
+
+    # Exchange & Market parameters
+
+    :param exchange: Exchange endpoint to connected to: binance.com, binance.com-futures, binance.com-margin,
+                     binance.com-isolated_margin
+    :type exchange: str
+    :param market: Market to enforce stop/loss on, e.g. "ETHBTC"
+    :type market: str
+    :param trading_fee_use_bnb: Whether to use BNB for a discount on trading fees.  Default is False. See:
+                                https://www.binance.com/en/support/faq/115000583311 for details.
     :type trading_fee_use_bnb: bool
-    :param warn_on_update: set to `False` to disable the update warning
-    :type warn_on_update: bool
+
+    # Logging and Notification parameters
+
+    :param current_price: Current market price. Used for logging purposes only, updated automatically from the stream.
+    :type current_price: float
+    :param print_notifications: Print user friendly information to terminal.
+    :param send_to_email_address: Receiver's email address
+    :type send_to_email_address: str
+    :param send_from_email_address: Sender's email address
+    :type send_from_email_address: str
+    :param send_from_email_password: SMTP auth password
+    :type send_from_email_password: str
+    :param send_from_email_server: SMTP server hostname or IP
+    :type send_from_email_server: str
+    :param send_from_email_port: SMTP server port
+    :type send_from_email_port: int
+    :param telegram_bot_token: Telegram API Token
+    :type telegram_bot_token: str
+    :param telegram_send_to: Receiver's UserId (i.e. not username) on Telegram.
+    :type telegram_send_to: str
+
+     # Unicorn Binance Suite parameters
+
     :param ubra_manager: Provide a shared unicorn_binance_rest_api.manager instance
     :type ubra_manager: BinanceRestApiManager
     :param ubwa_manager: Provide a shared unicorn_binance_websocket_api.manager instance.
     :type ubwa_manager: BinanceWebSocketApiManager
+    :param warn_on_update: Inform of availability of package updates. Disable with `False`.
+    :type warn_on_update: bool
     """
 
     def __init__(self,
