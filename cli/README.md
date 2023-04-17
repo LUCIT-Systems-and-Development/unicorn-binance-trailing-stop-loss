@@ -85,61 +85,61 @@ usability immensely.
 ### Create `ubtsl_config.ini`
 A fresh `ubtsl_config.ini` file can be created with the following command
 
-```
+```sh
 $ ubtsl --createconfigini 
 ```
 
 ### Create `ubtsl_profiles.ini`
 The same command is available for the `ubtsl_profiles.ini` file:
 
-```
+```sh
 $ ubtsl --createprofilesini 
 ```
 
 ### Open `ubtsl_config.ini`
 Open the used `ubtsl_config.ini` file in a GUI editor: 
 
-```
+```sh
 $ ubtsl --openconfigini 
 ```
 
 ### Open `ubtsl_profiles.ini`
 The same command is available for the `ubtsl_profiles.ini` file:
 
-```
+```sh
 $ ubtsl --openprofilesini 
 ```
 
 ### Test the notification settings
 If you entered valid email and/or Telegram settings you can test the notification system:
 
-```
+```sh
 $ ubtsl --test notification
 ```
 
 ### Test connectivity to Binance API
 If you entered valid API key and secret you can test the connectivity to the Binance API:
 
-```
+```sh
 $ ubtsl --test binance-connectivity
 ```
 
 ### Test data streams
 Test the data streams, this test needs a defined exchange and market parameter:
 
-```
+```sh
 $ ubtsl --test streams --exchange binance.com --market BTCUSDT
 ```
 
 It is possible to use `exchange` and `market` values of a profile. 
 
-```
+```sh
 $ ubtsl --profile "BTCUSDT_SELL" --test streams
 ```
 
 ## Usage
 
-```
+```sh
 $ ubtsl --help
 ```
 
@@ -147,13 +147,13 @@ Alternatively, it is possible to run `ubtsl` in the Python environment as follow
 
 Linux/Mac:
 
-```
+```sh
 $ python3 -m ubtsl --help
 ```
 
 Windows:
 
-```
+```sh
 $ py -m ubtsl --help
 ```
 
@@ -161,7 +161,7 @@ $ py -m ubtsl --help
 
 If profiles are available, they can be activated with the `--profile` parameter at startup. 
 
-```
+```sh
 $ ubtsl --profile BTCUSDT_SELL
 ```
 
@@ -173,7 +173,7 @@ Any CLI parameters will overwrite predefined values from the profile.
 
 All parameters that expect numbers can be configured with fixed numerical values as well as with percentage values.
 
-```
+```sh
 $ ubtsl --help
 usage: ubtsl [-h] [-ak APIKEY] [-as APISECRET] [-bt BORROWTHRESHOLD] [-coo] [-cci] [-cpi] [-cf CONFIGFILE] [-cu]
              [-ex EXAMPLE] [-e EXCHANGE] [-n ENGINE] [-k KEEPTHRESHOLD] [-lf LOGFILE] [-ll LOGLEVEL] [-loo]
@@ -249,12 +249,12 @@ options:
 
 ## Example commands
 ### Check if a new update is available
-```
+```sh
 $ ubtsl --checkupdate
 ```
 
 ### Show program version
-```
+```sh
 $ ubtsl --version
 ```
 
@@ -263,7 +263,7 @@ Arguments defined in the CLI overrule values from the loaded profile!
 
 Start with profile "BTCUSDT_SELL" and overwrite the stoplosslimit:
 
-```
+```sh
 $ ubtsl --profile BTCUSDT_SELL --stoplosslimit 0.5%
 ```
 
@@ -276,32 +276,32 @@ of the [example_ubtsl_profiles.ini](https://github.com/LUCIT-Systems-and-Develop
 By activating the `jump-in-and-trail` engine, the bot first buys the predefined asset amount and then trails them 
 automatically. 
 
-```
+```sh
 $ ubtsl --profile BTCUSDT_SMART_ENTRY
 ```
 
 ### List all open orders
 Get a list of all open orders.
 
-```
+```sh
 $ ubtsl --exchange "binance.com" --market "BTCUSDT" --listopenorders 
 ```
 
 It is possible to use `exchange` and `market` values of a profile. 
 
-```
+```sh
 $ ubtsl --profile "BTCUSDT_SELL" --listopenorders
 ```
 
 ### Cancel all open orders
 
-```
+```sh
 $ ubtsl --exchange "binance.com" --market "BTCUSDT" --cancelopenorders 
 ```
 
 It's possible to use `exchange` and `market` values of a profile.
 
-```
+```sh
 $ ubtsl --profile "BTCUSDT_SELL" --listopenorders
 ```
 

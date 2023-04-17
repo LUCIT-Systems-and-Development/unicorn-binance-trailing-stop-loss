@@ -113,7 +113,7 @@ def main(is_bot=False):
 
     parser.add_argument('-ak', '--apikey',
                         type=str,
-                        help="the API key",
+                        help="The API key",
                         required=False)
     parser.add_argument('-as', '--apisecret',
                         type=str,

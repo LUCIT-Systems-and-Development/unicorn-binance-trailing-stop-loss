@@ -44,7 +44,7 @@ If you put this engine on a market, you should stop trading manually on this mar
 Part of ['UNICORN Binance Suite'](https://www.lucit.tech/unicorn-binance-suite.html).
 
 ## How to start the trailing stop loss engine:
-```
+```python
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 
 
@@ -84,19 +84,19 @@ ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
 ```
 
 ### Stop the engine:
-```
+```python
 ubtsl.stop_manager()
 ```
 
 ### Get the right [logger](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_logging.py):
-```
+```python
 logging.getLogger("unicorn_binance_trailing_stop_loss")
 ```
 
 [Discover more possibilities](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html).
 
 ## Start the engine on the command line (Windows, Linux and Mac):
-```
+```sh
 $ ubtsl --profile BTCUSDT_SELL --stoplosslimit 0.5%
 ```
 

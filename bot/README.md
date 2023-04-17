@@ -73,20 +73,19 @@ from GitHub.
 8. Read the following [post installation instructions](https://www.lucit.tech/ubtsl-cli.html#installation).
 
 ### Mac
-Comming soon! Receive a 
+Coming soon! Receive a 
 [notification](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#receive-notifications) on release.
 
 ## Update
 ### Windows
 Just start `ubtsl` with the parameter `--installupdate`. Only available in the bot version!
 
-```
+```sh
 $ ubtsl --installupdate
 ```
 
 ### Mac
-Comming soon! Receive a 
-[notification](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#receive-notifications) on release.
+Coming soon! Receive a [notification](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#receive-notifications) on release.
 
 ## Change Log
 [https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html)
