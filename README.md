@@ -31,9 +31,6 @@
 A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss and 
 [smart entry](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#smart-entry) on the Binance exchange.
 
-As [`UNICORN Binance Trailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html)
-we also offer a standalone version that does not require an installed Python environment.
-
 Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/), our
 [disclaimer](#disclaimer) and look in the 
 [issues](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues) about known 
@@ -157,9 +154,6 @@ The current dependencies are listed
 
 If you run into errors during the installation take a look [here](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki/Installation).
 
-If you just want to install the `UNICORN Binance Trailing Stop Loss Bot` read 
-[this!](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html)
-
 ### A wheel and a source file of the latest release with `pip` from [PyPI](https://pypi.org/project/unicorn-binance-trailing-stop-loss/)
 `pip install unicorn-binance-trailing-stop-loss --upgrade`
 
@@ -200,7 +194,6 @@ or the [current master branch](https://github.com/LUCIT-Systems-and-Development/
 - [General](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech)
 - [Modules](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/modules.html)
 - [CLI](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html)
-- [Bot](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/Bot.html)
 
 ## Examples
 - [example_logging.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_logging.py)

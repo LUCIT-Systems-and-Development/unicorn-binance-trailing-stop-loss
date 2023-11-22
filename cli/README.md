@@ -39,9 +39,6 @@ The CLI interface `ubtsl`/`ubtsl.exe` is installed during the
 is used to interact with the 
 [`unicorn-binance-trailing-stop-loss`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html) Python library.
 
-If you are looking for a standalone version that runs without an installed Python environment, you can use
-[`UNICORN Binance Tailing Stop Loss Bot`](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html).
-
 Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/), our
 [disclaimer](#disclaimer) and look in the 
 [issues](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues) about known 
@@ -73,10 +70,6 @@ then it stops.
 | [Binance Margin](https://www.binance.com)          | `binance.com-margin`          | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)                 |
 
 ## Installation
-No matter if you installed the [CLI version via PIP/conda](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#installation-and-upgrade) 
-or the [standalone Bot version via setup file](https://www.lucit.tech/unicorn-binance-trailing-stop-loss-bot.html#installation). 
-Both the configuration and the usage are always absolutely identical for both versions. It is the same source code!
-
 Every parameter that can be configured via the [`ubtsl_profiles.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini) 
 or the [`ubtsl_config.ini`](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_config.ini) 
 file can also be defined as a command line argument. Therefore, both files are not mandatory, but it increases the 
@@ -143,7 +136,7 @@ $ ubtsl --profile "BTCUSDT_SELL" --test streams
 $ ubtsl --help
 ```
 
-Alternatively, it is possible to run `ubtsl` in the Python environment as follows (not available in the bot/stand alone variant):
+Alternatively, it is possible to run `ubtsl` in the Python environment as follows:
 
 Linux/Mac:
 
@@ -273,7 +266,7 @@ $ ubtsl --profile BTCUSDT_SELL --stoplosslimit 0.5%
 Do a smart entry by using `engine = jump-in-and-trail` like it is defined within the profile `BTCUSDT_SMART_ENTRY` 
 of the [example_ubtsl_profiles.ini](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/cli/example_ubtsl_profiles.ini).
 
-By activating the `jump-in-and-trail` engine, the bot first buys the predefined asset amount and then trails them 
+By activating the `jump-in-and-trail` engine, it first buys the predefined asset amount and then trails them 
 automatically. 
 
 ```
@@ -316,7 +309,6 @@ $ ubtsl --profile "BTCUSDT_SELL" --listopenorders
 - [General](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech)
 - [Modules](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/unicorn_binance_trailing_stop_loss.html)
 - [CLI](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html)
-- [Bot](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/Bot.html)
 
 ## Project Homepage
 [https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)
