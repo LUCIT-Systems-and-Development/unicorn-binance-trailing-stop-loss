@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to 
 [Semantic Versioning](http://semver.org/).
 
-[How to upgrade to the latest version!](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/README.html#installation-and-upgrade)
+[How to upgrade to the latest version!](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/readme.html#installation-and-upgrade)
 
 ## 0.8.0.dev (development stage/unreleased/unstable)
 ### Added

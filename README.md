@@ -162,18 +162,18 @@ If you run into errors during the installation take a look [here](https://github
 
 `conda update -c conda-forge unicorn-binance-trailing-stop-loss`
 
-### From source of the latest release with PIP from [Github](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)
+### From source of the latest release with PIP from [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)
 #### Linux, macOS, ...
 Run in bash:
 
 `pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/$(curl -s https://api.github.com/repos/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")').tar.gz --upgrade`
 
 #### Windows
-Use the below command with the version (such as 0.7.0) you determined 
+Use the below command with the version (such as 0.8.0) you determined 
 [here](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest):
 
-`pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/0.7.0.tar.gz --upgrade`
-### From the latest source (dev-stage) with PIP from [Github](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)
+`pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/0.8.0.tar.gz --upgrade`
+### From the latest source (dev-stage) with PIP from [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)
 This is not a release version and can not be considered to be stable!
 
 `pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/tarball/master --upgrade`

@@ -8,30 +8,15 @@
 # Github: https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss
 # Documentation: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech
 # PyPI: https://pypi.org/project/unicorn-binance-trailing-stop-loss
+# LUCIT Online Shop: https://shop.lucit.services/software
+#
+# License: LSOSL - LUCIT Synergetic Open Source License
+# https://github.com/LUCIT-Systems-and-Development/unicorn-binance-websocket-api/blob/master/LICENSE
 #
 # Author: LUCIT Systems and Development
 #
-# Copyright (c) 2019-2023, LUCIT Systems and Development (https://www.lucit.tech) and Oliver Zehentleitner
+# Copyright (c) 2022-2023, LUCIT Systems and Development (https://www.lucit.tech)
 # All rights reserved.
-#
-# Permission is hereby granted, free of charge, to any person obtaining a
-# copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish, dis-
-# tribute, sublicense, and/or sell copies of the Software, and to permit
-# persons to whom the Software is furnished to do so, subject to the fol-
-# lowing conditions:
-#
-# The above copyright notice and this permission notice shall be included
-# in all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-# OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABIL-
-# ITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
-# SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-# IN THE SOFTWARE.
 
 from unicorn_binance_rest_api.manager import BinanceRestApiManager
 from unicorn_binance_rest_api.exceptions import BinanceAPIException
@@ -50,15 +35,15 @@ import sys
 import threading
 import time
 
-__app_name__ = "unicorn_binance_trailing_stop_loss"
-__logger__ = logging.getLogger(__app_name__)
+__app_name__ = "unicorn-binance-trailing-stop-loss"
 __version__ = "0.8.0"
+__logger__ = logging.getLogger("unicorn_binance_trailing_stop_loss")
 
 
 class BinanceTrailingStopLossManager(threading.Thread):
     """
     After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a
-    notification can be sent via email and Telegram afterwards. Then it calls the function passed with the
+    notification can be sent via email and Telegram afterward. Then it calls the function passed with the
     `callback_finished` parameter or on error it calls the function passed to `callback_error`.
 
     Partially filled orders are currently not handled by the engine. If you want to react individually to this event,

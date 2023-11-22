@@ -15,7 +15,7 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath('../../..'))
 
 
 # -- Project information -----------------------------------------------------
@@ -43,14 +43,11 @@ html_last_updated_fmt = "%b %d %Y at %H:%M (CET)"
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.githubpages',
-    'recommonmark',
-    'sphinx_markdown_tables'
+    'myst_parser',
+    'sphinx_markdown_tables',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.viewcode',
 ]
-
-source_parsers = {
-    '.md': 'recommonmark.parser.CommonMarkParser',
-}
-
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -75,7 +72,7 @@ language = "en"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
@@ -94,6 +91,7 @@ html_context = {'github_user_name': 'LUCIT-Systems-and-Development',
                 'freshchat_src': "//eu.fw-cdn.com/10659511/361973.js",
                 'lucit': True}
 
+myst_heading_anchors = 3
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
