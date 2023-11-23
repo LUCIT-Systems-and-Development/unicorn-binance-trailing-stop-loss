@@ -49,6 +49,7 @@ setup(
         'Wiki': 'https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/wiki',
         'Author': 'https://www.lucit.tech',
         'Changes': 'https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/changelog.html',
+        'License': 'https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/license.html',
         'Issue Tracker': 'https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues',
         'Chat': 'https://gitter.im/unicorn-binance-suite/unicorn-binance-trailing-stop-loss',
         'Telegram': 'https://t.me/unicorndevs',
