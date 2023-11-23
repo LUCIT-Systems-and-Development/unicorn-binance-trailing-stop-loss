@@ -319,7 +319,7 @@ async def cli(is_bot=False):
         response = requests.get(installer_source)
         with open(installer_file_path, "wb+") as installer_file_handler:
             installer_file_handler.write(response.content)
-        return installer_file_path
+        return str(installer_file_path)
 
     def load_examples_ini_from_github(example_name: str = None) -> Optional[str]:
         """
@@ -367,7 +367,7 @@ async def cli(is_bot=False):
             decision = input(f"The file `{config_file_path}` already exists. Do you want to overwrite it? [y/N]")
             if decision.upper() != "Y":
                 return False
-        create_directory(config_path)
+        create_directory(str(config_path))
         content = load_examples_ini_from_github("config")
         with open(config_file_path, "w+") as fh_config_file:
             fh_config_file.write(content)
@@ -383,7 +383,7 @@ async def cli(is_bot=False):
             decision = input(f"The file `{profiles_file_path}` already exists. Do you want to overwrite it? [y/N]")
             if decision.upper() != "Y":
                 return False
-        create_directory(config_path)
+        create_directory(str(config_path))
         content = load_examples_ini_from_github("profiles")
         with open(profiles_file_path, "w+") as fh_profiles_file:
             fh_profiles_file.write(content)
@@ -416,7 +416,7 @@ async def cli(is_bot=False):
                     decision = input(f"The file `{setup_file_path}` already exists. Do you want to overwrite it? [y/N]")
                     if decision.upper() != "Y":
                         sys.exit(0)
-                create_directory(config_path)
+                create_directory(str(config_path))
                 start_installer_file = download_bot_installer_from_github()
                 print(f"Update successfully downloaded, starting the installer")
                 process = subprocess.Popen(start_installer_file, shell=True)

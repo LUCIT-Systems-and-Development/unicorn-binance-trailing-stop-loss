@@ -27,7 +27,6 @@ with open("README.md", "r") as fh:
 setup(
      ext_modules=cythonize(
         ['unicorn_binance_trailing_stop_loss/__init__.py',
-         'unicorn_binance_trailing_stop_loss/__main__.py',
          'unicorn_binance_trailing_stop_loss/cli.py',
          'unicorn_binance_trailing_stop_loss/manager.py'],
         annotate=False),
