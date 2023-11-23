@@ -182,8 +182,8 @@ configuration.
 `pip install unicorn-binance-trailing-stop-loss --upgrade`
 
 ### A Conda Package of the latest version with `conda` from [Anaconda](https://anaconda.org/lucit)
-The `unicorn-binance-trailing-stop-loss` package is available with [Conda](https://docs.conda.io/en/latest/) through the 
-[`lucit` channel](https://anaconda.org/lucit). 
+The `unicorn-binance-trailing-stop-loss` package is also available as a Cython version for the `linux-64`, `osx-64` 
+and `win-64` architectures with [Conda](https://docs.conda.io/en/latest/) through the [`lucit` channel](https://anaconda.org/lucit). 
 
 For optimal compatibility and performance, it is recommended to source the necessary dependencies from the 
 [`conda-forge` channel](https://anaconda.org/conda-forge). 
