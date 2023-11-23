@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-rm dev/unicorn_binance_local_depth_cache
+rm dev/unicorn_binance_trailing_stop_loss

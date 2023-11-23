@@ -10,12 +10,14 @@ Welcome to unicorn-binance-trailing-stop-loss's documentation!
    :maxdepth: 3
    :caption: Contents:
 
-   Readme <README.md>
-   CLI <CLI.md>
-   Bot <Bot.md>
+   Readme <readme.md>
+   CLI <cli.md>
    Modules <modules.rst>
-   ChangeLog <CHANGELOG.md>
-   Copyright <copyright.rst>
+   ChangeLog <changelog.md>
+   Code of Conduct <code_of_conduct.md>
+   Contributing <contributing.md>
+   License <license.rst>
+   Security <security.md>
 
 
 Indices and tables

@@ -7,7 +7,7 @@ rm build -r
 rm dist -r
 rm *.egg-info -r
 
-rm unicorn_binance_local_depth_cache/*.c
-rm unicorn_binance_local_depth_cache/*.html
-rm unicorn_binance_local_depth_cache/*.dll
-rm unicorn_binance_local_depth_cache/*.so
+rm unicorn_binance_trailing_stop_loss/*.c
+rm unicorn_binance_trailing_stop_loss/*.html
+rm unicorn_binance_trailing_stop_loss/*.dll
+rm unicorn_binance_trailing_stop_loss/*.so

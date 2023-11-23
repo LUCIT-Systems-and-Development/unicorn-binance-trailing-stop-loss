@@ -1,4 +1,4 @@
 #!/usr/bin/bash
 
 cd dev
-ln -s ../unicorn_binance_local_depth_cache
+ln -s ../unicorn_binance_trailing_stop_loss

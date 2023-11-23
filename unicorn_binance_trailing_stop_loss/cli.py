@@ -19,11 +19,12 @@
 # All rights reserved.
 
 from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
-# from manager import BinanceTrailingStopLossManager  # need for testing the the cli interface during development
+# from manager import BinanceTrailingStopLossManager  # need for testing the cli interface during development
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 from pathlib import Path
 from typing import Optional
+import asyncio
 import argparse
 import logging
 import platform
@@ -36,7 +37,7 @@ import time
 import webbrowser
 
 
-def main(is_bot=False):
+async def cli(is_bot=False):
     """
         UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
 
@@ -704,6 +705,13 @@ def main(is_bot=False):
         except KeyboardInterrupt:
             print("\nStopping ... just wait a few seconds!")
             ubtsl.stop_manager()
+
+
+def main():
+    try:
+        asyncio.run(cli())
+    except KeyboardInterrupt:
+        print("\r\nGracefully stopping ...")
 
 
 if __name__ == "__main__":

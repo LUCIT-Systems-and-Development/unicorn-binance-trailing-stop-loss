@@ -5,6 +5,7 @@
 # ./setup.py
 
 requests
-ubtsl
-unicorn-binance-rest-api
-unicorn-binance-websocket-api
+Cython
+lucit-licensing-python>=1.8.1
+unicorn-binance-rest-api>=2.1.2
+unicorn-binance-websocket-api>=2.1.1

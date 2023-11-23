@@ -22,7 +22,10 @@ from unicorn_binance_rest_api.manager import BinanceRestApiManager
 from unicorn_binance_rest_api.exceptions import BinanceAPIException
 from unicorn_binance_websocket_api.manager import BinanceWebSocketApiManager
 from unicorn_binance_websocket_api.exceptions import UnknownExchange
+from lucit_licensing_python.manager import LucitLicensingManager
+from lucit_licensing_python.exceptions import NoValidatedLucitLicense
 from typing import Optional, Union
+import cython
 import datetime
 import logging
 import math
@@ -67,6 +70,8 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type callback_finished: function or None
     :param callback_partially_filled: Callback function used if stop_loss gets partially filled filled.
     :type callback_partially_filled: function or None
+    :param disable_colorama: set to True to disable the use of `colorama <https://pypi.org/project/colorama/>`_
+    :type disable_colorama: bool
     :param engine: Option `trail` (default) for standard trailing stop/loss or `jump-in-and-trail` to activate smart
                    entry function.
     :type engine: str
@@ -121,6 +126,17 @@ class BinanceTrailingStopLossManager(threading.Thread):
     :type trading_fee_use_bnb: bool
     :param warn_on_update: set to `False` to disable the update warning
     :type warn_on_update: bool
+    :param lucit_api_secret: The `api_secret` of your UNICORN Binance Suite license from
+                             https://shop.lucit.services/software/unicorn-binance-suite
+    :type lucit_api_secret:  str
+    :param lucit_license_ini: Specify the path including filename to the config file (ex: `~/license_a.ini`). If not
+                              provided lucitlicmgr tries to load a `lucit_license.ini` from `/home/oliver/.lucit/`.
+    :type lucit_license_ini:  str
+    :param lucit_license_profile: The license profile to use. Default is 'LUCIT'.
+    :type lucit_license_profile:  str
+    :param lucit_license_token: The `license_token` of your UNICORN Binance Suite license from
+                                https://shop.lucit.services/software/unicorn-binance-suite
+    :type lucit_license_token:  str
     :param ubra_manager: Provide a shared unicorn_binance_rest_api.manager instance
     :type ubra_manager: BinanceRestApiManager
     :param ubwa_manager: Provide a shared unicorn_binance_websocket_api.manager instance.
@@ -134,6 +150,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  callback_error: Optional[type(abs)] = None,
                  callback_finished: Optional[type(abs)] = None,
                  callback_partially_filled: Optional[type(abs)] = None,
+                 disable_colorama: bool = False,
                  engine: str = "trail",
                  exchange: str = "binance.com",
                  keep_threshold: str = None,
@@ -159,6 +176,10 @@ class BinanceTrailingStopLossManager(threading.Thread):
                  trading_fee_discount_spot_percent: float = 25.0,
                  trading_fee_percent: float = 0.1,
                  trading_fee_use_bnb: bool = False,
+                 lucit_api_secret: str = None,
+                 lucit_license_ini: str = None,
+                 lucit_license_profile: str = None,
+                 lucit_license_token: str = None,
                  ubra_manager: Optional[Union[BinanceRestApiManager, bool]] = False,
                  ubwa_manager: Optional[Union[BinanceWebSocketApiManager, bool]] = False,
                  warn_on_update=True):
@@ -166,7 +187,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.name = __app_name__
         self.logger = __logger__
         self.version = __version__
-        self.logger.info(f"New instance of {self.get_user_agent()} on "
+        self.logger.info(f"New instance of {self.get_user_agent()}-{'compiled' if cython.compiled else 'source'} on "
                          f"{str(platform.system())} {str(platform.release())} for exchange {exchange} started")
         self.binance_public_key = binance_public_key
         self.binance_private_key = binance_private_key
@@ -215,21 +236,49 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.trading_fee_percent = trading_fee_percent
         self.trading_fee_use_bnb = trading_fee_use_bnb
         self.user_stream_id = None
+        self.lucit_api_secret = lucit_api_secret
+        self.lucit_license_ini = lucit_license_ini
+        self.lucit_license_profile = lucit_license_profile
+        self.lucit_license_token = lucit_license_token
+        self.ubra = ubra_manager
+        self.ubwa = ubwa_manager
+        self.llm = LucitLicensingManager(api_secret=self.lucit_api_secret,
+                                         license_ini=self.lucit_license_ini,
+                                         license_profile=self.lucit_license_profile,
+                                         license_token=self.lucit_license_token,
+                                         parent_shutdown_function=self.stop_manager,
+                                         program_used=self.name,
+                                         needed_license_type="UNICORN-BINANCE-SUITE",
+                                         start=True)
+        licensing_exception = self.llm.get_license_exception()
+        if licensing_exception is not None:
+            raise NoValidatedLucitLicense(licensing_exception)
+
         self.ubra: BinanceRestApiManager = ubra_manager or BinanceRestApiManager(self.binance_public_key,
                                                                                  self.binance_private_key,
                                                                                  exchange=self.exchange,
-                                                                                 warn_on_update=warn_on_update)
+                                                                                 disable_colorama=disable_colorama,
+                                                                                 warn_on_update=warn_on_update,
+                                                                                 lucit_api_secret=self.lucit_api_secret,
+                                                                                 lucit_license_ini=self.lucit_license_ini,
+                                                                                 lucit_license_profile=self.lucit_license_profile,
+                                                                                 lucit_license_token=self.lucit_license_token)
         if warn_on_update and self.is_update_available():
-            update_msg = f"Release {self.name}_" + f"{self.get_latest_version()}" + " is available, " \
-                         "please consider updating! (Changelog: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CHANGELOG.html)"
+            update_msg = f"Release {self.name}_{self.get_latest_version()} is available, please consider updating! " \
+                         f"(Changelog: https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/changelog.html)"
             print(update_msg)
             self.logger.warning(update_msg)
         try:
             self.ubwa: BinanceWebSocketApiManager = ubwa_manager or \
                                                         BinanceWebSocketApiManager(exchange=self.exchange,
                                                                                    output_default="UnicornFy",
+                                                                                   disable_colorama=True,
                                                                                    high_performance=True,
-                                                                                   warn_on_update=warn_on_update)
+                                                                                   warn_on_update=warn_on_update,
+                                                                                   lucit_api_secret=self.lucit_api_secret,
+                                                                                   lucit_license_ini=self.lucit_license_ini,
+                                                                                   lucit_license_profile=self.lucit_license_profile,
+                                                                                   lucit_license_token=self.lucit_license_token)
         except UnknownExchange:
             self.logger.critical("BinanceTrailingStopLossManager() - Please use a valid exchange!")
             if test is None or "streams" in str(test):
@@ -307,6 +356,16 @@ class BinanceTrailingStopLossManager(threading.Thread):
                 self.logger.error(msg)
                 if self.print_notifications:
                     print(msg)
+
+    def __enter__(self):
+        self.logger.debug(f"Entering 'with-context' ...")
+        return self
+
+    def __exit__(self, exc_type, exc_value, error_traceback):
+        self.logger.debug(f"Leaving 'with-context' ...")
+        self.stop_manager()
+        if exc_type:
+            self.logger.critical(f"An exception occurred: {exc_type} - {exc_value} - {error_traceback}")
 
     def calculate_stop_loss_amount(self,
                                    amount: float
@@ -1083,7 +1142,7 @@ class BinanceTrailingStopLossManager(threading.Thread):
         """
         return self.stop_manager()
 
-    def stop_manager(self) -> bool:
+    def stop_manager(self, close_api_session: bool = True) -> bool:
         """
         Stop stop_loss! :)
 
@@ -1092,14 +1151,16 @@ class BinanceTrailingStopLossManager(threading.Thread):
         self.logger.info(f"BinanceTrailingStopLossManager.stop_manager() - Gracefully stopping "
                          f"unicorn-binance-stop-loss engine")
         self.stop_request = True
-        try:
-            self.ubwa.stop_manager_with_all_streams()
-            return True
-        except KeyboardInterrupt:
-            print("\nStopping ... just wait a few seconds!")
+        if self.ubwa is not None:
+            self.ubwa.stop_manager()
+        if self.ubra is not None:
+            self.ubra.stop_manager()
+        # close lucit license manger and the api session
+        if close_api_session is True:
+            self.llm.close()
+        return True
 
-    def set_stop_loss_price(self,
-                            stop_loss_price: float = None) -> bool:
+    def set_stop_loss_price(self, stop_loss_price: float = None) -> bool:
         """
         Set the stop/loss price.
 
