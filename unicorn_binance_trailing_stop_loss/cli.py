@@ -51,7 +51,7 @@ async def cli(is_bot=False):
 
     parser = argparse.ArgumentParser(
         description=f"UNICORN Binance Trailing Stop Loss {'Bot ' if is_bot else ''}{version} by LUCIT Systems and "
-                    f"Development (MIT License)",
+                    f"Development (LSOSL License)",
         prog=f"ubtsl",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent('''\
