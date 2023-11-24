@@ -27,7 +27,7 @@
 [Description](#description) | [Smart Entry](#smart-entry) | [Installation](#installation-and-upgrade) | 
 [Documentation](#documentation) | [Examples](#examples) | [Change Log](#change-log) | [Wiki](#wiki) | [Social](#social) |
 [Notifications](#receive-notifications) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
-[Contributing](#contributing) | [Leave a review](#you-want-to-say-thank-you) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
+[Contributing](#contributing) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
 
 A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss and 
 [smart entry](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#smart-entry) on the Binance exchange.
@@ -161,12 +161,12 @@ If you run into errors during the installation take a look [here](https://github
 ### A Cython binary, PyPy or source code based CPython wheel of the latest version with `pip` from [PyPI](https://pypi.org/project/unicorn-binance-rest-api/)
 Our [Cython](https://cython.org/) and [PyPy](https://www.pypy.org/) Wheels are available on [PyPI](https://pypi.org/), 
 these wheels offer significant advantages for Python developers:
-- ***Performance Boost with Cython Wheels:*** 
-  Cython is a programming language that supplements Python with static typing and C-level performance. By compiling 
+
+- ***Performance Boost with Cython Wheels:*** Cython is a programming language that supplements Python with static typing and C-level performance. By compiling 
   Python code into C, Cython Wheels can significantly enhance the execution speed of Python code, especially in 
   computationally intensive tasks. This means faster runtimes and more efficient processing for users of our package. 
-- ***PyPy Wheels for Enhanced Efficiency:*** 
-  PyPy is an alternative Python interpreter known for its speed and efficiency. It uses Just-In-Time (JIT) compilation, 
+
+- ***PyPy Wheels for Enhanced Efficiency:*** PyPy is an alternative Python interpreter known for its speed and efficiency. It uses Just-In-Time (JIT) compilation, 
   which can dramatically improve the performance of Python code. Our PyPy Wheels are tailored for compatibility with 
   PyPy, allowing users to leverage this speed advantage seamlessly.
 
@@ -181,8 +181,8 @@ configuration.
 `pip install unicorn-binance-trailing-stop-loss --upgrade`
 
 ### A Conda Package of the latest version with `conda` from [Anaconda](https://anaconda.org/lucit)
-The `unicorn-binance-trailing-stop-loss` package is available with [Conda](https://docs.conda.io/en/latest/) through the 
-[`lucit` channel](https://anaconda.org/lucit). 
+The `unicorn-binance-trailing-stop-loss` package is also available as a Cython version for the `linux-64`, `osx-64` 
+and `win-64` architectures with [Conda](https://docs.conda.io/en/latest/) through the [`lucit` channel](https://anaconda.org/lucit). 
 
 For optimal compatibility and performance, it is recommended to source the necessary dependencies from the 
 [`conda-forge` channel](https://anaconda.org/conda-forge). 
@@ -204,10 +204,10 @@ Run in bash:
 `pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/$(curl -s https://api.github.com/repos/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")').tar.gz --upgrade`
 
 #### Windows
-Use the below command with the version (such as 1.0.0) you determined 
+Use the below command with the version (such as 1.1.0) you determined 
 [here](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/releases/latest):
 
-`pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/1.0.0.tar.gz --upgrade`
+`pip install https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/archive/1.1.0.tar.gz --upgrade`
 ### From the latest source (dev-stage) with PIP from [GitHub](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)
 This is not a release version and can not be considered to be stable!
 
@@ -291,9 +291,6 @@ contribute follow
 [![Contributors](https://contributors-img.web.app/image?repo=LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/graphs/contributors)
 
 We ![love](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/heart.png) open source!
-
-## You want to say Thank You?
-We hope you are enjoying using our libraries and that they are proving to be useful to you. If you have a moment, we would greatly appreciate it if you could leave us a [review on Google](https://g.page/r/CbfHlcs8BfG8EAg/review). Thank you for your support!
 
 ## Disclaimer
 This project is for informational purposes only. You should not construe this information or any other material as 

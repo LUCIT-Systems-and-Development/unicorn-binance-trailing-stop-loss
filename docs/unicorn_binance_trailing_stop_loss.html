@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>unicorn_binance_trailing_stop_loss package &#8212; unicorn-binance-trailing-stop-loss 1.0.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>unicorn_binance_trailing_stop_loss package &#8212; unicorn-binance-trailing-stop-loss 1.1.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=fdf8e9ae" />
@@ -66,47 +66,9 @@
     <ul>
 <li><a class="reference internal" href="#">unicorn_binance_trailing_stop_loss package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-unicorn_binance_trailing_stop_loss.manager">unicorn_binance_trailing_stop_loss.manager module</a><ul>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager</span></code></a><ul>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.calculate_stop_loss_amount"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.calculate_stop_loss_amount()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.calculate_stop_loss_price"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.calculate_stop_loss_price()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.cancel_open_stop_loss_order"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.cancel_open_stop_loss_order()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.create_stop_loss_order"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.create_stop_loss_order()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_exchange_info"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_exchange_info()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_latest_release_info"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_latest_release_info()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_latest_version"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_latest_version()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_open_orders"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_open_orders()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_owning_amount"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_owning_amount()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_asset_amount"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_stop_loss_asset_amount()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_asset_amount_free"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_stop_loss_asset_amount_free()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_price"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_stop_loss_price()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_trigger_price"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_stop_loss_trigger_price()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_symbol_info"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_symbol_info()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_user_agent"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_user_agent()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_version"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_version()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.is_update_available"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.is_update_available()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.process_price_feed_stream"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.process_price_feed_stream()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.process_userdata_stream"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.process_userdata_stream()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.round_decimals_down"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.round_decimals_down()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.run"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.run()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.send_email_notification"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.send_email_notification()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.send_telegram_notification"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.send_telegram_notification()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.set_stop_loss_price"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.set_stop_loss_price()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.start_streams"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.start_streams()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.stop"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.stop()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.stop_manager"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.stop_manager()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.update_stop_loss_asset_amount"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.update_stop_loss_asset_amount()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.update_stop_loss_quantity"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.update_stop_loss_quantity()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-unicorn_binance_trailing_stop_loss.cli">unicorn_binance_trailing_stop_loss.cli module</a><ul>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.cli.cli"><code class="docutils literal notranslate"><span class="pre">cli()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-unicorn_binance_trailing_stop_loss">Module contents</a></li>
+<li><a class="reference internal" href="#unicorn-binance-trailing-stop-loss-manager-module">unicorn_binance_trailing_stop_loss.manager module</a></li>
+<li><a class="reference internal" href="#unicorn-binance-trailing-stop-loss-cli-module">unicorn_binance_trailing_stop_loss.cli module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -176,9 +138,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="changelog.html" title="unicorn-binance-trailing-stop-loss Change Log"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -224,432 +183,14 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
-<section id="module-unicorn_binance_trailing_stop_loss.manager">
-<span id="unicorn-binance-trailing-stop-loss-manager-module"></span><h2>unicorn_binance_trailing_stop_loss.manager module<a class="headerlink" href="#module-unicorn_binance_trailing_stop_loss.manager" title="Link to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unicorn_binance_trailing_stop_loss.manager.</span></span><span class="sig-name descname"><span class="pre">BinanceTrailingStopLossManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binance_public_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binance_private_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">borrow_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">builtin_function_or_method</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_finished</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">builtin_function_or_method</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_partially_filled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">builtin_function_or_method</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_colorama</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'trail'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'binance.com'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_notifications</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_stop_loss_price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">send_to_email_address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">send_from_email_address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">send_from_email_password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">send_from_email_server</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">send_from_email_port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_loss_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_loss_order_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_loss_price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_loss_start_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_loss_trigger_gap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'0.01'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">telegram_bot_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">telegram_send_to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trading_fee_discount_futures_percent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trading_fee_discount_margin_percent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trading_fee_discount_spot_percent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trading_fee_percent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trading_fee_use_bnb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lucit_api_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lucit_license_ini</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lucit_license_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lucit_license_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ubra_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinanceRestApiManager</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ubwa_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinanceWebSocketApiManager</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn_on_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Thread</span></code></p>
-<p>After starting the engine, a stop/loss order is placed and trailed until it is completely fulfilled. If desired, a
-notification can be sent via email and Telegram afterward. Then it calls the function passed with the
-<cite>callback_finished</cite> parameter or on error it calls the function passed to <cite>callback_error</cite>.</p>
-<p>Partially filled orders are currently not handled by the engine. If you want to react individually to this event,
-you can use the function provided to <cite>callback_partially_filled</cite>.</p>
-<p>In addition, there is a smart entry option called <cite>jump-in-and-trail</cite>. This offers the possibility to buy spot,
-future and margin assets with a limit or market order and then to trail a stop/loss order until sold.</p>
-<p>Supported exchanges: binance.com, binance.com-testnet, binance.com-futures, binance.com-margin,
-binance.com-isolated_margin</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>binance_public_key</strong> (<em>str</em>) – Provide the public Binance key.</p></li>
-<li><p><strong>binance_private_key</strong> (<em>str</em>) – Provide the private Binance key.</p></li>
-<li><p><strong>borrow_threshold</strong> (<em>str</em>) – Provide the private Binance key.</p></li>
-<li><p><strong>callback_error</strong> (<em>function</em><em> or </em><em>None</em>) – Callback function used if an error occurs.</p></li>
-<li><p><strong>callback_finished</strong> (<em>function</em><em> or </em><em>None</em>) – Callback function used if stop_loss gets filled.</p></li>
-<li><p><strong>callback_partially_filled</strong> (<em>function</em><em> or </em><em>None</em>) – Callback function used if stop_loss gets partially filled filled.</p></li>
-<li><p><strong>disable_colorama</strong> (<em>bool</em>) – set to True to disable the use of <a class="reference external" href="https://pypi.org/project/colorama/">colorama</a></p></li>
-<li><p><strong>engine</strong> (<em>str</em>) – Option <cite>trail</cite> (default) for standard trailing stop/loss or <cite>jump-in-and-trail</cite> to activate smart
-entry function.</p></li>
-<li><p><strong>exchange</strong> (<em>str</em>) – Choose the exchange endpoint: binance.com, binance.com-futures, binance.com-margin,
-binance.com-isolated_margin</p></li>
-<li><p><strong>keep_threshold</strong> (<em>str</em>) – If empty we sell the full balance, use integer or percent values.</p></li>
-<li><p><strong>market</strong> (<em>str</em>) – The market to enforce stop/loss.</p></li>
-<li><p><strong>print_notifications</strong> (<em>bool</em>) – If True the lib is printing user friendly information to terminal.</p></li>
-<li><p><strong>reset_stop_loss_price</strong> (<em>bool</em>) – Reset an existing stop_loss_price and calculate a new one. Only True is True, anything
-else is False!</p></li>
-<li><p><strong>send_to_email_address</strong> (<em>str</em>) – Email address of receiver</p></li>
-<li><p><strong>send_from_email_address</strong> (<em>str</em>) – Email address of sender</p></li>
-<li><p><strong>send_from_email_password</strong> (<em>str</em>) – Password for SMTP auth</p></li>
-<li><p><strong>send_from_email_server</strong> (<em>str</em>) – Hostname or IP of SMTP server</p></li>
-<li><p><strong>send_from_email_port</strong> (<em>int</em>) – Port of SMTP server</p></li>
-<li><p><strong>start_engine</strong> (<em>bool</em>) – Start the trailing stop loss engine. Default is True</p></li>
-<li><p><strong>stop_loss_limit</strong> (<em>str</em>) – The limit is used to calculate the <cite>stop_loss_price</cite> of the highest given price, use integer
-or percent values.</p></li>
-<li><p><strong>stop_loss_order_type</strong> (<em>str</em>) – Can be <cite>limit</cite> or <cite>market</cite> - default is None which leads to a stop of the algorithm.</p></li>
-<li><p><strong>stop_loss_price</strong> (<em>float</em>) – Set a price to use for stop/loss, this is valid till it get overwritten with a higher price.</p></li>
-<li><p><strong>stop_loss_start_limit</strong> (<em>str</em>) – The trailing stop/loss order is trailed with the distance defined in
-<cite>stop_loss_limit</cite>. If you want to use a different value at the start, you can specify
-it with <cite>stop_loss_start_limit</cite>. This value will be used instead of the
-<cite>stop_loss_limit</cite> value until this value is caught up and then trailed.</p></li>
-<li><p><strong>stop_loss_trigger_gap</strong> (<em>str</em>) – Gap between stopPrice and limit order price, use integer or percent values.</p></li>
-<li><p><strong>test</strong> (<em>str</em>) – Use this to test specific systems like “notification”, “binance-connectivity” and “streams”. The
-streams test needs a valid exchange and market. If test is not None the engine will NOT start! It
-only tests!</p></li>
-<li><p><strong>telegram_bot_token</strong> (<em>str</em>) – Token to connect with Telegram API.</p></li>
-<li><p><strong>telegram_send_to</strong> (<em>str</em>) – Receiver of the message sent via Telegram.</p></li>
-<li><p><strong>trading_fee_use_bnb</strong> (<em>bool</em>) – Default is False. Set to True to use BNB for a discount on trading fees:
-<a class="reference external" href="https://www.binance.com/en/support/faq/115000583311">https://www.binance.com/en/support/faq/115000583311</a>.</p></li>
-<li><p><strong>warn_on_update</strong> (<em>bool</em>) – set to <cite>False</cite> to disable the update warning</p></li>
-<li><p><strong>lucit_api_secret</strong> (<em>str</em>) – The <cite>api_secret</cite> of your UNICORN Binance Suite license from
-<a class="reference external" href="https://shop.lucit.services/software/unicorn-binance-suite">https://shop.lucit.services/software/unicorn-binance-suite</a></p></li>
-<li><p><strong>lucit_license_ini</strong> (<em>str</em>) – Specify the path including filename to the config file (ex: <cite>~/license_a.ini</cite>). If not
-provided lucitlicmgr tries to load a <cite>lucit_license.ini</cite> from <cite>/home/oliver/.lucit/</cite>.</p></li>
-<li><p><strong>lucit_license_profile</strong> (<em>str</em>) – The license profile to use. Default is ‘LUCIT’.</p></li>
-<li><p><strong>lucit_license_token</strong> (<em>str</em>) – The <cite>license_token</cite> of your UNICORN Binance Suite license from
-<a class="reference external" href="https://shop.lucit.services/software/unicorn-binance-suite">https://shop.lucit.services/software/unicorn-binance-suite</a></p></li>
-<li><p><strong>ubra_manager</strong> (<em>BinanceRestApiManager</em>) – Provide a shared unicorn_binance_rest_api.manager instance</p></li>
-<li><p><strong>ubwa_manager</strong> (<em>BinanceWebSocketApiManager</em>) – Provide a shared unicorn_binance_websocket_api.manager instance.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.calculate_stop_loss_amount">
-<span class="sig-name descname"><span class="pre">calculate_stop_loss_amount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.calculate_stop_loss_amount"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.calculate_stop_loss_amount" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate the tradeable stop/loss asset amount (= owning and free - trading fee)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>amount</strong> (<em>float</em>) – The full owning asset amount.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>float or None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.calculate_stop_loss_price">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_stop_loss_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.calculate_stop_loss_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.calculate_stop_loss_price" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate the stop/loss price.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>price</strong> (<em>float</em><em>, </em><em>str</em>) – Base price used for the calculation</p></li>
-<li><p><strong>limit</strong> (<em>float</em><em>, </em><em>str</em>) – Stop loss limit in percent or as fixed float value</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>float or None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.cancel_open_stop_loss_order">
-<span class="sig-name descname"><span class="pre">cancel_open_stop_loss_order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.cancel_open_stop_loss_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.cancel_open_stop_loss_order" title="Link to this definition">¶</a></dt>
-<dd><p>Cancel all open stop/loss orders.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.create_stop_loss_order">
-<span class="sig-name descname"><span class="pre">create_stop_loss_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_loss_price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.create_stop_loss_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.create_stop_loss_order" title="Link to this definition">¶</a></dt>
-<dd><p>Create a stop/loss order!</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>stop_loss_price</strong> (<em>float</em>) – Price to set for the SL order.</p></li>
-<li><p><strong>current_price</strong> (<em>float</em>) – Current price is optional and only used for logging.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_exchange_info">
-<span class="sig-name descname"><span class="pre">get_exchange_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_exchange_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_exchange_info" title="Link to this definition">¶</a></dt>
-<dd><p>Get the exchange info.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict or bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_latest_release_info">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_latest_release_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_latest_release_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_latest_release_info" title="Link to this definition">¶</a></dt>
-<dd><p>Get infos about the latest available release
-:return: dict or False</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_latest_version">
-<span class="sig-name descname"><span class="pre">get_latest_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_latest_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_latest_version" title="Link to this definition">¶</a></dt>
-<dd><p>Get the version of the latest available release (cache time 1 hour)
-:return: str or None</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_open_orders">
-<span class="sig-name descname"><span class="pre">get_open_orders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">market</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_open_orders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_open_orders" title="Link to this definition">¶</a></dt>
-<dd><p>Get the owning amount of the stop/loss asset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict or None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_owning_amount">
-<span class="sig-name descname"><span class="pre">get_owning_amount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_asset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_owning_amount"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_owning_amount" title="Link to this definition">¶</a></dt>
-<dd><p>Get the owning amount of the stop/loss asset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple (total, free) or None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_asset_amount">
-<span class="sig-name descname"><span class="pre">get_stop_loss_asset_amount</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_stop_loss_asset_amount"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_asset_amount" title="Link to this definition">¶</a></dt>
-<dd><p>Get the current stop/loss asset amount.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_asset_amount_free">
-<span class="sig-name descname"><span class="pre">get_stop_loss_asset_amount_free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_stop_loss_asset_amount_free"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_asset_amount_free" title="Link to this definition">¶</a></dt>
-<dd><p>Get the free current stop/loss asset amount.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_price">
-<span class="sig-name descname"><span class="pre">get_stop_loss_price</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_stop_loss_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_price" title="Link to this definition">¶</a></dt>
-<dd><p>Get the current stop loss price.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_trigger_price">
-<span class="sig-name descname"><span class="pre">get_stop_loss_trigger_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_loss_price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_stop_loss_trigger_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_trigger_price" title="Link to this definition">¶</a></dt>
-<dd><p>Get the current stop/loss trigger price - if this price gets touched the limit order will get placed in the
-orderbook.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_symbol_info">
-<span class="sig-name descname"><span class="pre">get_symbol_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_symbol_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_symbol_info" title="Link to this definition">¶</a></dt>
-<dd><p>Get the symbol info of the stop/loss asset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_user_agent">
-<span class="sig-name descname"><span class="pre">get_user_agent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_user_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_user_agent" title="Link to this definition">¶</a></dt>
-<dd><p>Get the user_agent string “lib name + lib version + python version”
-:return:</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_version">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.get_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_version" title="Link to this definition">¶</a></dt>
-<dd><p>Get the package/module version
-:return: str</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.is_update_available">
-<span class="sig-name descname"><span class="pre">is_update_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.is_update_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.is_update_available" title="Link to this definition">¶</a></dt>
-<dd><p>Is a new release of this package available?
-:return: bool</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.process_price_feed_stream">
-<span class="sig-name descname"><span class="pre">process_price_feed_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream_buffer_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.process_price_feed_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.process_price_feed_stream" title="Link to this definition">¶</a></dt>
-<dd><p>Process the price feed data:
-Control current price and update <cite>stop_loss_price</cite> or trigger stop/loss if needed.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.process_userdata_stream">
-<span class="sig-name descname"><span class="pre">process_userdata_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream_buffer_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.process_userdata_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.process_userdata_stream" title="Link to this definition">¶</a></dt>
-<dd><p>Process the received data of the userData stream.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.round_decimals_down">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">round_decimals_down</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.round_decimals_down"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.round_decimals_down" title="Link to this definition">¶</a></dt>
-<dd><p>Returns a value rounded down to a specific number of decimal places.
-:param number: The decimal number to round down.
-:type number: float
-:param decimals: How many decimals you want to keep.
-:type decimals: int
-:return: float</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.run" title="Link to this definition">¶</a></dt>
-<dd><p>Start Stop/Loss with provided settings!</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.send_email_notification">
-<span class="sig-name descname"><span class="pre">send_email_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.send_email_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.send_email_notification" title="Link to this definition">¶</a></dt>
-<dd><p>Send a notification via email!</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – Text to send via email.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.send_telegram_notification">
-<span class="sig-name descname"><span class="pre">send_telegram_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.send_telegram_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.send_telegram_notification" title="Link to this definition">¶</a></dt>
-<dd><p>Send a notification via telegram!</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – Text to send via Telegram.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.set_stop_loss_price">
-<span class="sig-name descname"><span class="pre">set_stop_loss_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_loss_price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.set_stop_loss_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.set_stop_loss_price" title="Link to this definition">¶</a></dt>
-<dd><p>Set the stop/loss price.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stop_loss_price</strong> (<em>float</em>) – Price to set for the SL order.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.start_streams">
-<span class="sig-name descname"><span class="pre">start_streams</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.start_streams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.start_streams" title="Link to this definition">¶</a></dt>
-<dd><p>Procedure to start the web streams</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.stop" title="Link to this definition">¶</a></dt>
-<dd><p>Stop stop_loss! :)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.stop_manager">
-<span class="sig-name descname"><span class="pre">stop_manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">close_api_session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.stop_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.stop_manager" title="Link to this definition">¶</a></dt>
-<dd><p>Stop stop_loss! :)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.update_stop_loss_asset_amount">
-<span class="sig-name descname"><span class="pre">update_stop_loss_asset_amount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.update_stop_loss_asset_amount"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.update_stop_loss_asset_amount" title="Link to this definition">¶</a></dt>
-<dd><p>Update the owning asset amount (total, free)!</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>total</strong> (<em>float</em>) – Total amount of the stop_loss_asset!</p></li>
-<li><p><strong>free</strong> (<em>float</em>) – Free amount of the stop_loss_asset!</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.update_stop_loss_quantity">
-<span class="sig-name descname"><span class="pre">update_stop_loss_quantity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/manager.html#BinanceTrailingStopLossManager.update_stop_loss_quantity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.update_stop_loss_quantity" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate and update the stop_loss_quantity!</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>total</strong> (<em>float</em>) – Total asset amount</p></li>
-<li><p><strong>free</strong> (<em>float</em>) – Free asset amount</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<section id="unicorn-binance-trailing-stop-loss-manager-module">
+<h2>unicorn_binance_trailing_stop_loss.manager module<a class="headerlink" href="#unicorn-binance-trailing-stop-loss-manager-module" title="Link to this heading">¶</a></h2>
 </section>
-<section id="module-unicorn_binance_trailing_stop_loss.cli">
-<span id="unicorn-binance-trailing-stop-loss-cli-module"></span><h2>unicorn_binance_trailing_stop_loss.cli module<a class="headerlink" href="#module-unicorn_binance_trailing_stop_loss.cli" title="Link to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.cli.cli">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unicorn_binance_trailing_stop_loss.cli.</span></span><span class="sig-name descname"><span class="pre">cli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_bot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/cli.html#cli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.cli.cli" title="Link to this definition">¶</a></dt>
-<dd><p>UNICORN Binance Trailing Stop Loss Command Line Interface Documentation</p>
-<p>More info: <a class="reference external" href="https://www.lucit.tech/ubtsl-cli.html">https://www.lucit.tech/ubtsl-cli.html</a></p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="unicorn_binance_trailing_stop_loss.cli.main">
-<span class="sig-prename descclassname"><span class="pre">unicorn_binance_trailing_stop_loss.cli.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/unicorn_binance_trailing_stop_loss/cli.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#unicorn_binance_trailing_stop_loss.cli.main" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<section id="unicorn-binance-trailing-stop-loss-cli-module">
+<h2>unicorn_binance_trailing_stop_loss.cli module<a class="headerlink" href="#unicorn-binance-trailing-stop-loss-cli-module" title="Link to this heading">¶</a></h2>
 </section>
-<section id="module-unicorn_binance_trailing_stop_loss">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-unicorn_binance_trailing_stop_loss" title="Link to this heading">¶</a></h2>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -679,47 +220,9 @@ Control current price and update <cite>stop_loss_price</cite> or trigger stop/lo
     <ul>
 <li><a class="reference internal" href="#">unicorn_binance_trailing_stop_loss package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-unicorn_binance_trailing_stop_loss.manager">unicorn_binance_trailing_stop_loss.manager module</a><ul>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager</span></code></a><ul>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.calculate_stop_loss_amount"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.calculate_stop_loss_amount()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.calculate_stop_loss_price"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.calculate_stop_loss_price()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.cancel_open_stop_loss_order"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.cancel_open_stop_loss_order()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.create_stop_loss_order"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.create_stop_loss_order()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_exchange_info"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_exchange_info()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_latest_release_info"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_latest_release_info()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_latest_version"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_latest_version()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_open_orders"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_open_orders()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_owning_amount"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_owning_amount()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_asset_amount"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_stop_loss_asset_amount()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_asset_amount_free"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_stop_loss_asset_amount_free()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_price"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_stop_loss_price()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_stop_loss_trigger_price"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_stop_loss_trigger_price()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_symbol_info"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_symbol_info()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_user_agent"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_user_agent()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_version"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.get_version()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.is_update_available"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.is_update_available()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.process_price_feed_stream"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.process_price_feed_stream()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.process_userdata_stream"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.process_userdata_stream()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.round_decimals_down"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.round_decimals_down()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.run"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.run()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.send_email_notification"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.send_email_notification()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.send_telegram_notification"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.send_telegram_notification()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.set_stop_loss_price"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.set_stop_loss_price()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.start_streams"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.start_streams()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.stop"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.stop()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.stop_manager"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.stop_manager()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.update_stop_loss_asset_amount"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.update_stop_loss_asset_amount()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.update_stop_loss_quantity"><code class="docutils literal notranslate"><span class="pre">BinanceTrailingStopLossManager.update_stop_loss_quantity()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-unicorn_binance_trailing_stop_loss.cli">unicorn_binance_trailing_stop_loss.cli module</a><ul>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.cli.cli"><code class="docutils literal notranslate"><span class="pre">cli()</span></code></a></li>
-<li><a class="reference internal" href="#unicorn_binance_trailing_stop_loss.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-unicorn_binance_trailing_stop_loss">Module contents</a></li>
+<li><a class="reference internal" href="#unicorn-binance-trailing-stop-loss-manager-module">unicorn_binance_trailing_stop_loss.manager module</a></li>
+<li><a class="reference internal" href="#unicorn-binance-trailing-stop-loss-cli-module">unicorn_binance_trailing_stop_loss.cli module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -789,9 +292,6 @@ Control current price and update <cite>stop_loss_price</cite> or trigger stop/lo
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="changelog.html" title="unicorn-binance-trailing-stop-loss Change Log"
              >next</a> |</li>
         <li class="right" >
@@ -829,7 +329,7 @@ Control current price and update <cite>stop_loss_price</cite> or trigger stop/lo
     <div class="footer">
     &copy; <a href="/license.html">Copyright</a> 2022-2023, LUCIT Systems and Development and Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Nov 23 2023 at 02:52 (CET).
+    Last updated on Nov 24 2023 at 18:39 (CET).
     <a href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
