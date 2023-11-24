@@ -48,8 +48,8 @@ def callback_finished(msg):
 
 UBTSL = BinanceTrailingStopLossManager(callback_error=callback_error,
                                        callback_finished=callback_finished,
-                                       binance_public_key="aaa",
-                                       binance_private_key="bbb",
+                                       api_key="aaa",
+                                       api_secret="bbb",
                                        exchange="binance.com-testnet",
                                        keep_threshold="20%",
                                        reset_stop_loss_price=True,

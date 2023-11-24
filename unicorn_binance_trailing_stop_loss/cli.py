@@ -18,8 +18,10 @@
 # Copyright (c) 2022-2023, LUCIT Systems and Development (https://www.lucit.tech)
 # All rights reserved.
 
-from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
-# from manager import BinanceTrailingStopLossManager  # need for testing the cli interface during development
+try:
+    from manager import BinanceTrailingStopLossManager
+except ModuleNotFoundError:
+    from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException
 from configparser import ConfigParser, ExtendedInterpolation
 from pathlib import Path
@@ -30,10 +32,8 @@ import logging
 import platform
 import os
 import requests
-import subprocess
 import sys
 import textwrap
-import time
 import webbrowser
 
 
@@ -643,11 +643,11 @@ async def cli():
                                         ubra_manager=ubra,
                                         ubwa_manager=None,
                                         warn_on_update=False) as ubtsl:
-    if test is None:
-        # Catch Keyboard Interrupt only if there is no test running
-        while ubtsl.is_manager_stopping() is False:
-            # This loop continues until the trailing stop loss engine is terminated
-            await asyncio.sleep(1)
+        if test is None:
+            # Catch Keyboard Interrupt only if there is no test running
+            while ubtsl.is_manager_stopping() is False:
+                # This loop continues until the trailing stop loss engine is terminated
+                await asyncio.sleep(1)
 
 def main():
     try:
