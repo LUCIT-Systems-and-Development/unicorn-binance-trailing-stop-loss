@@ -37,7 +37,7 @@ import time
 import webbrowser
 
 
-async def cli(is_bot=False):
+async def cli():
     """
         UNICORN Binance Trailing Stop Loss Command Line Interface Documentation
 
@@ -50,7 +50,7 @@ async def cli(is_bot=False):
     log_format = "{asctime} [{levelname:8}] {process} {thread} {module}: {message}"
 
     parser = argparse.ArgumentParser(
-        description=f"UNICORN Binance Trailing Stop Loss {'Bot ' if is_bot else ''}{version} by LUCIT Systems and "
+        description=f"UNICORN Binance Trailing Stop Loss {version} by LUCIT Systems and "
                     f"Development (LSOSL License)",
         prog=f"ubtsl",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -145,11 +145,6 @@ async def cli(is_bot=False):
                         help='Choose the engine. Default: `trail` Options: `jump-in-and-trail` to place a buy order '
                              'and trail.',
                         required=False)
-    if is_bot:
-        parser.add_argument('-iu', '--installupdate',
-                            help="Trigger an update installation. Only available in the Bot version.",
-                            required=False,
-                            action='store_true')
     parser.add_argument('-k', '--keepthreshold',
                         type=str,
                         help="Set the threshold to be kept. This is the amount that will not get sold.",
@@ -299,34 +294,12 @@ async def cli(is_bot=False):
                   f"profit: {profit}")
         ubtsl.stop_manager()
 
-    def download_bot_installer_from_github() -> Optional[str]:
-        """
-        Download Bot installer files from GitHub and get the file path.
-
-        :return: str or None
-        """
-        if is_bot is False:
-            logger.error(f"download_bot_installer_from_github() not starting because `is_bot` is False")
-            return None
-        logger.info(f"download_bot_installer_from_github() started")
-        if os_type == "Windows":
-            installer_file = "ubtsl_setup.exe"
-        else:
-            return None
-        installer_file_path = f"{config_path}{installer_file}"
-        installer_source = f"https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/" \
-                           f"releases/latest/download/{installer_file}"
-        response = requests.get(installer_source)
-        with open(installer_file_path, "wb+") as installer_file_handler:
-            installer_file_handler.write(response.content)
-        return str(installer_file_path)
-
     def load_examples_ini_from_github(example_name: str = None) -> Optional[str]:
         """
         Load example_*.ini files from GitHub
 
         :param example_name: `config` or `profiles`
-        :type example_name: str
+        :type example_name:  str
         :return: str or None
         """
         logger.info(f"load_examples_ini_from_github() started ")
@@ -397,36 +370,10 @@ async def cli(is_bot=False):
         if ubtsl.is_update_available():
             print("A new update is available: https://github.com/LUCIT-Systems-and-Development/"
                   "unicorn-binance-trailing-stop-loss/releases/latest")
-            if is_bot:
-                if os_type == "Windows":
-                    print(f"Use `ubtsl --installupdate` to start the installation of the update.")
         else:
             print("No available updates found!")
         ubtsl.stop_manager()
         sys.exit(0)
-
-    # Install an available update
-    if is_bot:
-        if options.installupdate is True:
-            ubtsl = BinanceTrailingStopLossManager(start_engine=False, warn_on_update=False)
-            if ubtsl.is_update_available():
-                setup_file_path = f"{config_path}ubtsl_setup.exe"
-                print("The update is being downloaded, please be patient")
-                if os.path.isfile(setup_file_path):
-                    decision = input(f"The file `{setup_file_path}` already exists. Do you want to overwrite it? [y/N]")
-                    if decision.upper() != "Y":
-                        sys.exit(0)
-                create_directory(str(config_path))
-                start_installer_file = download_bot_installer_from_github()
-                print(f"Update successfully downloaded, starting the installer")
-                process = subprocess.Popen(start_installer_file, shell=True)
-                process.wait()
-                print(f"Deleting `{start_installer_file}`")
-                os.remove(start_installer_file)
-            else:
-                print("No available updates found!")
-            ubtsl.stop_manager()
-            sys.exit(0)
 
     # Print the version
     if options.version is True:
@@ -669,43 +616,38 @@ async def cli(is_bot=False):
         sys.exit(0)
 
     # Starting the Trailing Stop/Loss Engine
-    ubtsl = BinanceTrailingStopLossManager(callback_error=callback_error,
-                                           callback_finished=callback_finished,
-                                           callback_partially_filled=None,
-                                           binance_public_key=public_key,
-                                           binance_private_key=private_key,
-                                           borrow_threshold=borrow_threshold,
-                                           engine=engine,
-                                           exchange=exchange,
-                                           keep_threshold=keep_threshold,
-                                           market=market,
-                                           print_notifications=True,
-                                           reset_stop_loss_price=reset_stop_loss_price,
-                                           send_to_email_address=send_to_email_address,
-                                           send_from_email_address=send_from_email_address,
-                                           send_from_email_password=send_from_email_password,
-                                           send_from_email_server=send_from_email_server,
-                                           send_from_email_port=int(send_from_email_port),
-                                           stop_loss_limit=stop_loss_limit,
-                                           stop_loss_order_type=stop_loss_order_type,
-                                           stop_loss_price=stop_loss_price,
-                                           stop_loss_start_limit=stop_loss_start_limit,
-                                           telegram_bot_token=telegram_bot_token,
-                                           telegram_send_to=telegram_send_to,
-                                           test=test,
-                                           ubra_manager=ubra,
-                                           ubwa_manager=False,
-                                           warn_on_update=False)
-
-    # Catch Keyboard Interrupt only if there is no test running
+    with BinanceTrailingStopLossManager(callback_error=callback_error,
+                                        callback_finished=callback_finished,
+                                        callback_partially_filled=None,
+                                        api_key=public_key,
+                                        api_secret=private_key,
+                                        borrow_threshold=borrow_threshold,
+                                        engine=engine,
+                                        exchange=exchange,
+                                        keep_threshold=keep_threshold,
+                                        market=market,
+                                        print_notifications=True,
+                                        reset_stop_loss_price=reset_stop_loss_price,
+                                        send_to_email_address=send_to_email_address,
+                                        send_from_email_address=send_from_email_address,
+                                        send_from_email_password=send_from_email_password,
+                                        send_from_email_server=send_from_email_server,
+                                        send_from_email_port=int(send_from_email_port),
+                                        stop_loss_limit=stop_loss_limit,
+                                        stop_loss_order_type=stop_loss_order_type,
+                                        stop_loss_price=stop_loss_price,
+                                        stop_loss_start_limit=stop_loss_start_limit,
+                                        telegram_bot_token=telegram_bot_token,
+                                        telegram_send_to=telegram_send_to,
+                                        test=test,
+                                        ubra_manager=ubra,
+                                        ubwa_manager=None,
+                                        warn_on_update=False) as ubtsl:
     if test is None:
-        try:
-            while ubtsl.stop_request is False:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            print("\nStopping ... just wait a few seconds!")
-            ubtsl.stop_manager()
-
+        # Catch Keyboard Interrupt only if there is no test running
+        while ubtsl.is_manager_stopping() is False:
+            # This loop continues until the trailing stop loss engine is terminated
+            await asyncio.sleep(1)
 
 def main():
     try:

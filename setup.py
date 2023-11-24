@@ -41,7 +41,7 @@ setup(
      long_description_content_type="text/markdown",
      license='LSOSL - LUCIT Synergetic Open Source License',
      install_requires=['lucit-licensing-python>=1.8.1', 'Cython', 'requests', 'unicorn-binance-websocket-api>=2.1.1',
-                       'unicorn-binance-rest-api>=2.1.2'],
+                       'unicorn-binance-rest-api>=2.2.0'],
      keywords='Binance, Binance Futures, Binance Margin, Binance Isolated Margin, Binance Testnet, Trailing Stop Loss, '
               'Smart Entry',
      project_urls={

@@ -7,7 +7,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [How to upgrade to the latest version!](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/readme.html#installation-and-upgrade)
 
-## 1.0.0.dev (development stage/unreleased/unstable)
+## 1.1.0.dev (development stage/unreleased/unstable)
+
+## 1.1.0
+### Added
+- `manager.is_manager_stopping()`
+- Support for "binance.com"
 
 ## 1.0.0
 ### Added
