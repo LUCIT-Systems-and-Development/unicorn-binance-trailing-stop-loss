@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>unicorn_binance_trailing_stop_loss.manager &#8212; unicorn-binance-trailing-stop-loss 1.0.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>unicorn_binance_trailing_stop_loss.manager &#8212; unicorn-binance-trailing-stop-loss 1.1.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="../../_static/pydoctheme.css?v=fdf8e9ae" />
@@ -184,7 +184,7 @@
 <span class="kn">import</span> <span class="nn">time</span>
 
 <span class="n">__app_name__</span> <span class="o">=</span> <span class="s2">&quot;unicorn-binance-trailing-stop-loss&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.1.0.dev&quot;</span>
 <span class="n">__logger__</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;unicorn_binance_trailing_stop_loss&quot;</span><span class="p">)</span>
 
 
@@ -205,10 +205,10 @@
 <span class="sd">    Supported exchanges: binance.com, binance.com-testnet, binance.com-futures, binance.com-margin,</span>
 <span class="sd">    binance.com-isolated_margin</span>
 
-<span class="sd">    :param binance_public_key: Provide the public Binance key.</span>
-<span class="sd">    :type binance_public_key: str</span>
-<span class="sd">    :param binance_private_key: Provide the private Binance key.</span>
-<span class="sd">    :type binance_private_key: str</span>
+<span class="sd">    :param api_key: Provide the Binance API key.</span>
+<span class="sd">    :type api_key: str</span>
+<span class="sd">    :param api_secret: Provide the Binance API secret.</span>
+<span class="sd">    :type api_secret: str</span>
 <span class="sd">    :param borrow_threshold: Provide the private Binance key.</span>
 <span class="sd">    :type borrow_threshold: str</span>
 <span class="sd">    :param callback_error: Callback function used if an error occurs.</span>
@@ -291,8 +291,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">binance_public_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">binance_private_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">api_secret</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">borrow_threshold</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">callback_error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="nb">abs</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">callback_finished</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="nb">abs</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -327,8 +327,8 @@
                  <span class="n">lucit_license_ini</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">lucit_license_profile</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">lucit_license_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">ubra_manager</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">BinanceRestApiManager</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                 <span class="n">ubwa_manager</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">BinanceWebSocketApiManager</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">ubra_manager</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">BinanceRestApiManager</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">ubwa_manager</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">BinanceWebSocketApiManager</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">warn_on_update</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">__app_name__</span>
@@ -336,8 +336,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">__version__</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New instance of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_user_agent</span><span class="p">()</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="s1">&#39;compiled&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">cython</span><span class="o">.</span><span class="n">compiled</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;source&#39;</span><span class="si">}</span><span class="s2"> on &quot;</span>
                          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">())</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">platform</span><span class="o">.</span><span class="n">release</span><span class="p">())</span><span class="si">}</span><span class="s2"> for exchange </span><span class="si">{</span><span class="n">exchange</span><span class="si">}</span><span class="s2"> started&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">binance_public_key</span> <span class="o">=</span> <span class="n">binance_public_key</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">binance_private_key</span> <span class="o">=</span> <span class="n">binance_private_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_secret</span> <span class="o">=</span> <span class="n">api_secret</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">borrow_threshold</span> <span class="o">=</span> <span class="n">borrow_threshold</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback_error</span> <span class="o">=</span> <span class="n">callback_error</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback_finished</span> <span class="o">=</span> <span class="n">callback_finished</span>
@@ -349,8 +349,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">keep_threshold</span> <span class="o">=</span> <span class="n">keep_threshold</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_update_check_github</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;tag_name&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lock_create_stop_loss_order</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">precision_crypto</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">precision_fiat</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precision_price</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span> <span class="o">=</span> <span class="n">print_notifications</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset_stop_loss_price</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">reset_stop_loss_price</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">send_to_email_address</span> <span class="o">=</span> <span class="n">send_to_email_address</span>
@@ -371,7 +371,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_quantity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_trigger_gap</span> <span class="o">=</span> <span class="n">stop_loss_trigger_gap</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_request</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stop_request</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop_manager_request</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">telegram_bot_token</span> <span class="o">=</span> <span class="n">telegram_bot_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">telegram_send_to</span> <span class="o">=</span> <span class="n">telegram_send_to</span>
@@ -401,8 +401,8 @@
         <span class="k">if</span> <span class="n">licensing_exception</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">NoValidatedLucitLicense</span><span class="p">(</span><span class="n">licensing_exception</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="p">:</span> <span class="n">BinanceRestApiManager</span> <span class="o">=</span> <span class="n">ubra_manager</span> <span class="ow">or</span> <span class="n">BinanceRestApiManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binance_public_key</span><span class="p">,</span>
-                                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">binance_private_key</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="p">:</span> <span class="n">BinanceRestApiManager</span> <span class="o">=</span> <span class="n">ubra_manager</span> <span class="ow">or</span> <span class="n">BinanceRestApiManager</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="p">,</span>
+                                                                                 <span class="n">api_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">api_secret</span><span class="p">,</span>
                                                                                  <span class="n">exchange</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exchange</span><span class="p">,</span>
                                                                                  <span class="n">disable_colorama</span><span class="o">=</span><span class="n">disable_colorama</span><span class="p">,</span>
                                                                                  <span class="n">warn_on_update</span><span class="o">=</span><span class="n">warn_on_update</span><span class="p">,</span>
@@ -419,13 +419,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ubwa</span><span class="p">:</span> <span class="n">BinanceWebSocketApiManager</span> <span class="o">=</span> <span class="n">ubwa_manager</span> <span class="ow">or</span> \
                                                         <span class="n">BinanceWebSocketApiManager</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exchange</span><span class="p">,</span>
                                                                                    <span class="n">output_default</span><span class="o">=</span><span class="s2">&quot;UnicornFy&quot;</span><span class="p">,</span>
-                                                                                   <span class="n">disable_colorama</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                                   <span class="n">disable_colorama</span><span class="o">=</span><span class="n">disable_colorama</span><span class="p">,</span>
                                                                                    <span class="n">high_performance</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                                                                    <span class="n">warn_on_update</span><span class="o">=</span><span class="n">warn_on_update</span><span class="p">,</span>
                                                                                    <span class="n">lucit_api_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lucit_api_secret</span><span class="p">,</span>
                                                                                    <span class="n">lucit_license_ini</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lucit_license_ini</span><span class="p">,</span>
                                                                                    <span class="n">lucit_license_profile</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lucit_license_profile</span><span class="p">,</span>
-                                                                                   <span class="n">lucit_license_token</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lucit_license_token</span><span class="p">)</span>
+                                                                                   <span class="n">lucit_license_token</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lucit_license_token</span><span class="p">,</span>
+                                                                                   <span class="n">ubra_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="p">,</span>
+                                                                                   <span class="n">show_secrets_in_logs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">UnknownExchange</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;BinanceTrailingStopLossManager() - Please use a valid exchange!&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">test</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s2">&quot;streams&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
@@ -484,7 +486,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">start_streams</span><span class="p">()</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_request</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_manager_stopping</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">ubwa</span><span class="o">.</span><span class="n">print_summary</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;UNICORN Binance Trailing Stop Loss </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2"> - &quot;</span>
                                                   <span class="sa">f</span><span class="s2">&quot;Testing streams&quot;</span><span class="p">)</span>
@@ -636,17 +638,22 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">order_is_placed</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock_create_stop_loss_order</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">stop_loss_price</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stop_loss_price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_stop_loss_price</span><span class="p">(</span><span class="n">stop_loss_price</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">stop_loss_price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stop_loss_price</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_stop_loss_price</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stop_loss_price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stop_loss_price</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">set_stop_loss_price</span><span class="p">(</span><span class="n">stop_loss_price</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">stop_loss_price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cancel_open_stop_loss_order</span><span class="p">():</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="n">total</span><span class="p">,</span> <span class="n">free</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_stop_loss_asset_amount</span><span class="p">()</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">stop_loss_quantity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_stop_loss_quantity</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">total</span><span class="p">,</span>
                                                                                              <span class="n">free</span><span class="o">=</span><span class="n">free</span><span class="p">),</span>
-                                                              <span class="bp">self</span><span class="o">.</span><span class="n">precision_crypto</span><span class="p">)</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">stop_loss_quantity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_stop_loss_amount</span><span class="p">(</span><span class="n">free</span><span class="p">)</span>
 
@@ -683,7 +690,8 @@
                                                            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;STOP_LOSS_LIMIT&quot;</span><span class="p">,</span>
                                                            <span class="n">price</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">,</span>
                                                            <span class="n">stopPrice</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_stop_loss_trigger_price</span><span class="p">(</span><span class="n">stop_loss_price</span><span class="p">),</span>
-                                                           <span class="n">quantity</span><span class="o">=</span><span class="n">stop_loss_quantity</span><span class="p">,</span>
+                                                           <span class="n">quantity</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">stop_loss_quantity</span><span class="p">,</span>
+                                                                              <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span><span class="p">)),</span>
                                                            <span class="n">timeInForce</span><span class="o">=</span><span class="s2">&quot;GTC&quot;</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">exchange</span> <span class="o">==</span> <span class="s2">&quot;binance.com-isolated_margin&quot;</span><span class="p">:</span>
                         <span class="n">new_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="o">.</span><span class="n">create_margin_order</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">market</span><span class="p">,</span>
@@ -692,7 +700,8 @@
                                                                   <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;STOP_LOSS_LIMIT&quot;</span><span class="p">,</span>
                                                                   <span class="n">price</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">,</span>
                                                                   <span class="n">stopPrice</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_stop_loss_trigger_price</span><span class="p">(</span><span class="n">stop_loss_price</span><span class="p">),</span>
-                                                                  <span class="n">quantity</span><span class="o">=</span><span class="n">stop_loss_quantity</span><span class="p">,</span>
+                                                                  <span class="n">quantity</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">stop_loss_quantity</span><span class="p">,</span>
+                                                                                     <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span><span class="p">)),</span>
                                                                   <span class="n">timeInForce</span><span class="o">=</span><span class="s2">&quot;GTC&quot;</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">exchange</span> <span class="o">==</span> <span class="s2">&quot;binance.com-margin&quot;</span><span class="p">:</span>
                         <span class="n">new_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="o">.</span><span class="n">create_margin_order</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">market</span><span class="p">,</span>
@@ -700,7 +709,8 @@
                                                                   <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;STOP_LOSS_LIMIT&quot;</span><span class="p">,</span>
                                                                   <span class="n">price</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">,</span>
                                                                   <span class="n">stopPrice</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_stop_loss_trigger_price</span><span class="p">(</span><span class="n">stop_loss_price</span><span class="p">),</span>
-                                                                  <span class="n">quantity</span><span class="o">=</span><span class="n">stop_loss_quantity</span><span class="p">,</span>
+                                                                  <span class="n">quantity</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">stop_loss_quantity</span><span class="p">,</span>
+                                                                                     <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span><span class="p">)),</span>
                                                                   <span class="n">timeInForce</span><span class="o">=</span><span class="s2">&quot;GTC&quot;</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">exchange</span> <span class="o">==</span> <span class="s2">&quot;binance.com-futures&quot;</span><span class="p">:</span>
                         <span class="n">new_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="o">.</span><span class="n">futures_create_order</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">market</span><span class="p">,</span>
@@ -708,7 +718,8 @@
                                                                    <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;STOP_LOSS_LIMIT&quot;</span><span class="p">,</span>
                                                                    <span class="n">price</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">,</span>
                                                                    <span class="n">stopPrice</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_stop_loss_trigger_price</span><span class="p">(</span><span class="n">stop_loss_price</span><span class="p">),</span>
-                                                                   <span class="n">quantity</span><span class="o">=</span><span class="n">stop_loss_quantity</span><span class="p">,</span>
+                                                                   <span class="n">quantity</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">stop_loss_quantity</span><span class="p">,</span>
+                                                                                      <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span><span class="p">)),</span>
                                                                    <span class="n">timeInForce</span><span class="o">=</span><span class="s2">&quot;GTC&quot;</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.create_stop_loss_order() - Invalid exchange &quot;</span>
@@ -717,9 +728,8 @@
                             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid exchange `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">exchange</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
                         <span class="k">return</span> <span class="kc">False</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_order_id</span> <span class="o">=</span> <span class="n">new_order</span><span class="p">[</span><span class="s1">&#39;orderId&#39;</span><span class="p">]</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.create_stop_loss_order() - Created stop/loss order &quot;</span>
-                                     <span class="sa">f</span><span class="s2">&quot;for market </span><span class="si">{</span><span class="n">new_order</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> with orderId=&quot;</span>
-                                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">new_order</span><span class="p">[</span><span class="s1">&#39;orderId&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> and side=</span><span class="si">{</span><span class="n">new_order</span><span class="p">[</span><span class="s1">&#39;side&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.create_stop_loss_order() - Created stop/loss &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;order for market </span><span class="si">{</span><span class="n">new_order</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - Response: </span><span class="si">{</span><span class="n">new_order</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
                         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created stop/loss order for market </span><span class="si">{</span><span class="n">new_order</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: &quot;</span>
                               <span class="sa">f</span><span class="s2">&quot;stop_loss_price=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="si">}</span><span class="s2"> and &quot;</span>
@@ -858,15 +868,42 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.get_owning_amount() - </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">account_info</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]:</span>
-            <span class="n">base_asset_pool</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;baseAsset&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;asset&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">base_asset</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.get_owning_amount() - Owning &quot;</span>
-                                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;asset&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: free=</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
-                                 <span class="sa">f</span><span class="s2">&quot;total=</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;totalAsset&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span>
-                                 <span class="sa">f</span><span class="s2">&quot;(interest=</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;interest&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;totalAsset&#39;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exchange</span> <span class="o">==</span> <span class="s2">&quot;binance.com&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">account_info</span><span class="p">[</span><span class="s1">&#39;balances&#39;</span><span class="p">]:</span>
+                <span class="n">base_asset_pool</span> <span class="o">=</span> <span class="n">item</span>
+                <span class="k">if</span> <span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;asset&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">base_asset</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.get_owning_amount() - Owning &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;asset&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: free=</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;total=</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">account_info</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]:</span>
+                <span class="n">base_asset_pool</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;baseAsset&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;asset&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">base_asset</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.get_owning_amount() - Owning &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;asset&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: free=</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;total=</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;totalAsset&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;(interest=</span><span class="si">{</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;interest&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;totalAsset&#39;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">base_asset_pool</span><span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="BinanceTrailingStopLossManager.get_precision">
+<a class="viewcode-back" href="../../unicorn_binance_trailing_stop_loss.html#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.get_precision">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_precision</span><span class="p">(</span><span class="n">step_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">step_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">step_size</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">count</span>
+            <span class="k">return</span> <span class="n">count</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
 
 
 <div class="viewcode-block" id="BinanceTrailingStopLossManager.get_stop_loss_asset_amount">
@@ -877,7 +914,7 @@
 
 <span class="sd">        :return: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_asset_amount</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_crypto</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_asset_amount</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BinanceTrailingStopLossManager.get_stop_loss_asset_amount_free">
@@ -888,7 +925,7 @@
 
 <span class="sd">        :return: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_asset_amount_free</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_crypto</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_asset_amount_free</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BinanceTrailingStopLossManager.get_stop_loss_price">
@@ -899,10 +936,16 @@
 
 <span class="sd">        :return: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span><span class="p">[</span><span class="s1">&#39;quote&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;USDT&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exchange</span> <span class="o">==</span> <span class="s2">&quot;binance.com&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span><span class="p">[</span><span class="s1">&#39;quoteAsset&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;USDT&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span><span class="p">[</span><span class="s1">&#39;quote&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;USDT&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span></div>
 
 
 <div class="viewcode-block" id="BinanceTrailingStopLossManager.get_stop_loss_trigger_price">
@@ -920,11 +963,8 @@
             <span class="n">trigger_gap</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_stop_loss_price</span><span class="p">()</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="mf">100.0</span><span class="o">-</span><span class="n">gap_percent</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">trigger_gap</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_trigger_gap</span><span class="p">)</span>
-        <span class="n">trigger_gap</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="n">trigger_gap</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_crypto</span><span class="p">))</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span><span class="p">[</span><span class="s1">&#39;quote&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;USDT&quot;</span><span class="p">:</span>
-            <span class="n">precision</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_fiat</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">precision</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_crypto</span>
+        <span class="n">trigger_gap</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">round_decimals_down</span><span class="p">(</span><span class="n">trigger_gap</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span><span class="p">))</span>
+        <span class="n">precision</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span>
 
         <span class="k">if</span> <span class="n">stop_loss_price</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">stop_loss_price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span>
@@ -946,7 +986,7 @@
 <span class="sd">         &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exchange</span> <span class="o">==</span> <span class="s2">&quot;binance.com&quot;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">None</span>
+                <span class="n">symbol_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="o">.</span><span class="n">get_symbol_info</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">)</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">exchange</span> <span class="o">==</span> <span class="s2">&quot;binance.com-futures&quot;</span><span class="p">:</span>
                 <span class="n">symbol_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="o">.</span><span class="n">get_symbol_info</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">)</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">exchange</span> <span class="o">==</span> <span class="s2">&quot;binance.com-margin&quot;</span><span class="p">:</span>
@@ -987,6 +1027,20 @@
         <span class="k">return</span> <span class="n">__version__</span></div>
 
 
+<div class="viewcode-block" id="BinanceTrailingStopLossManager.is_manager_stopping">
+<a class="viewcode-back" href="../../unicorn_binance_trailing_stop_loss.html#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.is_manager_stopping">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_manager_stopping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns `True` if the manager has a stop request, &#39;False&#39; if not.</span>
+
+<span class="sd">        :return: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_manager_request</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+
 <div class="viewcode-block" id="BinanceTrailingStopLossManager.is_update_available">
 <a class="viewcode-back" href="../../unicorn_binance_trailing_stop_loss.html#unicorn_binance_trailing_stop_loss.manager.BinanceTrailingStopLossManager.is_update_available">[docs]</a>
     <span class="k">def</span> <span class="nf">is_update_available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -1018,64 +1072,65 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream(stream_data=</span><span class="si">{</span><span class="n">stream_data</span><span class="si">}</span><span class="s2">, &quot;</span>
                           <span class="sa">f</span><span class="s2">&quot;stream_buffer_name=</span><span class="si">{</span><span class="n">stream_buffer_name</span><span class="si">}</span><span class="s2">) started&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;event_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;executionReport&quot;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_order_id</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;FILLED&quot;</span><span class="p">:</span>
-                    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Subject: unicorn-binance-trailing-stop-loss &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">market</span><span class="si">}</span><span class="s2">&#39;</span><span class="se">\n\n</span><span class="s2">&quot;</span> \
-                          <span class="sa">f</span><span class="s2">&quot;STOP LOSS FILLED at price </span><span class="si">{</span><span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_price&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> (order_id=</span><span class="si">{</span><span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
-                    <span class="n">msg_short</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;STOP LOSS FILLED at price </span><span class="si">{</span><span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_price&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span> \
-                                <span class="sa">f</span><span class="s2">&quot;(order_id=</span><span class="si">{</span><span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
-                    <span class="n">log_msg_short</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg_short</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - </span><span class="si">{</span><span class="n">log_msg_short</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="n">msg_short</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">send_telegram_notification</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">send_email_notification</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">stop_manager</span><span class="p">()</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback_finished</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">callback_finished</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="kc">True</span>
-                <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CANCELED&quot;</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - &quot;</span>
-                                     <span class="sa">f</span><span class="s2">&quot;Received CANCELED event, trigger creation of new order&quot;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received CANCELED event, creating a new order&quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">create_stop_loss_order</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">,</span> <span class="n">current_price</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_price</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="kc">False</span>
-                <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;PARTIALLY_FILLED&quot;</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - &quot;</span>
-                                        <span class="sa">f</span><span class="s2">&quot;Received PARTIALLY_FILLED event&quot;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received PARTIALLY_FILLED event&quot;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback_partially_filled</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">callback_partially_filled</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_manager_stopping</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;event_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;executionReport&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_order_id</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;FILLED&quot;</span><span class="p">:</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Subject: unicorn-binance-trailing-stop-loss &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">market</span><span class="si">}</span><span class="s2">&#39;</span><span class="se">\n\n</span><span class="s2">&quot;</span> \
+                              <span class="sa">f</span><span class="s2">&quot;STOP LOSS FILLED at price </span><span class="si">{</span><span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_price&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> (order_id=</span><span class="si">{</span><span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+                        <span class="n">msg_short</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;STOP LOSS FILLED at price </span><span class="si">{</span><span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_price&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span> \
+                                    <span class="sa">f</span><span class="s2">&quot;(order_id=</span><span class="si">{</span><span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+                        <span class="n">log_msg_short</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg_short</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - </span><span class="si">{</span><span class="n">log_msg_short</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="n">msg_short</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">send_telegram_notification</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">send_email_notification</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">stop_manager</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback_finished</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">callback_finished</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="kc">True</span>
+                    <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CANCELED&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - &quot;</span>
+                                         <span class="sa">f</span><span class="s2">&quot;Received CANCELED event, trigger creation of new order&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received CANCELED event, creating a new order&quot;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">create_stop_loss_order</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="p">,</span> <span class="n">current_price</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_price</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+                    <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;PARTIALLY_FILLED&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - &quot;</span>
+                                            <span class="sa">f</span><span class="s2">&quot;Received PARTIALLY_FILLED event&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received PARTIALLY_FILLED event&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback_partially_filled</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">callback_partially_filled</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+                    <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;NEW&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - Received event: &quot;</span>
+                                          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - Received unknown&quot;</span>
+                                             <span class="sa">f</span><span class="s2">&quot; event: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown, please report:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">))</span>
                 <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;NEW&quot;</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - Received event: &quot;</span>
                                       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CANCELED&quot;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - Received event: &quot;</span>
+                                      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - Received unknown&quot;</span>
-                                         <span class="sa">f</span><span class="s2">&quot; event: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - &quot;</span>
+                                      <span class="sa">f</span><span class="s2">&quot;Received stream_data: </span><span class="si">{</span><span class="n">stream_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
                         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown, please report:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">))</span>
-            <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;NEW&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - Received event: &quot;</span>
-                                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;current_order_status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CANCELED&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - Received event: &quot;</span>
-                                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;event_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;outboundAccountPosition&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - Received: </span><span class="si">{</span><span class="n">stream_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - &quot;</span>
-                                  <span class="sa">f</span><span class="s2">&quot;Received stream_data: </span><span class="si">{</span><span class="n">stream_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                                  <span class="sa">f</span><span class="s2">&quot;Received unkown stream_data: </span><span class="si">{</span><span class="n">stream_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown, please report:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">stream_data</span><span class="p">[</span><span class="s1">&#39;event_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;outboundAccountPosition&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - Received: </span><span class="si">{</span><span class="n">stream_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_userdata_stream() - &quot;</span>
-                              <span class="sa">f</span><span class="s2">&quot;Received unkown stream_data: </span><span class="si">{</span><span class="n">stream_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown, please report:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">))</span></div>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown, please report:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">stream_data</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="BinanceTrailingStopLossManager.process_price_feed_stream">
@@ -1095,22 +1150,22 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_price_feed_stream(stream_data=</span><span class="si">{</span><span class="n">stream_data</span><span class="si">}</span><span class="s2">, &quot;</span>
                           <span class="sa">f</span><span class="s2">&quot;stream_buffer_name=</span><span class="si">{</span><span class="n">stream_buffer_name</span><span class="si">}</span><span class="s2">) started&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current_price</span> <span class="o">=</span> <span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">)</span>
-            <span class="n">sl_price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_stop_loss_price</span><span class="p">(</span><span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_limit</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_price_feed_stream() - Setting &quot;</span>
-                                 <span class="sa">f</span><span class="s2">&quot;stop_loss_price from None to </span><span class="si">{</span><span class="n">sl_price</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting stop_loss_price from None to </span><span class="si">{</span><span class="n">sl_price</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">create_stop_loss_order</span><span class="p">(</span><span class="n">sl_price</span><span class="p">,</span> <span class="n">current_price</span><span class="o">=</span><span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">))</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span> <span class="o">&lt;</span> <span class="n">sl_price</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_price_feed_stream() - Setting &quot;</span>
-                                 <span class="sa">f</span><span class="s2">&quot;stop_loss_price from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">sl_price</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting stop_loss_price from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">sl_price</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">create_stop_loss_order</span><span class="p">(</span><span class="n">sl_price</span><span class="p">,</span> <span class="n">current_price</span><span class="o">=</span><span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">))</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_manager_stopping</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_price</span> <span class="o">=</span> <span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">)</span>
+                <span class="n">sl_price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_stop_loss_price</span><span class="p">(</span><span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_limit</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_price_feed_stream() - Setting &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;stop_loss_price from None to </span><span class="si">{</span><span class="n">sl_price</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting stop_loss_price from None to </span><span class="si">{</span><span class="n">sl_price</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">create_stop_loss_order</span><span class="p">(</span><span class="n">sl_price</span><span class="p">,</span> <span class="n">current_price</span><span class="o">=</span><span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span> <span class="o">&lt;</span> <span class="n">sl_price</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.process_price_feed_stream() - Setting &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;stop_loss_price from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">sl_price</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting stop_loss_price from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_price</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">sl_price</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">create_stop_loss_order</span><span class="p">(</span><span class="n">sl_price</span><span class="p">,</span> <span class="n">current_price</span><span class="o">=</span><span class="n">stream_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="BinanceTrailingStopLossManager.round_decimals_down">
@@ -1151,8 +1206,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">symbol</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user_stream_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubwa</span><span class="o">.</span><span class="n">create_stream</span><span class="p">(</span><span class="s2">&quot;arr&quot;</span><span class="p">,</span> <span class="s2">&quot;!userData&quot;</span><span class="p">,</span>
-                                                      <span class="n">api_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">binance_public_key</span><span class="p">,</span>
-                                                      <span class="n">api_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">binance_private_key</span><span class="p">,</span>
+                                                      <span class="n">api_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="p">,</span>
+                                                      <span class="n">api_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">api_secret</span><span class="p">,</span>
                                                       <span class="n">process_stream_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">process_userdata_stream</span><span class="p">,</span>
                                                       <span class="n">symbols</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span>
                                                       <span class="n">stream_label</span><span class="o">=</span><span class="s2">&quot;UserData&quot;</span><span class="p">)</span>
@@ -1237,7 +1292,7 @@
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumped in with buy price: </span><span class="si">{</span><span class="n">buy_price</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">==</span> <span class="s2">&quot;trail&quot;</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Starting `trail` engine&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1253,13 +1308,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.run() - reset_stop_loss_price=&quot;</span>
                           <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reset_stop_loss_price</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_symbol_info</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">market</span><span class="p">)</span>
+
+        <span class="n">symbol_info_symbols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="o">.</span><span class="n">get_exchange_info</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">market</span><span class="p">})[</span><span class="s1">&#39;symbols&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">symbols</span> <span class="ow">in</span> <span class="n">symbol_info_symbols</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">symbols</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;filters&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">filters</span> <span class="ow">in</span> <span class="n">symbols</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;filters&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">filters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;filterType&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;LOT_SIZE&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">precision_quantity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_precision</span><span class="p">(</span><span class="n">filters</span><span class="p">[</span><span class="s1">&#39;stepSize&#39;</span><span class="p">])</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.run() -  used_weight: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ubra</span><span class="o">.</span><span class="n">get_used_weight</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.run() - `symbol_info` is None&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_notifications</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: `symbol_info` is None -&gt; Stopping!&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop_manager</span><span class="p">()</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_asset_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span><span class="p">[</span><span class="s1">&#39;base&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exchange</span> <span class="o">==</span> <span class="s2">&quot;binance.com&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_asset_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span><span class="p">[</span><span class="s1">&#39;baseAsset&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop_loss_asset_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_info</span><span class="p">[</span><span class="s1">&#39;base&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exchange_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exchange_info</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_stop_loss_asset_amount</span><span class="p">()</span>
 
@@ -1373,8 +1440,8 @@
 <span class="sd">        :return: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BinanceTrailingStopLossManager.stop_manager() - Gracefully stopping &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;unicorn-binance-stop-loss engine&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stop_request</span> <span class="o">=</span> <span class="kc">True</span>
+                         <span class="sa">f</span><span class="s2">&quot;unicorn-binance-trailing-stop-loss engine&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop_manager_request</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubwa</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ubwa</span><span class="o">.</span><span class="n">stop_manager</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubra</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1564,7 +1631,7 @@
     <div class="footer">
     &copy; <a href="/license.html">Copyright</a> 2022-2023, LUCIT Systems and Development and Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Nov 23 2023 at 02:52 (CET).
+    Last updated on Nov 28 2023 at 13:05 (CET).
     <a href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.

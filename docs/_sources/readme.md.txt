@@ -229,7 +229,7 @@ or the [current master branch](https://github.com/LUCIT-Systems-and-Development/
 ## Documentation
 - [General](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech)
 - [Modules](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/modules.html)
-- [CLI](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/CLI.html)
+- [CLI](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/cli.html)
 
 ## Examples
 - [example_logging.py](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/example_logging.py)
