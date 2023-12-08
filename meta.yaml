@@ -51,8 +51,7 @@ test:
 
 about:
   summary: | 
-    A Python library with a command line interface for a trailing stop loss and smart entry on the Binance exchange. 
-    We also offer a standalone version for Windows and Mac that does not require an installed Python environment.
+    A Python library by LUCIT with a command line interface for a trailing stop loss and smart entry on the Binance exchange.
   description: |
     [![Get a UNICORN Binance Suite License](https://raw.githubusercontent.com/LUCIT-Systems-and-Development/unicorn-binance-suite/master/images/logo/LUCIT-UBS-License-Offer.png)](https://shop.lucit.services)
     
@@ -85,7 +84,7 @@ about:
     [Notifications](#receive-notifications) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
     [Contributing](#contributing) | [Disclaimer](#disclaimer) | [Commercial Support](#commercial-support)
     
-    A Python library with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss and 
+    A Python library by [LUCIT](https://www.lucit.tech) with a [command line interface](https://www.lucit.tech/ubtsl-cli.html) for a trailing stop loss and 
     [smart entry](https://www.lucit.tech/unicorn-binance-trailing-stop-loss.html#smart-entry) on the Binance exchange.
     
     Please read carefully all provided [documentation](https://unicorn-binance-trailing-stop-loss.docs.lucit.tech/), our
