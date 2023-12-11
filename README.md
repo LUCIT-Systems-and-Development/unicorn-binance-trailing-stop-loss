@@ -53,7 +53,7 @@ To run modules of the *UNICORN Binance Suite* you need a [valid license](https:/
 
 ## How to start the trailing stop loss engine:
 ```
-from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
+from unicorn_binance_trailing_stop_loss import BinanceTrailingStopLossManager
 
 
 def callback_error(msg):
