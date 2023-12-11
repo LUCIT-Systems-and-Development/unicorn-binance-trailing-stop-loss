@@ -649,6 +649,7 @@ async def cli():
                 # This loop continues until the trailing stop loss engine is terminated
                 await asyncio.sleep(1)
 
+
 def main():
     try:
         asyncio.run(cli())
