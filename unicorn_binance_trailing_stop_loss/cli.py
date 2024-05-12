@@ -19,7 +19,7 @@
 # All rights reserved.
 
 try:
-    from manager import BinanceTrailingStopLossManager
+    from .manager import BinanceTrailingStopLossManager
 except ModuleNotFoundError:
     from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
 from unicorn_binance_rest_api.manager import BinanceRestApiManager, BinanceAPIException

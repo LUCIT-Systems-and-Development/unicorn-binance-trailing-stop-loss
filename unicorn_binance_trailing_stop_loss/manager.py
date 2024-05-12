@@ -18,12 +18,9 @@
 # Copyright (c) 2022-2023, LUCIT Systems and Development (https://www.lucit.tech)
 # All rights reserved.
 
-from unicorn_binance_rest_api.manager import BinanceRestApiManager
-from unicorn_binance_rest_api.exceptions import BinanceAPIException
-from unicorn_binance_websocket_api.manager import BinanceWebSocketApiManager
-from unicorn_binance_websocket_api.exceptions import UnknownExchange
-from lucit_licensing_python.manager import LucitLicensingManager
-from lucit_licensing_python.exceptions import NoValidatedLucitLicense
+from .manager import LucitLicensingManager, NoValidatedLucitLicense
+from unicorn_binance_rest_api import BinanceRestApiManager, BinanceAPIException
+from unicorn_binance_websocket_api import BinanceWebSocketApiManager, UnknownExchange
 from typing import Optional, Union
 import cython
 import datetime

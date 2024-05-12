@@ -18,5 +18,5 @@
 # Copyright (c) 2022-2023, LUCIT Systems and Development (https://www.lucit.tech)
 # All rights reserved.
 
-from unicorn_binance_trailing_stop_loss.cli import *
-from unicorn_binance_trailing_stop_loss.manager import BinanceTrailingStopLossManager
+from .cli import *
+from .manager import BinanceTrailingStopLossManager
