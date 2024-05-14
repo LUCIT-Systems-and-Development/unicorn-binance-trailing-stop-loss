@@ -157,8 +157,7 @@ By activating the `jump-in-and-trail` engine, the engine first buys the predefin
 automatically. 
 
 ## Installation and Upgrade
-The module requires Python 3.7 or above, as it depends on Pythons latest asyncio features for asynchronous/concurrent 
-processing. 
+The module requires Python 3.7 and runs smoothly up to and including Python 3.12.
 
 For the PyPy interpreter we offer packages only from Python version 3.9 and higher.
 
