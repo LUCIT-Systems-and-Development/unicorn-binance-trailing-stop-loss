@@ -107,7 +107,7 @@ The Python package [UNICORN Binance Trailing Stop Loss](https://www.lucit.tech/u
 provides a reuseable library and [CLI interface](https://www.lucit.tech/ubtsl-cli.html).
 
 After starting the engine, a stop/loss order is placed on Binance and trailed until it is completely fulfilled. If desired, a 
-notification can be sent via email and Telegram afterwards. Then it calls the function 
+notification can be sent via email and Telegram afterward. Then it calls the function 
 passed with the `callback_finished` parameter or on error it calls the function passed to `callback_error`. 
 
 Partially filled orders are currently not handled by the engine. If you want to react individually to this event, you 
@@ -132,10 +132,17 @@ used API weight!)
 | [Binance Margin](https://www.binance.com)          | `binance.com-margin`          | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/ok-icon.png) | ![yes](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/x-icon.png)                 |
 
 - All parameters that expect numbers can be configured with fixed numerical values as well as with percentage values.
+
 - Integrated notification system (e-Mail and Telegram).
+
 - Test "notification", "binance-connectivity" and "streams" without starting the engine.
+
 - Powered by [UNICORN Binance REST API](https://www.lucit.tech/unicorn-binance-rest-api.html) and 
 [UNICORN Binance WebSocket API](https://www.lucit.tech/unicorn-binance-websocket-api.html).
+
+- Available via `pip` and `conda` as precompiled C-Extension including stub files for improved Intellisense features and 
+  source code easier debugging.
+
 - Well tested on Linux, Mac and Windows.
 
 If you like the project, please [![star](https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-trailing-stop-loss/master/images/misc/star.png)](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/stargazers) it on 
@@ -155,7 +162,7 @@ processing.
 
 For the PyPy interpreter we offer packages only from Python version 3.9 and higher.
 
-Anaconda packages are available from Python version 3.8 and higher.
+Anaconda packages are available from Python version 3.8 and higher, but only in the latest version!
 
 The current dependencies are listed [here](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/blob/master/requirements.txt).
 
@@ -291,7 +298,7 @@ click ![thumbs-up](https://raw.githubusercontent.com/lucit-systems-and-developme
 Before you report a bug, [try the latest release](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss#installation-and-upgrade). If the issue still exists, provide the error trace, OS 
 and Python version and explain how to reproduce the error. A demo script is appreciated.
 
-If you dont find an issue related to your topic, please open a new [issue](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues)!
+If you don't find an issue related to your topic, please open a new [issue](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/issues)!
 
 [Report a security bug!](https://github.com/LUCIT-Systems-and-Development/unicorn-binance-trailing-stop-loss/security/policy)
 
