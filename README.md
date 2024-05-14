@@ -140,8 +140,8 @@ used API weight!)
 - Powered by [UNICORN Binance REST API](https://www.lucit.tech/unicorn-binance-rest-api.html) and 
 [UNICORN Binance WebSocket API](https://www.lucit.tech/unicorn-binance-websocket-api.html).
 
-- Available via `pip` and `conda` as precompiled C-Extension including stub files for improved Intellisense features and 
-  source code easier debugging.
+- Available as a package via `pip` and `conda` as precompiled C extension with stub files for improved Intellisense 
+  functions and source code for easier debugging of the source code. [To the installation.](#installation-and-upgrade)
 
 - Well tested on Linux, Mac and Windows.
 
